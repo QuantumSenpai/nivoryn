@@ -1,0 +1,20 @@
+
+# Nivoryn local resources and build outputs
+.DS_Store
+.idea/
+.gradle/
+**/build/
+local.properties
+.venv/
+__pycache__/
+*.pyc
+.env
+*.jks
+*.keystore
+*.pte
+*.safetensors
+*.gguf
+*.traineddata
+*.apk
+*.aab
+local-resources/
