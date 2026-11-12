@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title description">
+  <title id="title">Nivoryn — Check before you trust.</title>
+  <desc id="description">Animated concept banner for an Android scam-safety assistant. Local-first design using Llama and ExecuTorch. Early development.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#171A35"/><stop offset="1" stop-color="#35305E"/></linearGradient>
+    <linearGradient id="shield" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DDD9F3"/></linearGradient>
+    <linearGradient id="scan"><stop stop-color="#6CE0CB" stop-opacity="0"/><stop offset=".5" stop-color="#6CE0CB"/><stop offset="1" stop-color="#6CE0CB" stop-opacity="0"/></linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#DCD8F8" opacity=".09"/></pattern>
+    <clipPath id="shieldClip"><path d="M244 92 338 127v79c0 66-46 102-94 123-48-21-94-57-94-123v-79Z"/></clipPath>
+  </defs>
+  <style>
+    text {font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
+    .float {animation:float 5s ease-in-out infinite}
+    .scan {animation:scan 4s ease-in-out infinite}
+    .trace {stroke-dasharray:112;stroke-dashoffset:0;animation:trace 4s ease-in-out infinite}
+    .halo {animation:halo 5s ease-in-out infinite;transform-origin:244px 200px}
+    .tagline {opacity:0;animation:words 12s ease-in-out infinite}
+    .first {opacity:1}
+    .second {animation-delay:4s}
+    .third {animation-delay:8s}
+    @keyframes float {0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes scan {0%{transform:translateY(-40px);opacity:0}18%{opacity:.75}76%{opacity:.75}100%{transform:translateY(230px);opacity:0}}
+    @keyframes trace {0%,20%{stroke-dashoffset:112}50%,100%{stroke-dashoffset:0}}
+    @keyframes halo {0%,100%{opacity:.30;transform:scale(1)}50%{opacity:.55;transform:scale(1.035)}}
+    @keyframes words {0%{opacity:0;transform:translateY(6px)}6%,27%{opacity:1;transform:translateY(0)}33%,100%{opacity:0;transform:translateY(-6px)}}
+    @media(prefers-reduced-motion:reduce){.float,.scan,.trace,.halo,.tagline{animation:none}.scan,.second,.third{opacity:0}.first{opacity:1}.trace{stroke-dashoffset:0}}
+  </style>
+  <rect width="1200" height="400" rx="26" fill="url(#bg)"/>
+  <rect width="1200" height="400" rx="26" fill="url(#dots)"/>
+  <circle cx="1155" cy="20" r="190" fill="#8D80CC" opacity=".09"/>
+  <circle cx="1040" cy="410" r="155" fill="#45B6B2" opacity=".07"/>
+  <circle class="halo" cx="244" cy="200" r="147" stroke="#9C94DB" fill="none" stroke-width="1"/>
+  <circle cx="244" cy="200" r="126" stroke="#B9B1E8" fill="none" stroke-opacity=".12"/>
+  <g class="float">
+    <path d="M244 92 338 127v79c0 66-46 102-94 123-48-21-94-57-94-123v-79Z" fill="url(#shield)"/>
+    <path d="M244 109 321 138v67c0 53-35 85-77 105-42-20-77-52-77-105v-67Z" fill="#F6F4FF" stroke="#C8C1E7"/>
+    <rect x="201" y="159" width="86" height="8" rx="4" fill="#6354A8" opacity=".25"/>
+    <rect x="214" y="178" width="60" height="6" rx="3" fill="#6354A8" opacity=".16"/>
+    <path class="trace" d="m207 222 25 25 48-52" fill="none" stroke="#257E7B" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <g clip-path="url(#shieldClip)"><rect class="scan" x="146" y="105" width="196" height="3" fill="url(#scan)"/></g>
+    <rect x="285" y="268" width="62" height="36" rx="18" fill="#6CE0CB"/>
+    <circle cx="304" cy="286" r="4" fill="#174A49"/>
+    <path d="M317 282h15m-15 8h10" stroke="#174A49" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="424" y="82" fill="#AAA4CA" font-size="12" font-weight="600" letter-spacing="2.4">ON-DEVICE DIGITAL SAFETY</text>
+  <text x="418" y="177" fill="#FFFFFF" font-size="88" font-weight="700" letter-spacing="-3">Nivoryn</text>
+  <g fill="#D3CFE9" font-size="28">
+    <text class="tagline first" x="424" y="231">Check before you trust.</text>
+    <text class="tagline second" x="424" y="231">See the evidence behind the warning.</text>
+    <text class="tagline third" x="424" y="231">Connect the messages. See the story.</text>
+  </g>
+  <g font-size="14" font-weight="600" text-anchor="middle">
+    <rect x="424" y="269" width="170" height="38" rx="19" fill="#FFFFFF" fill-opacity=".09" stroke="#FFFFFF" stroke-opacity=".09"/><text x="509" y="293" fill="#EAE7FA">Local-first design</text>
+    <rect x="607" y="269" width="204" height="38" rx="19" fill="#FFFFFF" fill-opacity=".09" stroke="#FFFFFF" stroke-opacity=".09"/><text x="709" y="293" fill="#EAE7FA">Llama + ExecuTorch</text>
+    <rect x="824" y="269" width="114" height="38" rx="19" fill="#FFFFFF" fill-opacity=".09" stroke="#FFFFFF" stroke-opacity=".09"/><text x="881" y="293" fill="#EAE7FA">Android</text>
+  </g>
+  <circle cx="430" cy="352" r="3" fill="#6CE0CB"/>
+  <text x="443" y="357" fill="#AAA4CA" font-size="12">PS3 · Bharat AI-SoC Challenge 2026–27 · Early development</text>
+</svg>

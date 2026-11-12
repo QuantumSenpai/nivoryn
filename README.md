@@ -1,21 +1,26 @@
 <div align="center">
 
-![Nivoryn — Check before you trust. Animated project banner.](assets/nivoryn-banner.gif)
+<img src="assets/readme/banner.svg" alt="Nivoryn — Check before you trust. Animated local-first safety concept." width="100%" />
 
-### Check before you trust.
+<br />
 
-An Android scam-safety assistant designed to examine suspicious messages, links and payment requests directly on your phone.
+**Your phone. Your evidence. Your next step.**
 
-![Status: early development](https://img.shields.io/badge/status-early_development-C58A35?style=flat-square)
-![Platform: Android](https://img.shields.io/badge/platform-Android-167D7F?style=flat-square)
-![Language: Kotlin](https://img.shields.io/badge/language-Kotlin-6253B5?style=flat-square)
-![Runtime: ExecuTorch](https://img.shields.io/badge/runtime-ExecuTorch-34334A?style=flat-square)
+An offline Android assistant for suspicious messages, links and payment requests.
+Designed to explain the warning, show the evidence and connect the story.
 
-[The idea](#the-idea) · [How it works](#how-it-works) · [Architecture](#architecture) · [Development](#development) · [Roadmap](#roadmap)
+![Status: early development](https://img.shields.io/badge/status-early_development-C58A35?style=for-the-badge)
+![Platform: Android](https://img.shields.io/badge/platform-Android-167D7F?style=for-the-badge)
+![Language: Kotlin](https://img.shields.io/badge/language-Kotlin-6253B5?style=for-the-badge)
+![Runtime: ExecuTorch](https://img.shields.io/badge/runtime-ExecuTorch-34334A?style=for-the-badge)
+
+[Why Nivoryn](#the-idea) · [Features](#features) · [Workflow](#how-it-works) · [Privacy](#privacy-and-boundaries) · [Architecture](#architecture) · [Development](#development) · [Roadmap](#roadmap)
 
 </div>
 
 > **Current status:** repository scaffold created. The Android build configuration, detection pipeline and on-device model integration are not implemented yet. This README describes the intended product. The animated banner is concept artwork, not an app recording.
+
+---
 
 ## The idea
 
@@ -29,7 +34,9 @@ The planned Android app combines local checks, a lightweight text classifier and
 
 Built for **Bharat AI-SoC Challenge 2026–27 · PS3: On-device threat, phishing & scam detection**.
 
-## What Nivoryn is designed to do
+---
+
+## Features
 
 | Capability | Intended experience |
 | :--- | :--- |
@@ -43,6 +50,8 @@ Built for **Bharat AI-SoC Challenge 2026–27 · PS3: On-device threat, phishing
 | **Local case history** | Explicitly save, review, export or delete a case. |
 
 These capabilities are planned. Optional notification checking and network-analysis work are tracked separately in the roadmap.
+
+---
 
 ## Scam Story
 
@@ -58,7 +67,13 @@ The planned case engine will connect user-selected messages, track relevant evid
 
 **This is a proposed product distinction, not a claim of global novelty or proven detection superiority.**
 
+---
+
 ## How it works
+
+<div align="center">
+<img src="assets/readme/flow.svg" alt="Planned Nivoryn workflow: share, inspect, connect, explain and act." width="100%" />
+</div>
 
 1. **Bring the content.** Share, paste or import a supported message, link or image.
 2. **Review the input.** Check extracted text and correct OCR errors before analysis.
@@ -86,6 +101,8 @@ This is an example of the intended output, not a measured result from the curren
 - **No clear warning found:** available checks found no strong signal; this does not certify safety.
 - **Cannot assess:** the input is insufficient, unreadable or unsupported.
 
+---
+
 ## Architecture
 
 ```mermaid
@@ -104,6 +121,8 @@ flowchart TD
 
 The diagram describes the planned local pipeline. The reasoning model will not receive browser, shell, messaging or payment tools. Generated explanations will be checked against evidence references and approved actions; invalid output will fall back to a curated explanation.
 
+---
+
 ## Technology choices
 
 | Layer | Selected approach |
@@ -121,11 +140,16 @@ The diagram describes the planned local pipeline. The reasoning model will not r
 
 Exact dependency versions and model-export compatibility will be pinned after the first successful Android integration.
 
-### Model footprint
+<details>
+<summary><b>Model footprint and device measurements</b></summary>
 
 Meta reports a **1,083 MB PTE file** and **1,921 MB runtime RSS** for its 1B SpinQuant reference benchmark on OnePlus 12. These are reference measurements, not Nivoryn app benchmarks or minimum device requirements. See the [official model card](https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8).
 
 The model is planned as a separate import rather than part of the APK. This reduces the APK download size, while the phone still needs storage for the imported assets. Actual APK size, whole-app memory use and inference latency remain unmeasured.
+
+</details>
+
+---
 
 ## Privacy and boundaries
 
@@ -140,6 +164,8 @@ The intended privacy model is straightforward: process locally, save deliberatel
 An offline check cannot establish fresh domain registration details, live website reputation or payment-recipient ownership. A missing match is not evidence that something is safe.
 
 Notification access does not provide complete chat history, and Android may redact sensitive content. Live cellular-call listening, universal payment blocking and complete antivirus protection are outside the initial release.
+
+---
 
 ## Development
 
@@ -170,6 +196,8 @@ Build and installation commands will be added once they have been verified again
 
 Model binaries, raw private datasets, signing keys and generated build outputs belong outside Git. The development plan keeps large resources on external storage and tests on a physical phone rather than requiring an emulator.
 
+---
+
 ## Roadmap
 
 - [x] Define the local-only Android architecture.
@@ -186,6 +214,8 @@ Model binaries, raw private datasets, signing keys and generated build outputs b
 
 Live VPN monitoring and behavioural malware detection are later work. Their absence must remain visible in the [PS3 coverage document](docs/PS3_COVERAGE.md); recorded analysis will not be described as live protection.
 
+---
+
 ## Evaluation before claims
 
 Detection results will be assessed against legitimate counterexamples and held-out scam cases, with separate reporting for language and scam category. Related templates, domains and conversations must not leak across training and test splits.
@@ -194,17 +224,23 @@ The evaluation plan includes false positives, precision/recall, explanation evid
 
 **No detection accuracy, production readiness or complete PS3 coverage is claimed at this stage.**
 
+---
+
 ## Documentation
 
 [Project specification](docs/PROJECT_SPECIFICATION.md) · [Development setup](docs/SETUP.md) · [Model setup](docs/MODEL_SETUP.md) · [PS3 coverage](docs/PS3_COVERAGE.md) · [Data provenance](docs/DATA_PROVENANCE.md) · [Benchmarks](docs/BENCHMARKS.md)
 
 The scaffold includes these documentation paths; detailed content will be populated alongside implementation.
 
+---
+
 ## Contributing and licensing
 
 Useful early contributions include reproducible Android integration, reviewed scam/legitimate examples, explanation-validation tests and device measurements. Do not include private messages, credentials, phone numbers or payment details in public issues or fixtures.
 
 See [LICENSE](LICENSE) for the repository's current terms. Llama weights remain subject to the [Llama 3.2 Community License](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE), independently of the application licence. Dependency and asset notices belong in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+---
 
 ## References
 
