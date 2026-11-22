@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="250" viewBox="0 0 1200 250" role="img" aria-labelledby="title desc">
-  <title id="title">Nivoryn planned workflow</title><desc id="desc">Share, inspect, connect, explain and act. A conceptual workflow; implementation pending.</desc>
+  <title id="title">Nivoryn planned workflow</title><desc id="desc">Share, inspect, connect, explain and act. A conceptual workflow. Local checks are available; advanced case linking and AI reasoning are planned.</desc>
   <style>
     text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
     .rail{stroke-dasharray:5 10;animation:travel 3s linear infinite}
@@ -9,13 +9,13 @@
     @keyframes glow{0%,22%,100%{opacity:0}6%,16%{opacity:.16}}
     @media(prefers-reduced-motion:reduce){.rail,.pulse{animation:none}.pulse{opacity:0}}
   </style>
-  <rect width="1200" height="250" rx="24" fill="#F6F4EF"/>
-  <text x="38" y="34" fill="#888498" font-size="10" letter-spacing="1.6">PLANNED LOCAL WORKFLOW</text>
-  <path class="rail" d="M120 95H1080" fill="none" stroke="#9384C5" stroke-width="2" opacity=".55"/>
-  <g fill="#61519F">
+  <rect width="1200" height="250" rx="24" fill="#F7F7F5"/>
+  <text x="38" y="34" fill="#595959" font-size="10" letter-spacing="1.6">PLANNED LOCAL WORKFLOW</text>
+  <path class="rail" d="M120 95H1080" fill="none" stroke="#F44748" stroke-width="2" opacity=".55"/>
+  <g fill="#191919">
     <circle cx="120" cy="95" r="37"/><circle cx="360" cy="95" r="37"/><circle cx="600" cy="95" r="37"/><circle cx="840" cy="95" r="37"/><circle cx="1080" cy="95" r="37"/>
   </g>
-  <g fill="#61519F">
+  <g fill="#191919">
     <circle class="pulse" cx="120" cy="95" r="48"/><circle class="pulse p2" cx="360" cy="95" r="48"/><circle class="pulse p3" cx="600" cy="95" r="48"/><circle class="pulse p4" cx="840" cy="95" r="48"/><circle class="pulse p5" cx="1080" cy="95" r="48"/>
   </g>
   <g stroke="#FFFFFF" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -25,11 +25,11 @@
     <path d="M824 81h32v24h-18l-10 8v-8h-4Zm7 9h18m-18 7h12"/>
     <path d="m1065 96 10 10 20-23"/>
   </g>
-  <g text-anchor="middle" font-weight="700" font-size="20" fill="#29253E">
+  <g text-anchor="middle" font-weight="700" font-size="20" fill="#191919">
     <text x="120" y="170">Share</text><text x="360" y="170">Inspect</text><text x="600" y="170">Connect</text><text x="840" y="170">Explain</text><text x="1080" y="170">Act</text>
   </g>
-  <g text-anchor="middle" font-size="13" fill="#777384">
+  <g text-anchor="middle" font-size="13" fill="#595959">
     <text x="120" y="195">Bring suspicious content</text><text x="360" y="195">Check local evidence</text><text x="600" y="195">Build a Scam Story</text><text x="840" y="195">Reason on device</text><text x="1080" y="195">Choose the next step</text>
   </g>
-  <text x="600" y="231" text-anchor="middle" fill="#9993A5" font-size="10">Concept illustration · Core processing stays on the phone by design</text>
+  <text x="600" y="231" text-anchor="middle" fill="#595959" font-size="10">Concept workflow · Advanced case linking and AI reasoning planned</text>
 </svg>

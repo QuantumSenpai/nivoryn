@@ -1,0 +1,71 @@
+{
+  "conditions": "Headless Brave on host Mac; 4x CPU slowdown, 1.6Mbit/s down, 750Kbit/s up, 150ms latency, cache disabled. Three cold contexts per width. Event Timing interaction maximum is a lab proxy, not field INP. Idle rAF intervals are not a hardware scroll smoothness measurement.",
+  "runs": [
+    {
+      "width": 390,
+      "run": 1,
+      "lcpMs": 996,
+      "cls": 0,
+      "resourceTransferBytes": 140867,
+      "maxObservedInteractionMs": 40,
+      "idleRafP95Ms": 16.7,
+      "frameSamples": 78,
+      "longTasksThroughInitialLoad": 1
+    },
+    {
+      "width": 390,
+      "run": 2,
+      "lcpMs": 856,
+      "cls": 0,
+      "resourceTransferBytes": 140552,
+      "maxObservedInteractionMs": 40,
+      "idleRafP95Ms": 16.7,
+      "frameSamples": 78,
+      "longTasksThroughInitialLoad": 1
+    },
+    {
+      "width": 390,
+      "run": 3,
+      "lcpMs": 876,
+      "cls": 0,
+      "resourceTransferBytes": 140552,
+      "maxObservedInteractionMs": 40,
+      "idleRafP95Ms": 16.7,
+      "frameSamples": 78,
+      "longTasksThroughInitialLoad": 1
+    },
+    {
+      "width": 1440,
+      "run": 1,
+      "lcpMs": 888,
+      "cls": 0.0016,
+      "resourceTransferBytes": 140552,
+      "maxObservedInteractionMs": 40,
+      "idleRafP95Ms": 16.7,
+      "frameSamples": 78,
+      "longTasksThroughInitialLoad": 1
+    },
+    {
+      "width": 1440,
+      "run": 2,
+      "lcpMs": 888,
+      "cls": 0.0016,
+      "resourceTransferBytes": 140552,
+      "maxObservedInteractionMs": 48,
+      "idleRafP95Ms": 16.8,
+      "frameSamples": 78,
+      "longTasksThroughInitialLoad": 1
+    },
+    {
+      "width": 1440,
+      "run": 3,
+      "lcpMs": 904,
+      "cls": 0.0016,
+      "resourceTransferBytes": 140552,
+      "maxObservedInteractionMs": 40,
+      "idleRafP95Ms": 16.8,
+      "frameSamples": 78,
+      "longTasksThroughInitialLoad": 1
+    }
+  ]
+}

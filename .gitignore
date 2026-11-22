@@ -3,12 +3,17 @@
 .DS_Store
 .idea/
 .gradle/
+.kotlin/
 **/build/
+app/build
 local.properties
 .venv/
 __pycache__/
 *.pyc
 .env
+.env.*
+!.env.example
+.vercel/
 *.jks
 *.keystore
 *.pte
@@ -18,3 +23,10 @@ __pycache__/
 *.apk
 *.aab
 local-resources/
+
+# Companion frontend
+web/node_modules/
+web/dist/
+web/test-results/
+web/playwright-report/
+.taste-skill/

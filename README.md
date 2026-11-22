@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/readme/banner.svg" alt="Nivoryn — Check before you trust. Animated local-first safety concept." width="100%" />
+<img src="assets/readme/banner.svg" alt="Nivoryn — Pause before you trust. Offline Android checks, evidence and next steps." width="100%" />
 
 <br />
 
@@ -9,16 +9,25 @@
 An offline Android assistant for suspicious messages, links and payment requests.
 Designed to explain the warning, show the evidence and connect the story.
 
-![Status: early development](https://img.shields.io/badge/status-early_development-C58A35?style=for-the-badge)
-![Platform: Android](https://img.shields.io/badge/platform-Android-167D7F?style=for-the-badge)
-![Language: Kotlin](https://img.shields.io/badge/language-Kotlin-6253B5?style=for-the-badge)
-![Runtime: ExecuTorch](https://img.shields.io/badge/runtime-ExecuTorch-34334A?style=for-the-badge)
+[![Status: early access](https://img.shields.io/badge/status-early_access-191919?style=flat-square&labelColor=595959)](https://nivoryn.vercel.app/#download)
+![Platform: Android](https://img.shields.io/badge/platform-Android_8.0%2B-191919?style=flat-square&labelColor=595959)
+![Language: Kotlin](https://img.shields.io/badge/Kotlin-Jetpack_Compose-191919?style=flat-square&labelColor=595959)
+![Processing: offline](https://img.shields.io/badge/processing-offline-191919?style=flat-square&labelColor=595959)
+
+**[Visit the website](https://nivoryn.vercel.app) · [Download the Android test APK](https://nivoryn.vercel.app/#download)**
+
+Early-access version 0.1.1 · No account required.
 
 [Why Nivoryn](#the-idea) · [Features](#features) · [Workflow](#how-it-works) · [Privacy](#privacy-and-boundaries) · [Architecture](#architecture) · [Development](#development) · [Roadmap](#roadmap)
 
 </div>
 
-> **Current status:** repository scaffold created. The Android build configuration, detection pipeline and on-device model integration are not implemented yet. This README describes the intended product. The animated banner is concept artwork, not an app recording.
+> **Current status (2026-11-23):** the native Compose app now runs bounded local text rules, URL/payment-payload inspection, bundled Latin/Devanagari OCR and QR decoding. Explicitly saved text checks use encrypted, device-local history. Authored examples remain labelled separately. There is no Internet permission, remote backend, account or NIM integration. A scam classifier and Llama inference are **not** connected. Physical-phone validation remains pending.
+
+[Offline implementation and security boundaries](docs/OFFLINE_IMPLEMENTATION.md)
+
+[Run the frontend and review its boundaries](docs/frontend/README.md) · [Asset and font credits](docs/frontend/ASSETS.md)
+
 
 ---
 
@@ -38,18 +47,18 @@ Built for **Bharat AI-SoC Challenge 2026–27 · PS3: On-device threat, phishing
 
 ## Features
 
-| Capability | Intended experience |
-| :--- | :--- |
-| **Share to Check** | Share supported text or a link from another Android app, or paste it manually. |
-| **Evidence cards** | Read the specific phrase, parsed URL detail or payment request behind a warning. |
-| **Scam Story** | Add related messages to a case and examine how the conversation progresses. |
-| **Local explanations** | Request a short explanation and next steps from on-device Llama. |
-| **Screenshot checks** | Extract text locally, correct OCR mistakes and analyse the confirmed content. |
-| **QR inspection** | Decode a supported URL or payment payload without automatically opening it. |
-| **Visible uncertainty** | See which checks ran and which identities or claims remain unverified. |
-| **Local case history** | Explicitly save, review, export or delete a case. |
+| Capability | Experience | Status |
+| :--- | :--- | :--- |
+| **Share to Check** | Share text or a link, or paste it manually. | Available |
+| **Evidence cards** | Inspect the original phrase or URL detail behind a local warning. | Available |
+| **Screenshot checks** | Read text with bundled OCR, correct it and check the confirmed text. | Available; Latin OCR tested in emulator |
+| **QR inspection** | Decode a URL or payment payload without automatically opening it. | Available |
+| **Visible uncertainty** | See which checks ran and what remains unverified. | Available |
+| **Saved checks** | Deliberately save text in encrypted local history; review or delete it. | Available; export planned |
+| **Scam Story** | Explore example timelines and related messages. | Authored examples; custom linking planned |
+| **Local AI explanations** | Explain evidence through Llama / ExecuTorch. | Planned; not connected |
 
-These capabilities are planned. Optional notification checking and network-analysis work are tracked separately in the roadmap.
+The website presents authored examples. The Android test build runs limited local checks; neither certifies that content is safe. Optional notifications and network analysis remain roadmap work.
 
 ---
 
@@ -133,12 +142,12 @@ The diagram describes the planned local pipeline. The reasoning model will not r
 | Inference runtime | ExecuTorch |
 | Fast detection | Kotlin rules + exported lightweight text classifier |
 | Classifier development | Python / scikit-learn, with Kotlin parity checks |
-| Screenshot extraction | Tesseract4Android |
+| Screenshot extraction | Bundled ML Kit Latin / Devanagari OCR, without network permission |
 | QR decoding | ZXing |
-| Saved cases | Room / SQLite |
-| Cloud AI / backend | None in the selected architecture |
+| Saved checks / demo cases | Keystore AES-GCM store / app-private preferences |
+| Remote backend / cloud AI | None; analysis runs inside the Android app |
 
-Exact dependency versions and model-export compatibility will be pinned after the first successful Android integration.
+Android foundation dependencies are pinned in the Gradle build files; see [setup and verified commands](docs/SETUP.md). Model-export compatibility remains unverified.
 
 <details>
 <summary><b>Model footprint and device measurements</b></summary>
@@ -171,13 +180,13 @@ Notification access does not provide complete chat history, and Android may reda
 
 ### What exists today
 
-The repository contains Kotlin package scaffolding, initial asset containers, evaluation fixture files and documentation folders. Source files and rule assets are placeholders. There is no runnable APK or validated detection model yet.
+The repository contains a single Android app module with a genuine Gradle wrapper and a connected Compose demo frontend. Local rules, URL inspection, OCR, QR decoding and encrypted check history are implemented. A scam classifier, Llama model integration and held-out detection evaluation remain unimplemented. Bundled OCR models do not classify scams. See the frontend guide for implemented routes, state behaviour and verification limits.
 
 ### First engineering milestone
 
-Generate the real Android build configuration and Gradle wrapper, then run a compatible Llama export through ExecuTorch on a physical Arm Android phone. Measure model loading, memory use and generation before integrating the rest of the product.
+The Android foundation builds with `./gradlew :app:assembleDebug :app:lintDebug`. The screen shows “Check before you trust.”, “Android foundation ready” and “Local AI model: not configured”. No phone was connected during verification, so installation and launch remain untested.
 
-Build and installation commands will be added once they have been verified against the repository. Empty wrapper files or untested setup commands are not substitutes for a working build.
+See [docs/SETUP.md](docs/SETUP.md) for prerequisites, actual validation results, storage caveats and the device procedure. A later milestone will validate Llama through ExecuTorch on a physical Arm Android phone before integrating product features.
 
 ### Repository layout
 
@@ -202,12 +211,12 @@ Model binaries, raw private datasets, signing keys and generated build outputs b
 
 - [x] Define the local-only Android architecture.
 - [x] Create the repository and external-resource scaffold.
-- [ ] Configure a buildable Android project and real Gradle wrapper.
+- [x] Configure a buildable Android project and real Gradle wrapper.
 - [ ] Validate Llama + ExecuTorch on a physical Android device.
-- [ ] Implement text/link checks and evidence-based results.
+- [x] Implement bounded local text/link checks and evidence-based results.
 - [ ] Add validated local explanations and failure handling.
 - [ ] Implement Scam Story and user-controlled saved cases.
-- [ ] Add screenshot correction and QR inspection.
+- [x] Add bundled screenshot OCR, editable correction and non-opening QR inspection (hardware verification pending).
 - [ ] Evaluate optional notification checking.
 - [ ] Build a clearly labelled recorded-network-analysis demonstrator.
 - [ ] Publish held-out evaluation, device benchmarks and an offline demo.

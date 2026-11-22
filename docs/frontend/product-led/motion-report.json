@@ -1,0 +1,20 @@
+[
+  {
+    "width": 390,
+    "maxBlur": 0.65,
+    "p95FrameMs": 16.799999999999955,
+    "samples": 89,
+    "settledSharp": true,
+    "readingTextSharp": true,
+    "runtimeReducedMotion": true
+  },
+  {
+    "width": 1440,
+    "maxBlur": 1.4,
+    "p95FrameMs": 16.799999999999955,
+    "samples": 89,
+    "settledSharp": true,
+    "readingTextSharp": true,
+    "runtimeReducedMotion": true
+  }
+]

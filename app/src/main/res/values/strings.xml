@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Nivoryn</string>
+    <string name="tagline">Check before you trust.</string>
+    <string name="foundation_ready">Android foundation ready</string>
+    <string name="model_not_configured">Local AI model: not configured</string>
 </resources>

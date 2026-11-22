@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Privacy · Nivoryn</title><link rel="stylesheet" href="style.css">
+<meta name="description" content="Read how Nivoryn handles local drafts, selected files and encrypted saved checks, plus website hosting and the offline Android app’s privacy boundaries.">
+<link rel="canonical" href="https://nivoryn.vercel.app/privacy.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="application-name" content="Nivoryn">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nivoryn">
+<meta property="og:title" content="Privacy · Nivoryn">
+<meta property="og:description" content="Read how Nivoryn handles local drafts, selected files and encrypted saved checks, plus website hosting and the offline Android app’s privacy boundaries.">
+<meta property="og:url" content="https://nivoryn.vercel.app/privacy.html">
+<meta property="og:image" content="https://nivoryn.vercel.app/assets/brand/social-card.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nivoryn — Pause before you trust. Offline checks for Android.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Privacy · Nivoryn">
+<meta name="twitter:description" content="Read how Nivoryn handles local drafts, selected files and encrypted saved checks, plus website hosting and the offline Android app’s privacy boundaries.">
+<meta name="twitter:image" content="https://nivoryn.vercel.app/assets/brand/social-card.png">
+<meta name="twitter:image:alt" content="Nivoryn — Pause before you trust. Offline checks for Android.">
+</head><body><a class="skip" href="#main">Skip to content</a><div class="legal-header"><header class="frame site-header"><a class="wordmark" href="index.html">nivoryn</a><nav aria-label="Main navigation"><a href="index.html#examples">Examples</a><a href="index.html#download">Download</a></nav></header></div><main class="frame legal" id="main"><h1>Privacy</h1><p>This product-led frontend preview does not run a web scanning service. No submitted content is accepted by this website.</p><h2>The website</h2><p>Fonts and product images are served locally. There are no analytics scripts, advertising cookies or third-party embeds. The website and APK downloads are served by Vercel, which receives ordinary connection/request metadata. Selecting a repository link contacts GitHub. No message or file content is submitted to this website.</p><h2>The Android preview</h2><p>Draft text and selected file references are kept in the application session and Android saved-instance state. They are not saved to the history database. Selected documents are opened through Android’s document picker; access is limited to selected files. The app may retain that file’s read permission to keep its preview available.</p><p>Example cases and preferences are saved in app-private SharedPreferences. You can delete cases from Settings. Android backup is disabled in this manifest. The preview requests no Internet permission and uploads no content. Local rules inspect confirmed text and URL structure. Bundled Latin/Devanagari OCR and QR decoding run on device; there is no remote analysis or model-download service. Explicitly saved text checks use AES-GCM encryption with an Android Keystore key, a 50-check limit and 30-day expiry on history reads. Delete saved checks in History or clear saved data in Settings. Original attachments are not saved to check history. PDF extraction uses a temporary app-cache copy removed on normal completion; a process crash can leave it until cache is cleared.</p><h2>What still needs confirmation</h2><p>Before connecting detection, model downloads, issuer verification, crash reporting or any telemetry, document each endpoint, user choice, retention period and effect of deleting history. This page is an implementation description, not a compliance certification.</p></main><div class="legal-footer"><footer class="frame site-footer"><a class="wordmark" href="index.html">nivoryn</a><nav aria-label="Footer"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="notices.html">Open source</a><a href="accessibility.html">Accessibility</a></nav></footer></div></body></html>

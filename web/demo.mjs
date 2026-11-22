@@ -1,0 +1,10 @@
+export const samples=[
+ {id:'kyc',title:'An urgent KYC message',text:'Your bank account will be blocked today. Update KYC now at https://bank-verify.example/kyc. Share your OTP to continue.',assessment:'High risk',quote:'Share your OTP',explanation:'A deadline, an unfamiliar link and a request for a secret appear together in this authored example.',next:'Do not share the OTP. Contact your bank through its official app or a known number.'},
+ {id:'task',title:'Pay to unlock earnings',text:'Part-time task offer. Join our group to start. Deposit ₹999 to release your earnings.',assessment:'High risk',quote:'Deposit ₹999 to release your earnings',explanation:'The request for a deposit makes payment a condition of receiving promised earnings.',next:'Pause the payment. Verify the employer independently.'},
+ {id:'link',title:'A familiar name, another host',text:'Display name: Your Bank. Actual URL: https://your-bank.support-check.example/login',assessment:'Suspicious',quote:'your-bank.support-check.example',explanation:'The displayed bank name does not establish ownership of the actual host.',next:'Open your bank’s known app instead of following the message link.'},
+ {id:'legitimate',title:'An ordinary reminder',text:'Reminder: the residents’ meeting is at 6 pm in the community hall. No payment is needed.',assessment:'No clear warning found',quote:'',explanation:'This authored example contains no strong warning evidence. It is not a guarantee of safety.',next:'Use the context you already know. Verify unexpected changes independently.'},
+ {id:'insufficient',title:'Too little to go on',text:'Hello',assessment:'Cannot assess',quote:'',explanation:'This example has too little context for a useful assessment.',next:'Ask for context without sharing private information.'}
+];
+export function resultFor(id,text){return samples.find(sample=>sample.id===id&&sample.text===text)??null;}
+export function addStory(items,id){return [...new Set([...items,id])];}
+export function removeStory(items,id){return items.filter(item=>item!==id);}

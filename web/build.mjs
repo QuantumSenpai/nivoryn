@@ -1,0 +1,10 @@
+import {mkdir,copyFile,cp,rm} from 'node:fs/promises';
+const root=new URL('./',import.meta.url), out=new URL('./dist/',root);
+await rm(out,{recursive:true,force:true});
+await mkdir(out,{recursive:true});
+for(const file of ['index.html','privacy.html','terms.html','accessibility.html','notices.html','style.css','app.js','product-examples.mjs','product-motion.mjs','release.json','favicon.svg','favicon.ico','favicon-48.png','apple-touch-icon.png','robots.txt','sitemap.xml']) await copyFile(new URL(file,root),new URL(file,out));
+await cp(new URL('assets/brand/',root),new URL('assets/brand/',out),{recursive:true});
+for(const dir of ['assets/fonts/','assets/product/']) await mkdir(new URL(dir,out),{recursive:true});
+for(const file of ['manrope.woff2','dmsans.woff2','manrope-OFL.txt','dmsans-OFL.txt']) await copyFile(new URL('assets/fonts/'+file,root),new URL('assets/fonts/'+file,out));
+for(const file of ['phone.webp','envelope.webp','url.webp','document.webp']) await copyFile(new URL('assets/product/'+file,root),new URL('assets/product/'+file,out));
+console.log('Built static product website. No analysis service or external runtime requests.');

@@ -1,0 +1,33 @@
+{
+  "host": {
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "android14Emulator": {
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Warning": 24
+  },
+  "osvRuntimePackages": 140,
+  "osvFindings": [],
+  "artifacts": [
+    {
+      "name": "Debug, signed",
+      "path": "app/build/outputs/apk/debug/app-debug.apk",
+      "bytes": 57552245,
+      "sha256": "dec08c535b1fc502370d8c8225fd95e2e514a425708156f1a12139b859d8a732"
+    },
+    {
+      "name": "Release, unsigned",
+      "path": "app/build/outputs/apk/release/app-release-unsigned.apk",
+      "bytes": 45458673,
+      "sha256": "f4c0ba008c51e3f9fb4dd63fc3452b1eff806cff5781c659f2226810be23b047"
+    }
+  ]
+}
