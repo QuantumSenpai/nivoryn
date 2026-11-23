@@ -22,7 +22,7 @@
       ]
     },
     {
-      "source": "/downloads/nivoryn-0.1.1-preview-f6a9780cd556.apk",
+      "source": "/downloads/nivoryn-0.1.2-arm64-6d33c1498024.apk",
       "headers": [
         {
           "key": "Content-Type",
@@ -30,7 +30,7 @@
         },
         {
           "key": "Content-Disposition",
-          "value": "attachment; filename=\"Nivoryn-0.1.1-Preview.apk\""
+          "value": "attachment; filename=\"Nivoryn-Guard-v0.1.2.apk\""
         },
         {
           "key": "Cache-Control",

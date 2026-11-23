@@ -1,8 +1,11 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "channel": "preview",
-  "filename": "nivoryn-0.1.1-preview-f6a9780cd556.apk",
-  "downloadName": "Nivoryn-0.1.1-Preview.apk",
-  "sha256": "f6a9780cd556a97c4e4027c1ebbfc95d800fd85b1b05b5665ed4f4891a12b49f",
-  "bytes": 87193512
+  "filename": "nivoryn-0.1.2-arm64-6d33c1498024.apk",
+  "downloadName": "Nivoryn-Guard-v0.1.2.apk",
+  "sha256": "6d33c1498024ea0115a608dd3b341ba1051e7c7f5a1e7a8d2a7b8404ee5ad2d3",
+  "bytes": 25552762,
+  "versionCode": 3,
+  "buildVariant": "preview",
+  "abi": "arm64-v8a"
 }
