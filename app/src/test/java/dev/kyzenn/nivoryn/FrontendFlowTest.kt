@@ -33,9 +33,9 @@ class FrontendFlowTest {
         compose.onNodeWithText("The urgent KYC message").performScrollTo().performClick()
         compose.onNode(hasSetTextAction()).performTextReplacement("My own private message")
         compose.onNodeWithText("Run local check").performScrollTo().performClick()
-        compose.waitUntil(5000) { compose.onAllNodesWithText("Local check · Rule-based, not an AI verdict").fetchSemanticsNodes().size == 1 }
+        compose.waitUntil(5000) { compose.onAllNodesWithText("Local check · Evidence-led; signals are not a verdict").fetchSemanticsNodes().size == 1 }
         compose.onNodeWithText("!  No clear warning found").assertExists()
-        compose.onNodeWithText("Local check · Rule-based, not an AI verdict").assertExists()
+        compose.onNodeWithText("Local check · Evidence-led; signals are not a verdict").assertExists()
         compose.onNodeWithText("Example result · Authored demo data").assertDoesNotExist()
         compose.onNodeWithText("!  High risk").assertDoesNotExist()
         compose.onNodeWithText("Save example to a case").assertDoesNotExist()

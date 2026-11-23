@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -33,11 +34,12 @@ import dev.kyzenn.nivoryn.ui.components.*
     HomeForm(draft,hi,onText,onReview,onImport,onSamples,onClear)
 }
 @Composable private fun HomeForm(draft:CheckDraft,hi:Boolean,onText:(String)->Unit,onReview:()->Unit,onImport:(String)->Unit,onSamples:()->Unit,onClear:()->Unit) {
-    val clipboard=androidx.compose.ui.platform.LocalClipboardManager.current
+    val clipboard=androidx.compose.ui.platform.LocalClipboard.current
+    val pasteScope = rememberCoroutineScope()
     var pasteNotice by remember { mutableStateOf("") }
     Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
         FormField(draft.text,if(hi)"संदेश या लिंक"else"Message or link",onText,multiline=true)
-        TextAction(if(hi)"क्लिपबोर्ड से पेस्ट करें"else"Paste from clipboard",{ val text=clipboard.getText()?.text; if(text.isNullOrEmpty()) pasteNotice=if(hi)"क्लिपबोर्ड में पाठ नहीं है।"else"There is no text on the clipboard." else { onText(text);pasteNotice="" } })
+        TextAction(if(hi)"क्लिपबोर्ड से पेस्ट करें"else"Paste from clipboard",{ pasteScope.launch { val text=clipboard.getClipEntry()?.clipData?.getItemAt(0)?.text?.toString(); if(text.isNullOrEmpty()) pasteNotice=if(hi)"क्लिपबोर्ड में पाठ नहीं है।"else"There is no text on the clipboard." else { onText(text.take(12000));pasteNotice="" } } })
         if(pasteNotice.isNotEmpty()) Text(pasteNotice,style=MaterialTheme.typography.bodyMedium)
         if(draft.attachmentUri.isNotEmpty()) Notice("${draft.filename}\n${if(hi)"समीक्षा के लिए चुनी फ़ाइल"else"Selected for review"}")
         ActionButton(if(hi)"इनपुट की समीक्षा करें"else"Review input",onReview,Modifier.fillMaxWidth())

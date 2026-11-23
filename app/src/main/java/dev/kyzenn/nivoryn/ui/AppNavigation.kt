@@ -2,6 +2,7 @@ package dev.kyzenn.nivoryn.ui
 
 import android.content.Intent
 import android.provider.Settings
+import androidx.core.net.toUri
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,10 +31,10 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 private val DraftSaver = Saver<CheckDraft, String>(
-    save = { d -> JSONObject().put("text", d.text).put("sample", d.sampleId).put("uri", d.attachmentUri).put("name", d.filename).put("mime", d.mime).put("bytes", d.bytes).put("kind", d.kind).toString() },
+    save = { d -> JSONObject().put("text", d.text).put("sample", d.sampleId).put("uri", d.attachmentUri).put("name", d.filename).put("mime", d.mime).put("bytes", d.bytes).put("kind", d.kind).put("qr", d.qrPayload).put("source", d.extractionSource).toString() },
     restore = {
         val j = JSONObject(it)
-        CheckDraft(j.getString("text"), j.getString("sample"), j.getString("uri"), j.getString("name"), j.getString("mime"), j.getLong("bytes"), j.getString("kind"))
+        CheckDraft(j.getString("text"), j.getString("sample"), j.getString("uri"), j.getString("name"), j.getString("mime"), j.getLong("bytes"), j.getString("kind"), j.optString("qr"), j.optString("source"))
     }
 )
 
@@ -71,7 +72,8 @@ fun NivorynApp(launchIntent: Intent? = null) {
     val context = LocalContext.current
     val store = remember { FrontendStore(context) }
     val repo = remember { FrontendDemoRepository() }
-    val engine = remember { AnalyseInput() }
+    val requestGate = remember { AnalysisRequestGate() }
+    var requestToken by remember { mutableLongStateOf(0L) }
     val historyStore = remember { CheckHistoryStore(context) }
     var savedChecks by remember { mutableStateOf(emptyList<SavedCheck>()) }
     var historyError by remember { mutableStateOf(false) }
@@ -79,6 +81,21 @@ fun NivorynApp(launchIntent: Intent? = null) {
     LaunchedEffect(Unit) {
         runCatching { withContext(Dispatchers.IO) { historyStore.read() } }
             .onSuccess { savedChecks = it }.onFailure { historyError = true }
+    }
+    val exportScope = rememberCoroutineScope()
+    var exportStatus by remember { mutableStateOf("") }
+    var savedResultId by rememberSaveable { mutableStateOf("") }
+    var exportText by remember { mutableStateOf("") }
+    val exportPicker = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        val payload = exportText; exportText = ""
+        if (uri != null && payload.isNotBlank()) exportScope.launch {
+            exportStatus = try {
+                withContext(Dispatchers.IO) { context.contentResolver.openOutputStream(uri, "wt")?.use { it.write(payload.toByteArray()) } ?: error("No output stream") }
+                "Result exported. The selected provider controls the exported copy."
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+            catch (_: Exception) { "Export failed. A provider may have created an incomplete file; your local history is unchanged." }
+        }
+        else if (uri != null) exportStatus = "Export interrupted by app recreation. No content was written; the selected provider may have created an empty file. Retry the export."
     }
     val pageStates = rememberSaveableStateHolder()
     val shared = remember { ShareInputParser.text(launchIntent) }
@@ -108,6 +125,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
 
     fun go(next: String) {
         if (route != next) {
+            if (next == "processing") requestToken = requestGate.begin() else if (route == "processing") requestGate.invalidate()
             backwards = false
             stack += "/$next"
             error = ""
@@ -115,6 +133,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
     }
 
     fun back() {
+        requestGate.invalidate()
         backwards = true
         if (stack.contains('/')) stack = stack.substringBeforeLast('/') else stack = "home"
         if (stack.substringAfterLast('/') == "home" && draft.sampleId.isNotEmpty()) draft = customDraft
@@ -122,6 +141,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
     }
 
     fun root(next: String) {
+        requestGate.invalidate()
         backwards = false
         stack = next
         if (next in listOf("home", "check") && draft.sampleId.isNotEmpty()) draft = customDraft
@@ -153,7 +173,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
                 }
                 require(valid) { "This file format is not supported for $importKind." }
                 runCatching { context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
-                if (draft.attachmentUri.isNotEmpty()) runCatching { context.contentResolver.releasePersistableUriPermission(android.net.Uri.parse(draft.attachmentUri), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                if (draft.attachmentUri.isNotEmpty()) runCatching { context.contentResolver.releasePersistableUriPermission(draft.attachmentUri.toUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
                 draft = attachment; customDraft = draft; go("review")
               }.onFailure { error = it.message ?: "The file could not be opened. Choose another file." }
             }
@@ -161,6 +181,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
     }
 
     fun pick(kind: String) {
+        if (kind == "APK") { go("apk"); return }
         importKind = kind
         runCatching {
             picker.launch(when (kind) {
@@ -210,6 +231,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
 
                         AnimatedContent(
                             targetState = stack,
+                            contentKey = { value -> if (value.substringAfterLast('/') in listOf("processing", "result")) "analysis-result" else value },
                             modifier = Modifier.weight(1f),
                             transitionSpec = {
                                 val enter = if (reduce) 0 else Motion.Enter
@@ -241,20 +263,25 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                     ) {
                                         when (page) {
                                             "welcome" -> WelcomeScreen(hi, ::start, { start(); go("samples") })
-                                            "home", "check" -> HomeScreen(
+                                            "home", "check" -> { HomeScreen(
                                                 draft, hi,
                                                 { draft = draft.copy(text = it.take(12000), sampleId = ""); customDraft = draft },
                                                 { if (draft.canReview) go("review") else error = tr("Add a message or choose a file first.", "पहले संदेश या फ़ाइल जोड़ें।") },
                                                 ::pick,
                                                 { go("samples") },
                                                 {
-                                                    if (draft.attachmentUri.isNotEmpty()) runCatching { context.contentResolver.releasePersistableUriPermission(android.net.Uri.parse(draft.attachmentUri), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                                                    if (draft.attachmentUri.isNotEmpty()) runCatching { context.contentResolver.releasePersistableUriPermission(draft.attachmentUri.toUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
                                                     draft = CheckDraft(); customDraft = CheckDraft()
                                                     notify(tr("Draft cleared", "ड्राफ़्ट हटाया गया"))
                                                 },
                                                 onKind = { kind -> draft = draft.copy(kind = kind, sampleId = ""); customDraft = draft },
                                                 isCheck = page == "check"
                                             )
+                                              if (page == "home") EngineHomeSection(savedChecks, { check ->
+                                                  draft = CheckDraft(text = check.text, kind = check.kind, qrPayload = check.qrPayload, extractionSource = check.extractionSource); customDraft = draft
+                                                  if (check.result != null) { savedResultId = check.id; analysed = draft to check.result; go("result") } else go("review")
+                                              }, ::go)
+                                            }
                                             "samples" -> SampleList(repo.samples, hi, ::choose)
                                             "review" -> {
                                               val reviewedUri = draft.attachmentUri
@@ -266,36 +293,48 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                                     }
                                                 },
                                                 {
-                                                    runCatching { context.contentResolver.releasePersistableUriPermission(android.net.Uri.parse(draft.attachmentUri), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
-                                                    draft = draft.copy(attachmentUri = "", filename = "", mime = "", bytes = -1)
+                                                    runCatching { context.contentResolver.releasePersistableUriPermission(draft.attachmentUri.toUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                                                    draft = draft.copy(attachmentUri = "", filename = "", mime = "", bytes = -1, qrPayload = "", extractionSource = "")
                                                     customDraft = draft
                                                     notify(tr("Attachment removed", "फ़ाइल हटा दी गई"))
                                                 },
                                                 { pick(draft.kind) },
                                                 { go("processing") },
-                                                { go("samples") }
+                                                { go("samples") },
+                                                onExtracted = { extracted ->
+                                                    if (stack.substringAfterLast('/') == "review" && draft.attachmentUri == reviewedUri) {
+                                                        draft = draft.copy(text = extracted.text.take(12000), qrPayload = extracted.qr.take(12000), extractionSource = extracted.source, sampleId = "")
+                                                        customDraft = draft
+                                                    }
+                                                }
                                             )
                                             }
                                             "processing" -> {
                                               val processingDraft = draft
-                                              LocalProcessingScreen(processingDraft, hi, current == stack, { result ->
-                                                if (stack.substringAfterLast('/') == "processing" && draft == processingDraft) {
+                                              LocalProcessingScreen(processingDraft, hi, current == stack, { result, token ->
+                                                if (requestGate.accepts(token) && stack.substringAfterLast('/') == "processing" && draft == processingDraft) {
+                                                    savedResultId = ""
                                                     analysed = processingDraft to result
                                                     stack = stack.substringBeforeLast('/') + "/result"
                                                 }
-                                              }, ::back)
+                                              }, ::back, requestToken)
                                             }
                                             "result" -> {
-                                              val restored by produceState<DemoResult?>(repo.resultFor(draft) ?: analysed?.takeIf { it.first == draft }?.second, draft) {
-                                                if (value == null) value = withContext(Dispatchers.Default) { engine.analyse(draft) }
+                                              val restored by produceState<DemoResult?>(repo.resultFor(draft) ?: analysed?.takeIf { it.first == draft }?.second ?: savedChecks.find { it.id == savedResultId }?.result, draft, savedChecks, savedResultId) {
+                                                if (savedResultId.isNotEmpty()) value = savedChecks.find { it.id == savedResultId }?.result
+                                                else if (value == null) value = (context.applicationContext as dev.kyzenn.nivoryn.NivorynApplication).llama.explain(withContext(Dispatchers.IO) { AnalyseInput(IndicatorStore(context).load(), (context.applicationContext as dev.kyzenn.nivoryn.NivorynApplication).spam).analyse(draft) })
                                               }
-                                              if (restored == null) Text(tr("Restoring local result…", "स्थानीय परिणाम खुल रहा है…"), Modifier.semantics { liveRegion = LiveRegionMode.Polite })
+                                              if (restored == null && savedResultId.isNotEmpty()) {
+                                                  Notice("The saved assessment is loading, expired or unavailable. No new result has been substituted.")
+                                                  TextAction("Review input and run a new check", { savedResultId = ""; go("review") })
+                                              }
+                                              else if (restored == null) Text(tr("Restoring local result…", "स्थानीय परिणाम खुल रहा है…"), Modifier.semantics { liveRegion = LiveRegionMode.Polite })
                                               else ResultScreen(
                                                 restored, hi,
                                                 {
                                                     if (restored?.origin == ResultOrigin.AUTHORED) dialog = "save"
                                                     else scope.launch {
-                                                        runCatching { withContext(Dispatchers.IO) { historyStore.save(draft.text, draft.kind) } }
+                                                        runCatching { withContext(Dispatchers.IO) { historyStore.save(draft.text, draft.kind, result = restored, qrPayload = draft.qrPayload, extractionSource = draft.extractionSource) } }
                                                             .onSuccess { savedChecks = it; historyError = false; notify(tr("Check saved on this device", "जाँच इस फ़ोन पर सहेजी गई")) }
                                                             .onFailure { notify(tr("Could not save securely. Existing history was kept.", "जाँच सुरक्षित सहेजी नहीं जा सकी।")) }
                                                     }
@@ -305,10 +344,21 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                                 draft,
                                                 { draft = CheckDraft(); customDraft = CheckDraft(); root("check"); notify(tr("Input deleted", "इनपुट हटा दिया गया")) }
                                             )
+                                              if (restored?.origin == ResultOrigin.LOCAL) {
+                                                  Text("Export includes your original text and evidence. Choose a private destination.", style = MaterialTheme.typography.bodySmall)
+                                                  if (exportStatus.isNotEmpty()) Text(exportStatus)
+                                                  TextAction("Export this result", {
+                                                      restored?.let { result ->
+                                                          exportText = ResultCodec.export(SavedCheck("export", draft.text, draft.kind, System.currentTimeMillis(), result, draft.qrPayload, draft.extractionSource))
+                                                          exportPicker.launch("nivoryn-check.json")
+                                                      }
+                                                  })
+                                              }
                                             }
                                             "cases" -> {
                                               SavedChecksSection(savedChecks, historyError, hi, { check ->
-                                                draft = CheckDraft(text = check.text, kind = check.kind); customDraft = draft; go("review")
+                                                draft = CheckDraft(text = check.text, kind = check.kind, qrPayload = check.qrPayload, extractionSource = check.extractionSource); customDraft = draft
+                                                  if (check.result != null) { savedResultId = check.id; analysed = draft to check.result; go("result") } else go("review")
                                               }, { id -> scope.launch {
                                                 runCatching { withContext(Dispatchers.IO) { historyStore.remove(id) } }
                                                     .onSuccess { savedChecks = it }.onFailure { notify("Could not update saved checks.") }
@@ -343,7 +393,11 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                                 { dialog = "clear" },
                                                 { go("welcome") }
                                             )
-                                            "privacy", "accessibility", "notices", "model" -> InformationScreen(page, hi)
+                                            "rules" -> RulesScreen()
+                                            "network" -> InspectionScreen(true)
+                                            "apk" -> InspectionScreen(false)
+                                            "model" -> ModelSetupScreen()
+                                            "privacy", "accessibility", "notices" -> InformationScreen(page, hi)
                                         }
                                         if (error.isNotEmpty()) Text(error, color = MaterialTheme.colorScheme.error, modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
                                     }

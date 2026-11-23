@@ -20,7 +20,7 @@ class OfflineFlowTest {
         compose.onNodeWithText("Run local check").performScrollTo().performClick()
         compose.waitUntil(5000) { compose.onAllNodesWithText("!  High risk").fetchSemanticsNodes().size == 1 }
         compose.onNodeWithText("!  High risk").assertExists()
-        compose.onNodeWithText("Local check · Rule-based, not an AI verdict").assertExists()
+        compose.onNodeWithText("Local check · Evidence-led; signals are not a verdict").assertExists()
         compose.onNodeWithText("View evidence").performScrollTo().performClick()
         compose.onNodeWithText("A secret is requested").assertExists()
         compose.onNodeWithText("“send your OTP”", substring=true).assertExists()
@@ -49,7 +49,7 @@ class OfflineFlowTest {
         compose.mainClock.advanceTimeBy(500)
         compose.waitForIdle()
         compose.onNodeWithText("Review your input").assertExists()
-        compose.onNodeWithText("Local check · Rule-based, not an AI verdict").assertDoesNotExist()
+        compose.onNodeWithText("Local check · Evidence-led; signals are not a verdict").assertDoesNotExist()
     }
     @Test fun dashboardLinkSelectionOwnsTheActualInputMode() {
         compose.onNodeWithText("Start checking").performScrollTo().performClick()

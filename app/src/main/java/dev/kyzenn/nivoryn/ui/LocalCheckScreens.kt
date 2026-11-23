@@ -12,13 +12,15 @@ import dev.kyzenn.nivoryn.ui.components.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@Composable fun LocalProcessingScreen(draft: CheckDraft, hi: Boolean, active: Boolean, onComplete: (DemoResult) -> Unit, onCancel: () -> Unit) {
+@Composable fun LocalProcessingScreen(draft: CheckDraft, hi: Boolean, active: Boolean, onComplete: (DemoResult, Long) -> Unit, onCancel: () -> Unit, requestToken: Long) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val application = context.applicationContext as dev.kyzenn.nivoryn.NivorynApplication
     val complete by rememberUpdatedState(onComplete)
-    LaunchedEffect(draft, active) {
+    LaunchedEffect(draft, active, requestToken) {
         if (active) {
             val result = FrontendDemoRepository().resultFor(draft)
-                ?: withContext(Dispatchers.Default) { AnalyseInput().analyse(draft) }
-            complete(result)
+                ?: application.llama.explain(withContext(Dispatchers.Default) { AnalyseInput(IndicatorStore(context).load(), application.spam).analyse(draft) })
+            complete(result, requestToken)
         }
     }
     PageTitle(if (hi) "फ़ोन पर जाँच" else "Checking on this device")
@@ -33,7 +35,7 @@ import kotlinx.coroutines.withContext
     if (checks.isEmpty() && !unavailable) Text(if (hi) "अभी कोई जाँच सहेजी नहीं गई।" else "Nothing saved yet. Save a result when you want to keep its original text.")
     checks.forEach { check ->
         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            TextAction(check.text.take(85), { onOpen(check) })
+            TextAction(check.preview.take(85), { onOpen(check) })
             Text("${check.kind} · ${java.text.DateFormat.getDateInstance().format(java.util.Date(check.created))}", style = MaterialTheme.typography.bodySmall)
             TextAction(if (hi) "सहेजी हुई जाँच हटाएँ" else "Delete saved check", { onDelete(check.id) })
             HorizontalDivider()

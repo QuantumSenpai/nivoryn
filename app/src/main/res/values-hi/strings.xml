@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Nivoryn</string>
-    <string name="tagline">भरोसा करने से पहले जाँचें।</string>
-    <string name="foundation_ready">Android का आधार तैयार है</string>
-    <string name="model_not_configured">स्थानीय AI मॉडल: कॉन्फ़िगर नहीं किया गया</string>
 </resources>

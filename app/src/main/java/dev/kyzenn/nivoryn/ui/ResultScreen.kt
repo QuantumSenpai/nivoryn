@@ -55,10 +55,12 @@ fun ResultScreen(
             .padding(bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        if (result.destinations.isNotEmpty()) Text("Destination host: " + result.destinations.joinToString(", "))
+        Text(result.explanationMode, style = MaterialTheme.typography.labelMedium)
         Notice(if (result.origin == ResultOrigin.AUTHORED) {
             if (hi) "उदाहरण परिणाम · लिखे हुए डेमो डेटा" else "Example result · Authored demo data"
-        } else if (hi) "स्थानीय जाँच · नियम आधारित, AI का फैसला नहीं" else "Local check · Rule-based, not an AI verdict")
-        Text(if (result.origin == ResultOrigin.AUTHORED) "Mode: authored example. No detection engine ran." else "Mode: local rules v1. No network or AI inference.", style = MaterialTheme.typography.bodySmall)
+        } else if (hi) "स्थानीय जाँच · नियम आधारित, AI का फैसला नहीं" else "Local check · Evidence-led; signals are not a verdict")
+        Text(if (result.origin == ResultOrigin.AUTHORED) "Mode: authored example. No detection engine ran." else "Mode: ${result.explanationMode}. Detection uses local evidence; no connected verification.", style = MaterialTheme.typography.bodySmall)
 
         CrossFadeText(
             text = "!  $label",
@@ -70,7 +72,7 @@ fun ResultScreen(
         )
 
         CrossFadeText(
-            text = if (hi) result.explanationHi else result.explanation,
+            text = if (hi && !result.explanationMode.startsWith("Llama generated")) result.explanationHi else result.explanation,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -88,10 +90,7 @@ fun ResultScreen(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 SectionTitle(if (hi) "समर्थन में साक्ष्य" else "The supporting evidence")
-                EvidenceList(
-                    evidence = result.evidence,
-                    draftText = draft?.text ?: ""
-                )
+                EvidenceList(evidence = result.evidence)
             }
         }
 
@@ -135,6 +134,7 @@ fun ResultScreen(
 
         if (draft != null && draft.text.isNotEmpty()) TextAction(
             if (showInput) (if (hi) "कम दिखाएँ" else "Show less input") else (if (hi) "पूरा इनपुट देखें" else "Show full input"), { showInput = !showInput })
+        if (draft?.qrPayload?.isNotBlank() == true) Disclosure("Decoded QR input", "${draft.extractionSource}\n\n${draft.qrPayload}", initiallyOpen = false)
         TextAction(if (showCoverage) (if (hi) "जाँच विवरण छिपाएँ" else "Hide check details") else (if (hi) "जाँच विवरण देखें" else "View check details"), { showCoverage = !showCoverage })
         AnimatedVisibility(showCoverage, enter = fadeIn(tween(if (reduced) 0 else 180)), exit = fadeOut(tween(if (reduced) 0 else 120))) {
 
@@ -157,7 +157,7 @@ fun ResultScreen(
                 label = if (hi) "डेमो केस में सहेजें" else if (result.origin == ResultOrigin.AUTHORED) "Save example to a case" else "Save check locally",
                 onClick = onSave,
                 modifier = Modifier.fillMaxWidth(),
-                enabled = result.origin == ResultOrigin.AUTHORED || (draft?.text?.isNotBlank() == true && draft.kind !in listOf("Audio", "APK"))
+                enabled = result.origin == ResultOrigin.AUTHORED || (draft != null && (draft.text.isNotBlank() || draft.qrPayload.isNotBlank()) && draft.kind !in listOf("Audio", "APK"))
             )
             ActionButton(
                 label = if (hi) "फिर जाँचें" else "Check again",
@@ -190,6 +190,6 @@ private fun ResultEmptyState(hi: Boolean, onEdit: () -> Unit, onSamples: () -> U
 
 /** Reading text stays stable; the page transition owns entry and exit. */
 @Composable
-fun CrossFadeText(text: String, style: androidx.compose.ui.text.TextStyle, color: Color = MaterialTheme.colorScheme.onSurface, modifier: Modifier = Modifier) {
+fun CrossFadeText(text: String, style: androidx.compose.ui.text.TextStyle, modifier: Modifier = Modifier, color: Color = MaterialTheme.colorScheme.onSurface) {
     Text(text, style = style, color = color, modifier = modifier)
 }

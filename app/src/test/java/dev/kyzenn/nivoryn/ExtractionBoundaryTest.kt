@@ -41,6 +41,15 @@ class ExtractionBoundaryTest {
             CheckDraft(attachmentUri="file:///etc/hosts",kind="Screenshot"),
             CheckDraft(attachmentUri="content://test.synthetic/apk",kind="APK"))) {
             assertThrows(IllegalArgumentException::class.java) { runBlocking { LocalExtraction.read(context, draft, false) } }
+            assertThrows(IllegalArgumentException::class.java) { runBlocking { LocalExtraction.preview(context, draft) } }
+        }
+    }
+    @Test fun automaticPreviewEnforcesTheSameActualByteLimit() {
+        val context:Context=ApplicationProvider.getApplicationContext()
+        val uri=Uri.parse("content://test.synthetic/oversized-preview")
+        shadowOf(context.contentResolver).registerInputStream(uri, ByteArray(20*1024*1024+1).inputStream())
+        assertThrows(IllegalArgumentException::class.java) {
+            runBlocking { LocalExtraction.preview(context,CheckDraft(kind="Screenshot",attachmentUri=uri.toString(),mime="image/png",bytes=-1)) }
         }
     }
 }

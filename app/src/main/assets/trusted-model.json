@@ -1,0 +1,17 @@
+{
+  "family": "Llama",
+  "runtime": "executorch-1.2.0",
+  "version": "llama32-1b-spinquant-et-911221e0f49d",
+  "modelSha256": "8715cdba9e91f6bede00cc5f2d6b12397b95225da5630c4972a8da03001cda3b",
+  "tokenizerSha256": "82e9d31979e92ab929cd544440f129d9ecd797b69e327f80f17e1c50d5551b55",
+  "modelBytes": 1135951488,
+  "tokenizerBytes": 2183982,
+  "source": "executorch-community/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8-ET",
+  "revision": "911221e0f49d3354cbd4697a9c09feee25cadec7",
+  "upstreamReference": "https://github.com/pytorch/executorch/blob/v1.2.0/examples/models/llama/README.md",
+  "context": 2048,
+  "applicationSequenceLimit": 1024,
+  "quantisation": "SpinQuant INT4 group32 / dynamic INT8 / EO8",
+  "licence": "Llama 3.2 Community Licence",
+  "provenance": "Published conversion linked by upstream ExecuTorch; not a local export or Meta-hosted checkpoint"
+}

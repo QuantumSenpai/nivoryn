@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
+    implementation("org.pytorch:executorch-android:1.2.0")
+    implementation("androidx.exifinterface:exifinterface:1.4.2")
     implementation("com.google.zxing:core:3.5.4")
     // Bundled OCR models: first use works without Play Services downloads.
     implementation("com.google.mlkit:text-recognition:16.0.1")
@@ -69,4 +71,21 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+}
+
+// Explicit opt-in evaluator: external labelled data is never required by the unit-test suite.
+tasks.register<JavaExec>("evaluateSmsCorpus") {
+    dependsOn("compileDebugUnitTestKotlin")
+    mainClass.set("dev.kyzenn.nivoryn.SmsCorpusEvaluation")
+    classpath = files(layout.buildDirectory.dir("tmp/kotlin-classes/debugUnitTest"), layout.buildDirectory.dir("tmp/kotlin-classes/debug")) + configurations.getByName("debugUnitTestRuntimeClasspath")
+    doFirst {
+        args(providers.gradleProperty("smsCorpus").get(), providers.gradleProperty("evaluationOutput").get())
+    }
+}
+
+tasks.register<JavaExec>("writeAdvisoryPromptFixture") {
+    dependsOn("compileDebugUnitTestKotlin")
+    mainClass.set("dev.kyzenn.nivoryn.AdvisoryPromptFixture")
+    classpath = files(layout.buildDirectory.dir("tmp/kotlin-classes/debugUnitTest"), layout.buildDirectory.dir("tmp/kotlin-classes/debug")) + configurations.getByName("debugUnitTestRuntimeClasspath")
+    doFirst { args(providers.gradleProperty("promptOutput").get()) }
 }

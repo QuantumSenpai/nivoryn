@@ -21,6 +21,15 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class InputUiTest {
     @get:Rule val compose = createComposeRule()
+    @Test fun unsupportedAudioDoesNotStartAnAutomaticPlayer() {
+        compose.setContent { NivorynTheme {
+            Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+                dev.kyzenn.nivoryn.ui.ReviewScreen(CheckDraft(kind="Audio",attachmentUri="content://unsupported/audio",mime="audio/wav"),false,{},{},{},{},{})
+            }
+        } }
+        compose.onNodeWithText("Audio playback and transcription are unavailable. Paste a transcript using Text to check a message.").assertExists()
+        compose.onNodeWithText("Play audio").assertDoesNotExist()
+    }
     @Test fun oneChooserKeepsSelectionImportsAndReviewConnected() {
         var imported = ""
         var reviewed = false

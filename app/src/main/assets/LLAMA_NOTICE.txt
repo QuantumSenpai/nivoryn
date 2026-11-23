@@ -1,0 +1,8 @@
+Built with Llama
+
+Llama 3.2 is licensed under the Llama 3.2 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.
+
+Model: Llama 3.2 1B Instruct SpinQuant INT4 EO8.
+Published ExecuTorch conversion: executorch-community/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8-ET, revision 911221e0f49d3354cbd4697a9c09feee25cadec7, linked by the official ExecuTorch v1.2.0 Llama README.
+Weights are installed separately. The application bundles a pinned compatibility catalogue, not model weights.
+The Llama 3.2 Community License is included as LLAMA32_LICENSE.txt. The acceptable use policy is https://www.llama.com/llama3_2/use-policy/.

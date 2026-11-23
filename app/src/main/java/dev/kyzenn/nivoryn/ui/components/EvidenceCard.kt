@@ -7,14 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.kyzenn.nivoryn.domain.Evidence
 
-@Composable fun EvidenceCard(evidence: Evidence, draftText: String = "", modifier: Modifier = Modifier, initiallyOpen: Boolean = false) {
+@Composable fun EvidenceCard(evidence: Evidence, modifier: Modifier = Modifier, initiallyOpen: Boolean = false) {
     Column(modifier.fillMaxWidth()) {
-        Disclosure(evidence.title, "“${evidence.quote}”\n\n${evidence.explanation}", initiallyOpen)
+        Disclosure(evidence.title, "Source: ${evidence.source}\n\n“${evidence.quote}”\n\n${evidence.explanation}", initiallyOpen)
     }
 }
-@Composable fun EvidenceList(evidence: List<Evidence>, draftText: String = "", modifier: Modifier = Modifier, maxInitiallyOpen: Int = 1) {
+@Composable fun EvidenceList(evidence: List<Evidence>, modifier: Modifier = Modifier, maxInitiallyOpen: Int = 1) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        evidence.forEachIndexed { i, item -> EvidenceCard(item, draftText, initiallyOpen = i < maxInitiallyOpen) }
+        evidence.forEachIndexed { i, item -> EvidenceCard(item, initiallyOpen = i < maxInitiallyOpen) }
         if (evidence.isEmpty()) Notice("No warning evidence from the available checks. This does not establish safety.")
     }
 }
