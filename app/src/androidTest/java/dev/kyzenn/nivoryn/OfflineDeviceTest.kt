@@ -21,6 +21,21 @@ import javax.crypto.KeyGenerator
 class OfflineDeviceTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @Before fun installRequiredResourcesIndependentlyOfTestClassOrder() {
+        if (androidx.test.platform.app.InstrumentationRegistry.getArguments().getString("llamaRequired") != "true") return
+        val context = androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
+        val store = dev.kyzenn.nivoryn.data.ModelStore(context)
+        if (store.installed() == null) kotlinx.coroutines.runBlocking {
+            (context.applicationContext as NivorynApplication).llama.manageResources {
+                val source = java.io.File(context.filesDir, "runtime-smoke")
+                val importer = dev.kyzenn.nivoryn.reasoning.ModelImporter(store)
+                importer.import("model", java.io.File(source, "model.pte").inputStream())
+                importer.import("tokenizer", java.io.File(source, "tokenizer.bin").inputStream())
+            }
+        }
+        Assert.assertNotNull("Stage the documented real pair for resource-required UI tests", store.installed())
+    }
+
     @Test fun localEngineFlowWorksInTheActualAndroidProcess() {
         val arguments = androidx.test.platform.app.InstrumentationRegistry.getArguments()
         val requireLlama = arguments.getString("llamaRequired") == "true"

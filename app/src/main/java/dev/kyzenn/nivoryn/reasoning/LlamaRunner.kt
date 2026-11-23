@@ -64,7 +64,7 @@ class LlamaRunner(private val store: ModelStore) : AutoCloseable {
             }
         } catch (e: CancellationException) { throw e
         } catch (_: Exception) { return fallback(result, "Local inference failed")
-        } catch (_: LinkageError) { return fallback(result, "Runtime ABI unavailable")
+        } catch (_: LinkageError) { return fallback(result, "Native runtime unavailable")
         } finally { mutex.unlock() }
     }
     suspend fun <T> manageResources(action: () -> T): T = mutex.withLock {

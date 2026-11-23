@@ -31,7 +31,7 @@ import dev.kyzenn.nivoryn.ui.components.*
     TextAction(if(hi)"परिचय फिर देखें"else"Revisit the introduction",onIntro)
     SectionTitle(if(hi)"ऐप के बारे में"else"About this app")
     listOf("model" to if(hi)"मॉडल की उपलब्धता"else"Model and checking availability","privacy" to if(hi)"गोपनीयता"else"Privacy","accessibility" to if(hi)"सुलभता"else"Accessibility","notices" to if(hi)"ओपन-सोर्स और नोटिस"else"About and open-source notices").forEach { (route,label)->TextAction(label,{onPage(route)}) }
-    Text("Nivoryn · 0.1.1 · Local rules v2",style=MaterialTheme.typography.bodySmall)
+    Text("Nivoryn · ${dev.kyzenn.nivoryn.BuildConfig.VERSION_NAME} · Local rules v2",style=MaterialTheme.typography.bodySmall)
 }
 @Composable fun InformationScreen(page:String,hi:Boolean) {
     val content=when(page) {

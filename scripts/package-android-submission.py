@@ -35,7 +35,7 @@ for directory in allowed:
         if path.suffix in ['.pte', '.pth', '.safetensors', '.gguf', '.keystore', '.jks', '.key', '.pem', '.p12', '.pfx'] or path.name.startswith('.env') or path.stat().st_size > 20_000_000:
             raise SystemExit('Unexpected heavy/secret file in source snapshot: ' + str(path.relative_to(root)))
         files.append(path)
-for name in ['build.gradle.kts', 'settings.gradle.kts', 'gradle.properties', 'gradlew', 'gradlew.bat', 'app/build.gradle.kts', 'app/gradle.lockfile', 'LICENSE', 'README.md', 'NOTICE.md', 'THIRD_PARTY_NOTICES.md']:
+for name in ['build.gradle.kts', 'settings.gradle.kts', 'gradle.properties', 'gradlew', 'gradlew.bat', 'app/build.gradle.kts', 'app/proguard-rules.pro', 'app/gradle.lockfile', 'LICENSE', 'README.md', 'NOTICE.md', 'THIRD_PARTY_NOTICES.md']:
     files.append(root / name)
 files += list((root / 'docs').glob('*.md'))
 files += [p for p in (root / 'docs/reports/llama-runtime-2026-11-23').glob('*') if p.is_file()]
@@ -43,7 +43,8 @@ files += [p for p in (root / 'docs/reports/ps3-increment-2026-11-23').glob('*') 
 with zipfile.ZipFile(out / 'Nivoryn-native-source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
     for path in sorted(set(files)):
         archive.write(path, 'nivoryn/' + str(path.relative_to(root)))
-for source, name in [(root / 'app/build/outputs/apk/debug/app-debug.apk', 'Nivoryn-debug.apk'),
+for source, name in [(root / 'app/build/outputs/apk/preview/app-preview.apk', 'Nivoryn-Guard-v0.1.2.apk'),
+                     (root / 'app/build/outputs/apk/debug/app-debug.apk', 'Nivoryn-debug.apk'),
                      (root / 'app/build/outputs/apk/release/app-release-unsigned.apk', 'Nivoryn-release-unsigned.apk'),
                      (a.video.resolve(), 'Nivoryn-offline-demo.mp4')]:
     if not source.is_file():
@@ -63,7 +64,7 @@ shutil.copyfile(root / 'app/build/outputs/apk/androidTest/debug/app-debug-androi
 (fixtures / 'README.txt').write_text('Synthetic PCAP metadata fixtures: import only, never transmit. Checksums intentionally omitted.\n'
     'benign.pcap: four SYN/port records; port-sweep.pcap: forty distinct destination ports. Neither is a representative intrusion dataset.\n'
     'benign-instrumentation.apk: existing signed test harness built from this source. Import into APK indicators; do not install it as a product or malware sample.\n')
-(out / 'INSTALL.txt').write_text('Install Nivoryn-debug.apk for local testing. The release APK is unsigned and needs the owner signing key.\n'
+(out / 'INSTALL.txt').write_text('Install Nivoryn-Guard-v0.1.2.apk: non-debuggable Arm64 preview signed with the existing preview identity. The separate production release APK is unsigned and needs the owner signing key.\n'
     'Weights are separate: follow MODEL_SETUP.md and use the pinned model.pte + tokenizer.bin from ORBIT. Import both via Settings > Llama resources.\n'
     'Read PS3_VALIDATION.md for actual verified scope, experimental behavior and unavailable features. The video is an Arm64 emulator recording, not a physical-phone benchmark.\n'
     'The source ZIP contains current native working-tree changes, tests, tools and reports; no credentials/signing keys/model weights. The existing website is unchanged in the repository.\n')
