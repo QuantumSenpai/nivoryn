@@ -1,0 +1,295 @@
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+dev.kyzenn.nivoryn.ImportedExtractionDeviceTest:
+INSTRUMENTATION_STATUS: test=corruptAndExcessivePagePdfsAreRejected
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=corruptAndExcessivePagePdfsAreRejected
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=pdfOcrAndQrRemainAssociatedWithPageOne
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=pdfOcrAndQrRemainAssociatedWithPageOne
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=qrImportDecodesTheActualPayloadWithoutOpeningIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=qrImportDecodesTheActualPayloadWithoutOpeningIt
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=jpegOrientationIsAppliedBeforeRealOcr
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=jpegOrientationIsAppliedBeforeRealOcr
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=bundledDevanagariWorksWithoutDownloadingAnEngine
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=bundledDevanagariWorksWithoutDownloadingAnEngine
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=qrOnlyPdfIsAnalysedWithoutClaimingOcrContent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=qrOnlyPdfIsAnalysedWithoutClaimingOcrContent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadableImageDoesNotInventExtractedContent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.ImportedExtractionDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadableImageDoesNotInventExtractedContent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.NetworkReplayDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+dev.kyzenn.nivoryn.NetworkReplayDeviceTest:
+INSTRUMENTATION_STATUS: test=importsBenignScanAndCorruptCapturesWithoutClaimingLiveMonitoring
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.NetworkReplayDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=importsBenignScanAndCorruptCapturesWithoutClaimingLiveMonitoring
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+dev.kyzenn.nivoryn.OfflineDeviceTest:
+INSTRUMENTATION_STATUS: test=localEngineFlowWorksInTheActualAndroidProcess
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Llama generated explanation · validated references' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at dev.kyzenn.nivoryn.OfflineDeviceTest.localEngineFlowWorksInTheActualAndroidProcess(OfflineDeviceTest.kt:43)
+
+INSTRUMENTATION_STATUS: stream=
+Error in localEngineFlowWorksInTheActualAndroidProcess(dev.kyzenn.nivoryn.OfflineDeviceTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Llama generated explanation · validated references' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at dev.kyzenn.nivoryn.OfflineDeviceTest.localEngineFlowWorksInTheActualAndroidProcess(OfflineDeviceTest.kt:43)
+
+INSTRUMENTATION_STATUS: test=localEngineFlowWorksInTheActualAndroidProcess
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=bundledOcrReadsRealBitmapAndFeedsLocalEvidence
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=bundledOcrReadsRealBitmapAndFeedsLocalEvidence
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=androidKeystoreKeyEncryptsAndRejectsTamperedHistory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=androidKeystoreKeyEncryptsAndRejectsTamperedHistory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+dev.kyzenn.nivoryn.RealLlamaDeviceTest:
+INSTRUMENTATION_STATUS: test=realLlamaGeneratesGroundedAdviceOffline
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realLlamaGeneratesGroundedAdviceOffline
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=variedSyntheticAdvisoriesAreGroundedOrExplicitlyFallBack
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=variedSyntheticAdvisoriesAreGroundedOrExplicitlyFallBack
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationAndOverlapDoNotContaminateTheNextRequest
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellationAndOverlapDoNotContaminateTheNextRequest
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=trustedImportRealRunnerAndEncryptedHistoryWorkTogether
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.RealLlamaDeviceTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=trustedImportRealRunnerAndEncryptedHistoryWorkTogether
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.StaticApkDeviceTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+dev.kyzenn.nivoryn.StaticApkDeviceTest:
+INSTRUMENTATION_STATUS: test=malformedArchiveFailsClosed
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.StaticApkDeviceTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=malformedArchiveFailsClosed
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.StaticApkDeviceTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=execuTorchJniLoadsOnArm64
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.StaticApkDeviceTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=execuTorchJniLoadsOnArm64
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.StaticApkDeviceTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=inspectsSignedFixtureWithoutInstallingIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.StaticApkDeviceTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=18
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=inspectsSignedFixtureWithoutInstallingIt
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 51.481
+There was 1 failure:
+1) localEngineFlowWorksInTheActualAndroidProcess(dev.kyzenn.nivoryn.OfflineDeviceTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Llama generated explanation · validated references' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at dev.kyzenn.nivoryn.OfflineDeviceTest.localEngineFlowWorksInTheActualAndroidProcess(OfflineDeviceTest.kt:43)
+
+FAILURES!!!
+Tests run: 18,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

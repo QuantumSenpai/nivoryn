@@ -1,0 +1,13 @@
+{
+  "ro.product.model": "sdk_gphone16k_arm64",
+  "ro.build.version.release": "17",
+  "ro.build.version.sdk": "37",
+  "ro.product.cpu.abi": "arm64-v8a",
+  "ro.kernel.qemu": "1",
+  "pageSize": "16384",
+  "imagePackage": "system-images;android-37.0;google_apis_ps16k;arm64-v8a",
+  "original011CleanInstall": "Success",
+  "upgradeTo012": "Success",
+  "fresh012Install": "Success",
+  "scope": "Dedicated emulator. Original Oppo installer failure was not reproduced here; no Oppo hardware or Play Protect approval claim."
+}

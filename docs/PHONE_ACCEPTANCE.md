@@ -1,6 +1,6 @@
 # Owner's later phone acceptance
 
-Install `app/build/outputs/apk/debug/app-debug.apk` on an Arm64 Android phone. The unsigned release requires the owner's signing key. Keep the website deployment unchanged.
+Install the website’s **Nivoryn-Guard-v0.1.2.apk** (`app/build/outputs/apk/preview/app-preview.apk`) on an Arm64 Android phone; see INSTALL_ANDROID.md. The unsigned release requires the owner's signing key. Keep the website deployment unchanged.
 
 1. Follow MODEL_SETUP.md: the tested export/tokenizer are already downloaded on ORBIT and their reviewed hashes are pinned in the APK. Copy both files to the phone and import them in Settings → Llama resources. Run “Test local inference”: success must explicitly say Llama generated explanation · validated references, not curated fallback. A missing-model check is not a pass. Original checkpoint files cannot be loaded as exports.
 2. In airplane mode after cold start, paste a **new synthetic** supported message or URL. Run local detection, inspect actual evidence/destination, and verify actual Llama mode. Save, reopen the exact snapshot, deliberately export if needed, delete locally. Keep private messages/credentials out of recordings. A provider chosen for export controls its copy.

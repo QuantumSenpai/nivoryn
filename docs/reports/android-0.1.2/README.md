@@ -1,0 +1,20 @@
+# 0.1.2 distribution regression evidence
+
+The owner reported a direct “App not installed” failure on Oppo Find X9 Pro, without a warning. No physical Oppo is connected. The original 0.1.1 APK installed on the stock Android 17 test VM, so the OEM failure remains unreproduced; do not claim its exact cause is known.
+
+Changes: versionCode 3 / 0.1.2; a standalone, non-debuggable, Arm64-only minified preview; existing preview certificate retained for updates. Friendly filename: Nivoryn-Guard-v0.1.2.apk. This is not an owner-key production release or a Play Protect approval claim.
+
+A genuine minified-build regression was reproduced: ExecuTorch load fell back with a linkage failure. Its 1.2.0 AAR carries no consumer ProGuard rules, and R8 removed Module/EValue/Tensor/training entry classes that libexecutorch registers through JNI. The added DEX-class gate failed on that APK. Scoped keep rules retain only ExecuTorch/fbjni's JNI boundary; app optimization remains enabled. The fixed minified APK passed actual offline Llama + evidence + encrypted save/reopen/delete on Android 14. Static checks and raw reports identify the exact artifact.
+
+- distribution-apk.json: signature continuity, non-debuggable/non-test-only identity/version, Arm64-only ABI, ZIP + ELF 16 KB alignment and retained JNI class definitions.
+- host-summary.json / build.txt: 86 host tests, zero failures/errors/skips; successful preview/debug builds. Preview lint warnings: ChromeOsAbiSupport (phone/Arm64-only distribution), conservative UsableSpace check, and base-icon MonochromeLauncherIcon (API-33 monochrome variant is present). No blanket suppression or native-runtime substitution.
+- android14-instrumentation.txt: all 18 resource-required Android 14 tests passed. android14-minified-ui.json records genuine Llama mode in the installed minified APK.
+- android17-install.json / android17-clean-ui.json: actual stock Android 17, API 37, Arm64, 16384-byte pages; original install, upgrade and fresh new install passed. The new APK's custom local check/evidence/history flow passed before installing a model, accurately using its available guidance mode.
+- android17-minified-ui.json: after installation through System Files, the exact non-debuggable SHA-identified APK passed custom input → actual Llama explanation → evidence → encrypted save/reopen/delete, in airplane mode.
+- android17-system-installer.json: normal System Files → APK → Continue → Update route showed “App updated”; no adb install was used for this final transition to the minified build.
+- model-test-inputs.txt: real, pinned model/tokenizer input hashes verified inside the dedicated emulator; no weights are in Git/APK.
+- android17-before-test-isolation.txt: first full suite passed 17/18; the fresh-device UI test ran before another class activated staged model resources. An explicit resource-required @Before setup now imports through the real ModelImporter independently of class order; no assertion was relaxed, test skipped or fake response inserted. After clearing only the new emulator app’s synthetic data and restaging inputs, the final rerun passed all 18 tests; see android17-instrumentation.txt.
+
+Test setup: official system-images;android-37.0;google_apis_ps16k;arm64-v8a, emulator 37.3.10, separate 4 GB/two-core VM with a 6 GB data budget on the ORBIT-backed APFS cache. The old SDK 19 avdmanager generated target=android-0 for ApiLevel=37.0; only this new AVD's metadata was corrected to target API 37. The official Android image was unchanged. Actual guest API/release/page size, not its AVD name, establish test identity. This is functional emulator evidence, not Oppo performance, battery, accessibility or cloud reputation verification.
+
+References: [Android signing](https://developer.android.com/studio/publish/app-signing), [16 KB checks](https://developer.android.com/guide/practices/page-sizes), [ExecuTorch JNI registration](https://github.com/pytorch/executorch/blob/v1.2.0/extension/android/jni/jni_layer.cpp). Context7 had no matching release-minification/JNI rule entry; versioned upstream source, the shipped AAR, R8 mapping and real forward execution were used instead.

@@ -1,0 +1,15 @@
+{
+  "device": "sdk_gphone16k_arm64",
+  "android": "17",
+  "sdk": 37,
+  "pageSize": 16384,
+  "route": "System Files > Downloads > verified APK > Continue > Update",
+  "visibleResult": [
+    "App updated",
+    "Nivoryn",
+    "Done",
+    "Open"
+  ],
+  "passed": true,
+  "scope": "Stock Android emulator system installer; not Oppo hardware or Play Protect approval"
+}

@@ -22,7 +22,7 @@ Reproduce using an isolated Python environment containing `huggingface_hub`:
 
 ```sh
 python tools/model/download-supported.py
-zsh scripts/android.sh :app:assembleDebug
+zsh scripts/android.sh :app:assemblePreview
 ```
 
 The downloader scopes caches to ORBIT, pins the publisher revision, verifies independently reviewed build hashes, retains resumable downloads and includes licence/notice files. It does not trust imported checksum sidecars. Copy `model.pte` and `tokenizer.bin` to a phone folder; install the APK; open Settings → Llama resources → Import model export, then Import matching official tokenizer. Select each using Android's picker. Original `.pth`, `.safetensors`, GGUF and arbitrary `.pte` files are unsupported.

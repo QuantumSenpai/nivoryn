@@ -1,0 +1,25 @@
+{
+  "tests": {
+    "tests": 86,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": [
+    {
+      "id": "ChromeOsAbiSupport",
+      "severity": "Warning",
+      "message": "Missing x86_64 ABI support for ChromeOS"
+    },
+    {
+      "id": "UsableSpace",
+      "severity": "Warning",
+      "message": "Consider also using `StorageManager#getAllocatableBytes` and `allocateBytes` which will consider clearable cached data"
+    },
+    {
+      "id": "MonochromeLauncherIcon",
+      "severity": "Warning",
+      "message": "The application adaptive icon is missing a monochrome tag"
+    }
+  ]
+}

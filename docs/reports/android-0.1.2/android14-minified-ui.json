@@ -1,0 +1,21 @@
+{
+  "device": {
+    "ro.product.model": "sdk_gphone64_arm64",
+    "ro.build.version.release": "14",
+    "ro.build.version.sdk": "34",
+    "ro.product.cpu.abi": "arm64-v8a",
+    "ro.kernel.qemu": "1"
+  },
+  "pageSize": "4096",
+  "airplaneMode": true,
+  "tested": [
+    "custom text",
+    "deterministic evidence",
+    "save",
+    "reopen",
+    "delete"
+  ],
+  "realLlamaRequired": true,
+  "passed": true,
+  "scope": "Synthetic black-box UI on the installed distribution APK; not Oppo hardware or Play Protect approval"
+}
