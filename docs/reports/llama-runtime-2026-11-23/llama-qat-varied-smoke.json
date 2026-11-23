@@ -1,0 +1,44 @@
+[
+  {
+    "case": "otp",
+    "validated": false,
+    "elapsedMs": 2109,
+    "generated": "{\"summary\":\"A secret is requested. This request could expose a credential that authorises account access or payment\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "hinglish",
+    "validated": false,
+    "elapsedMs": 1518,
+    "generated": "{\"summary\":\"Potential credential exposure through secret request in Hinglish [E1].\",\"actions\":[\"A1\"]}<|eot_id|>"
+  },
+  {
+    "case": "hindi",
+    "validated": false,
+    "elapsedMs": 1534,
+    "generated": "{\"summary\":\"Request for sensitive information could compromise account access or payment.\",\"actions\":[\"A1\", \"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "url-authority",
+    "validated": false,
+    "elapsedMs": 1454,
+    "generated": "{\"summary\":\"A misleading URL authority can obscure the actual destination.\",\",\"actions\":[\"A1,A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "remote-control",
+    "validated": false,
+    "elapsedMs": 1640,
+    "generated": "{\"summary\":\"Remote-control installation request. Remote-access software can expose your device to another person [E1].\",\"actions\":[\"A1\", \"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "upfront-fee",
+    "validated": false,
+    "elapsedMs": 1561,
+    "generated": "{\"summary\":\"Upfront payment pressure. Payment is being made a condition of receiving a promised benefit\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "benign",
+    "validated": true,
+    "elapsedMs": 1382,
+    "generated": "{\"summary\":\"No clear warning found by limited local checks; safety is unverified.\",\"actions\":[\"A1\"]}<|eot_id|>"
+  }
+]

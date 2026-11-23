@@ -1,0 +1,20 @@
+{
+  "publisherRepository": "executorch-community/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8-ET",
+  "revision": "911221e0f49d3354cbd4697a9c09feee25cadec7",
+  "upstreamReference": "https://github.com/pytorch/executorch/blob/v1.2.0/examples/models/llama/README.md",
+  "licence": "Llama 3.2 Community Licence",
+  "format": "published ExecuTorch conversion; not exported locally",
+  "artifacts": [
+    {
+      "path": "Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8.pte",
+      "bytes": 1135951488,
+      "sha256": "8715cdba9e91f6bede00cc5f2d6b12397b95225da5630c4972a8da03001cda3b"
+    },
+    {
+      "path": "tokenizer.model",
+      "bytes": 2183982,
+      "sha256": "82e9d31979e92ab929cd544440f129d9ecd797b69e327f80f17e1c50d5551b55"
+    }
+  ],
+  "verification": "Pinned sizes and SHA-256 verified; real Android 14 Arm64 ExecuTorch 1.2.0 load/generate returned code 0 and passed app validation in airplane mode. Official Meta checkpoint access and download also succeeded after owner authentication. Physical-phone verification is pending."
+}

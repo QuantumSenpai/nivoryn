@@ -1,0 +1,11 @@
+{
+  "airplaneMode": "1",
+  "requireLlama": true,
+  "instrumentationPassed": true,
+  "serial": "emulator-5554",
+  "input": "Synthetic OTP request; no private content",
+  "scope": "Android UI recording; emulator is not phone performance evidence",
+  "durationSeconds": 25.561467,
+  "bytes": 994560,
+  "visualReview": "Generated mode/prose, original synthetic evidence quote and post-deletion History inspected from actual recording frames; no staged UI overlay."
+}

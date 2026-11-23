@@ -1,0 +1,17 @@
+{
+  "scope": "Latest build outputs. Does not assert model or physical-device verification.",
+  "artifacts": [
+    {
+      "path": "app/build/outputs/apk/debug/app-debug.apk",
+      "bytes": 87193374,
+      "sha256": "c4b3738100729352f5086000871ed4a8afeea059f9df510ac2027f3ef4ccc769",
+      "signedForInstall": true
+    },
+    {
+      "path": "app/build/outputs/apk/release/app-release-unsigned.apk",
+      "bytes": 70697121,
+      "sha256": "c6b0c2fe5e197f38ee806165f7da5a0d12727a046efb3c3c8c44c15a70d3cc9c",
+      "signedForInstall": false
+    }
+  ]
+}

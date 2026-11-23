@@ -1,0 +1,18 @@
+{
+  "source": "UCI SMS Spam Collection / Almeida & Hidalgo (2011), DOI 10.24432/C5CC84, CC BY 4.0",
+  "corpusSha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+  "rawRows": 5574,
+  "deduplicatedRows": 5159,
+  "trainRows": 4128,
+  "testRows": 1031,
+  "seed": 228,
+  "split": "Stratified 80/20 after NFKC whitespace/case deduplication; conflicting duplicate groups excluded. Vocabulary fitted on training only. Fixed threshold 0.99, not tuned on test.",
+  "tp": 113,
+  "fp": 0,
+  "tn": 903,
+  "fn": 15,
+  "precision": 1.0,
+  "recall": 0.8828125,
+  "warning": "Spam labels are not scam ground truth. No contemporary Indian scam, multilingual or real-world accuracy claim.",
+  "modelSha256": "3171473c44b56d449ef0b11b435e5448a0cc11d2ba7b34cbfefb72c73facc707"
+}

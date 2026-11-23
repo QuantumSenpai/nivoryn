@@ -1,0 +1,47 @@
+{
+  "generatedUtc": "2026-11-23T20:43:23.869443+00:00",
+  "build": {
+    "debug": true,
+    "unsignedRelease": true,
+    "instrumentationApk": true,
+    "command": "zsh scripts/android.sh :app:assembleDebug :app:assembleDebugAndroidTest :app:assembleRelease :app:testDebugUnitTest :app:lintDebug --offline",
+    "log": "android-build.txt"
+  },
+  "host": {
+    "tests": 86,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "instrumentation": {
+    "tests": 18,
+    "passed": true,
+    "log": "android-instrumentation.txt",
+    "scope": "Android 14 Arm64 emulator; resources required; airplane mode"
+  },
+  "linuxObserver": {
+    "tests": 2,
+    "passed": true,
+    "scope": "Host classification tests; not Arm Linux hardware"
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 5,
+    "ids": {
+      "AndroidGradlePluginVersion": 1,
+      "NewerVersionAvailable": 2,
+      "UsableSpace": 1,
+      "MonochromeLauncherIcon": 1
+    }
+  },
+  "artifacts": {
+    "app-debug.apk": {
+      "bytes": 87193512,
+      "sha256": "f6a9780cd556a97c4e4027c1ebbfc95d800fd85b1b05b5665ed4f4891a12b49f"
+    },
+    "app-release-unsigned.apk": {
+      "bytes": 70683941,
+      "sha256": "8450fbb185a7e83a66742fd8f098b09fc0896a3f7571c22f10b05c1668fded2d"
+    }
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "device": {
+    "ro.product.model": "sdk_gphone64_arm64",
+    "ro.product.cpu.abi": "arm64-v8a",
+    "ro.build.version.release": "14",
+    "ro.kernel.qemu": "1"
+  },
+  "emulator": true,
+  "airplaneMode": true,
+  "scope": "One debug process-cold Compose UI test with real Llama, save/reopen/delete; OS file cache may be warm. Automated scroll/click, software-rendered emulator where identified. Polling adds overhead. Not battery, phone or steady-state FPS evidence.",
+  "sampleIntervalMinimumMs": 250,
+  "peakSampledRssKiB": 1440240,
+  "peakSampledPssKiB": 1356613,
+  "wallMs": 7782,
+  "samples": [
+    {
+      "elapsedMs": 56
+    },
+    {
+      "elapsedMs": 498,
+      "pssKiB": 51644,
+      "rssKiB": 110588
+    },
+    {
+      "elapsedMs": 808,
+      "pssKiB": 116090,
+      "rssKiB": 195656,
+      "renderedFrames": 1,
+      "jankyFrames": 1,
+      "frameP50Ms": 133,
+      "frameP90Ms": 133,
+      "frameP95Ms": 133,
+      "frameP99Ms": 133
+    },
+    {
+      "elapsedMs": 1129,
+      "pssKiB": 121634,
+      "rssKiB": 202552,
+      "renderedFrames": 2,
+      "jankyFrames": 2,
+      "frameP50Ms": 200,
+      "frameP90Ms": 200,
+      "frameP95Ms": 200,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 1510,
+      "pssKiB": 124888,
+      "rssKiB": 206472,
+      "renderedFrames": 6,
+      "jankyFrames": 6,
+      "frameP50Ms": 32,
+      "frameP90Ms": 200,
+      "frameP95Ms": 200,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 1869,
+      "pssKiB": 121662,
+      "rssKiB": 203704,
+      "renderedFrames": 26,
+      "jankyFrames": 8,
+      "frameP50Ms": 16,
+      "frameP90Ms": 65,
+      "frameP95Ms": 133,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 2180,
+      "pssKiB": 121594,
+      "rssKiB": 203732,
+      "renderedFrames": 38,
+      "jankyFrames": 10,
+      "frameP50Ms": 17,
+      "frameP90Ms": 34,
+      "frameP95Ms": 133,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 2492,
+      "pssKiB": 122202,
+      "rssKiB": 204564,
+      "renderedFrames": 56,
+      "jankyFrames": 12,
+      "frameP50Ms": 16,
+      "frameP90Ms": 32,
+      "frameP95Ms": 65,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 2863,
+      "pssKiB": 124365,
+      "rssKiB": 206808,
+      "renderedFrames": 70,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 30,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 3173,
+      "pssKiB": 127585,
+      "rssKiB": 210176,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 3524,
+      "pssKiB": 137569,
+      "rssKiB": 220332,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 3855,
+      "pssKiB": 758358,
+      "rssKiB": 841128,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 4189,
+      "pssKiB": 1030335,
+      "rssKiB": 1113112,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 4524,
+      "pssKiB": 1352169,
+      "rssKiB": 1434948,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 4855,
+      "pssKiB": 1352887,
+      "rssKiB": 1435668,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 5193,
+      "pssKiB": 1352901,
+      "rssKiB": 1435688,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 5524,
+      "pssKiB": 1354375,
+      "rssKiB": 1437336,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 5855,
+      "pssKiB": 1354402,
+      "rssKiB": 1437384,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 6181,
+      "pssKiB": 1355151,
+      "rssKiB": 1438140,
+      "renderedFrames": 72,
+      "jankyFrames": 15,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 6497,
+      "pssKiB": 1355170,
+      "rssKiB": 1438276,
+      "renderedFrames": 83,
+      "jankyFrames": 18,
+      "frameP50Ms": 16,
+      "frameP90Ms": 26,
+      "frameP95Ms": 34,
+      "frameP99Ms": 200
+    },
+    {
+      "elapsedMs": 6820,
+      "pssKiB": 1355803,
+      "rssKiB": 1439332,
+      "renderedFrames": 101,
+      "jankyFrames": 20,
+      "frameP50Ms": 16,
+      "frameP90Ms": 19,
+      "frameP95Ms": 32,
+      "frameP99Ms": 133
+    },
+    {
+      "elapsedMs": 7178,
+      "pssKiB": 1356613,
+      "rssKiB": 1440240,
+      "renderedFrames": 120,
+      "jankyFrames": 22,
+      "frameP50Ms": 16,
+      "frameP90Ms": 19,
+      "frameP95Ms": 34,
+      "frameP99Ms": 133
+    },
+    {
+      "elapsedMs": 7531,
+      "pssKiB": 1351432,
+      "rssKiB": 1435256,
+      "renderedFrames": 135,
+      "jankyFrames": 23,
+      "frameP50Ms": 16,
+      "frameP90Ms": 19,
+      "frameP95Ms": 34,
+      "frameP99Ms": 133
+    }
+  ],
+  "testPassed": true,
+  "instrumentation": "INSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest\nINSTRUMENTATION_STATUS: current=1\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\nINSTRUMENTATION_STATUS: numtests=1\nINSTRUMENTATION_STATUS: stream=\ndev.kyzenn.nivoryn.OfflineDeviceTest:\nINSTRUMENTATION_STATUS: test=localEngineFlowWorksInTheActualAndroidProcess\nINSTRUMENTATION_STATUS_CODE: 1\nINSTRUMENTATION_STATUS: class=dev.kyzenn.nivoryn.OfflineDeviceTest\nINSTRUMENTATION_STATUS: current=1\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\nINSTRUMENTATION_STATUS: numtests=1\nINSTRUMENTATION_STATUS: stream=.\nINSTRUMENTATION_STATUS: test=localEngineFlowWorksInTheActualAndroidProcess\nINSTRUMENTATION_STATUS_CODE: 0\nINSTRUMENTATION_RESULT: stream=\n\nTime: 7.034\n\nOK (1 test)\n\n\nINSTRUMENTATION_CODE: -1\n",
+  "stderr": ""
+}

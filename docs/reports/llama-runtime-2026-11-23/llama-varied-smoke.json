@@ -1,0 +1,51 @@
+[
+  {
+    "case": "otp",
+    "validated": true,
+    "sourceBinding": "MODEL_REFERENCES",
+    "elapsedMs": 1719,
+    "generated": "{\"summary\":\"A secret is requested, which could expose a credential that authorises account access or payment [E1].\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "hinglish",
+    "validated": true,
+    "sourceBinding": "LOCAL_SINGLE_FINDING",
+    "elapsedMs": 1582,
+    "generated": "{\"summary\":\"A secret request in Hinglish could expose a credential that authorises account access or payment.\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "hindi",
+    "validated": false,
+    "sourceBinding": "REJECTED",
+    "elapsedMs": 1469,
+    "generated": "{\"summary\":\"Request for sensitive information could compromise account access or payment.\",\"actions\":[\"A1\",\"A2\"]}\"<|eot_id|>"
+  },
+  {
+    "case": "url-authority",
+    "validated": true,
+    "sourceBinding": "LOCAL_SINGLE_FINDING",
+    "elapsedMs": 1713,
+    "generated": "{\"summary\":\"Misleading URL authority. Embedded user information can obscure the actual destination. The apparent name does not establish destination ownership.\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "remote-control",
+    "validated": true,
+    "sourceBinding": "LOCAL_SINGLE_FINDING",
+    "elapsedMs": 1515,
+    "generated": "{\"summary\":\"Remote-control installation request. Remote-access software can expose your device to another person.\", \"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "upfront-fee",
+    "validated": false,
+    "sourceBinding": "REJECTED",
+    "elapsedMs": 1539,
+    "generated": "{\"summary\":\"Upfront payment pressure. Payment is being made a condition of receiving a promised benefit.\", \"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  },
+  {
+    "case": "benign",
+    "validated": true,
+    "sourceBinding": "NO_FINDINGS",
+    "elapsedMs": 1401,
+    "generated": "{\"summary\":\"No clear warning found by limited local checks; safety is unverified.\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>"
+  }
+]

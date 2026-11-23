@@ -1,0 +1,8 @@
+{
+  "ro.product.model": "sdk_gphone64_arm64",
+  "ro.product.cpu.abi": "arm64-v8a",
+  "ro.build.version.release": "14",
+  "ro.kernel.qemu": "1",
+  "airplaneMode": "1",
+  "scope": "Synthetic fixtures on this identified Android runtime; not real-world accuracy or physical-phone performance"
+}

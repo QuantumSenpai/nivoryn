@@ -1,0 +1,14 @@
+{
+  "runtime": "executorch-1.2.0",
+  "model": "Llama-3.2-1B-Instruct-QLORA_INT4_EO8",
+  "device": "sdk_gphone64_arm64",
+  "abi": "arm64-v8a",
+  "sdk": 34,
+  "loadCode": 0,
+  "loadMs": 1482,
+  "generationCode": 0,
+  "generationMs": 1905,
+  "firstTokenMs": 1222,
+  "generated": "{\"summary\":\"A secret is requested. This request could expose a credential that authorises account access or payment\",\"actions\":[\"A1\",\"A2\"]}<|eot_id|>",
+  "validated": false
+}

@@ -22,7 +22,7 @@ Early-access version 0.1.1 · No account required.
 
 </div>
 
-> **Current status (2026-11-23):** the native Compose app now runs bounded local text rules, URL/payment-payload inspection, bundled Latin/Devanagari OCR and QR decoding. Explicitly saved text checks use encrypted, device-local history. Authored examples remain labelled separately. There is no Internet permission, remote backend, account or NIM integration. A scam classifier and Llama inference are **not** connected. Physical-phone validation remains pending.
+> **Current status (2026-11-24):** the native Compose app runs local text/link checks, bundled Latin/Devanagari OCR/QR, document consistency, PCAP flow replay, static APK inspection and a trained English spam proxy. **Actual Llama 3.2 1B generation through ExecuTorch 1.2.0 is integrated and verified on an Arm64 Android emulator in airplane mode**, including validated advice and encrypted save/reopen/delete. Models are a separate pinned import. No Internet permission or cloud inference. Physical-phone acceptance, live Android VPN and general malware-behaviour monitoring remain unavailable/unverified. Read the [validation report](docs/PS3_VALIDATION.md) and [capability matrix](docs/PS3_COVERAGE.md) for exact scope.
 
 [Offline implementation and security boundaries](docs/OFFLINE_IMPLEMENTATION.md)
 
@@ -39,7 +39,7 @@ Nivoryn is being built to help answer three practical questions:
 
 **What looks suspicious? What is the evidence? What should I do next?**
 
-The planned Android app combines local checks, a lightweight text classifier and Llama running through ExecuTorch. It will explain the available evidence and show what remains unverified. Core analysis is designed to work offline after the required model assets have been imported, with no cloud AI API or backend.
+The Android app combines local checks, a lightweight text classifier and Llama running through ExecuTorch. It explains available evidence and shows what remains unverified. Supported analysis works offline after the required model assets have been imported, with no cloud AI API or backend.
 
 Built for **Bharat AI-SoC Challenge 2026–27 · PS3: On-device threat, phishing & scam detection**.
 
@@ -51,14 +51,16 @@ Built for **Bharat AI-SoC Challenge 2026–27 · PS3: On-device threat, phishing
 | :--- | :--- | :--- |
 | **Share to Check** | Share text or a link, or paste it manually. | Available |
 | **Evidence cards** | Inspect the original phrase or URL detail behind a local warning. | Available |
-| **Screenshot checks** | Read text with bundled OCR, correct it and check the confirmed text. | Available; Latin OCR tested in emulator |
+| **Screenshot checks** | Read text with bundled OCR, correct it and check the confirmed text. | Latin/Devanagari and orientation tested in emulator |
 | **QR inspection** | Decode a URL or payment payload without automatically opening it. | Available |
 | **Visible uncertainty** | See which checks ran and what remains unverified. | Available |
-| **Saved checks** | Deliberately save text in encrypted local history; review or delete it. | Available; export planned |
+| **Saved checks** | Deliberately save text, QR and exact evidence/advice snapshots in encrypted history; reopen, export or delete. | Verified in scoped host/emulator flows |
 | **Scam Story** | Explore example timelines and related messages. | Authored examples; custom linking planned |
-| **Local AI explanations** | Explain evidence through Llama / ExecuTorch. | Planned; not connected |
+| **Local AI explanations** | Actual Llama / ExecuTorch generation, checked against findings and approved remediation. | Verified emulator; advisory reliability experimental |
+| **Network replay** | Import bounded classic IPv4 PCAP and review flow/scan thresholds. | Host and Android provider tests; no live VPN |
+| **APK indicators** | Inspect identity, permissions, signing fingerprints and static combinations without installation. | Android fixture tests; static only |
 
-The website presents authored examples. The Android test build runs limited local checks; neither certifies that content is safe. Optional notifications and network analysis remain roadmap work.
+The website presents authored examples. The Android app runs scoped local services; neither certifies that content is safe. Optional notification access, live monitoring and broader case linking remain roadmap work.
 
 ---
 
@@ -128,7 +130,7 @@ flowchart TD
     I --> J
 ```
 
-The diagram describes the planned local pipeline. The reasoning model will not receive browser, shell, messaging or payment tools. Generated explanations will be checked against evidence references and approved actions; invalid output will fall back to a curated explanation.
+The diagram describes the local pipeline. The reasoning model receives controlled finding facts and no browser, shell, messaging or payment tools. Generated explanations are checked against evidence references and approved actions; invalid output falls back to explicitly labelled curated guidance.
 
 ---
 
@@ -138,23 +140,23 @@ The diagram describes the planned local pipeline. The reasoning model will not r
 | :--- | :--- |
 | Android application | Kotlin + Jetpack Compose |
 | Background work | Kotlin coroutines |
-| On-device reasoning | Llama 3.2 1B Instruct, SpinQuant INT4 candidate |
-| Inference runtime | ExecuTorch |
+| On-device reasoning | Tested pinned Llama 3.2 1B Instruct, SpinQuant INT4 |
+| Inference runtime | ExecuTorch Android 1.2.0, CPU/XNNPACK |
 | Fast detection | Kotlin rules + exported lightweight text classifier |
-| Classifier development | Python / scikit-learn, with Kotlin parity checks |
+| Classifier development | Reproducible Python multinomial Naive Bayes, with Kotlin parity checks |
 | Screenshot extraction | Bundled ML Kit Latin / Devanagari OCR, without network permission |
 | QR decoding | ZXing |
 | Saved checks / demo cases | Keystore AES-GCM store / app-private preferences |
 | Remote backend / cloud AI | None; analysis runs inside the Android app |
 
-Android foundation dependencies are pinned in the Gradle build files; see [setup and verified commands](docs/SETUP.md). Model-export compatibility remains unverified.
+Dependencies are locked in Gradle; see [API compatibility](docs/API_COMPATIBILITY.md), [resource setup](docs/MODEL_SETUP.md) and [validation](docs/PS3_VALIDATION.md). Published model conversion compatibility is emulator-verified; local source export and physical target verification remain pending.
 
 <details>
 <summary><b>Model footprint and device measurements</b></summary>
 
 Meta reports a **1,083 MB PTE file** and **1,921 MB runtime RSS** for its 1B SpinQuant reference benchmark on OnePlus 12. These are reference measurements, not Nivoryn app benchmarks or minimum device requirements. See the [official model card](https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8).
 
-The model is planned as a separate import rather than part of the APK. This reduces the APK download size, while the phone still needs storage for the imported assets. Actual APK size, whole-app memory use and inference latency remain unmeasured.
+The model is a separate verified import. The tested pair needs about 1.14 GB before staging/previous-version overhead. Actual emulator load, generation, memory and frame samples are in the validation report; these are not physical-phone or battery measurements.
 
 </details>
 
@@ -180,13 +182,13 @@ Notification access does not provide complete chat history, and Android may reda
 
 ### What exists today
 
-The repository contains a single Android app module with a genuine Gradle wrapper and a connected Compose demo frontend. Local rules, URL inspection, OCR, QR decoding and encrypted check history are implemented. A scam classifier, Llama model integration and held-out detection evaluation remain unimplemented. Bundled OCR models do not classify scams. See the frontend guide for implemented routes, state behaviour and verification limits.
+The repository contains a native Android app with real local services and a separately labelled authored demo. Current verification: 86 host tests, 18 Android instrumentation tests, two Linux-observer host tests, debug/release builds and lint. Real OCR/QR, Llama inference, PCAP replay, APK static inspection and encrypted history are exercised. The spam proxy has a documented held-out UCI evaluation; it is not contemporary scam ground truth. The existing promotional website is preserved.
 
-### First engineering milestone
+### Build and test
 
-The Android foundation builds with `./gradlew :app:assembleDebug :app:lintDebug`. The screen shows “Check before you trust.”, “Android foundation ready” and “Local AI model: not configured”. No phone was connected during verification, so installation and launch remain untested.
+Use JDK 17, Android SDK 36 and the checked-in Gradle wrapper: `./gradlew :app:assembleDebug :app:assembleRelease :app:testDebugUnitTest :app:lintDebug`. `scripts/android.sh` uses the existing Mac/ORBIT toolchain where present. Resource-required instrumentation needs the documented real model staged first; no weights are test assets.
 
-See [docs/SETUP.md](docs/SETUP.md) for prerequisites, actual validation results, storage caveats and the device procedure. A later milestone will validate Llama through ExecuTorch on a physical Arm Android phone before integrating product features.
+See [MODEL_SETUP](docs/MODEL_SETUP.md), [PHONE_ACCEPTANCE](docs/PHONE_ACCEPTANCE.md) and [PS3_VALIDATION](docs/PS3_VALIDATION.md). Older foundation reports retain their historical scope; the validation report supersedes their missing-model status.
 
 ### Repository layout
 
@@ -196,7 +198,7 @@ See [docs/SETUP.md](docs/SETUP.md) for prerequisites, actual validation results,
 | `.../domain/` | Analysis models and orchestration |
 | `.../detection/` | URL checks, rules and classifier integration |
 | `.../reasoning/` | Model import, ExecuTorch adapter and explanation validation |
-| `.../data/` | Model state; persistence will be added with saved cases |
+| `.../data/` | Trusted model/rule state and encrypted history snapshots |
 | `.../integration/` | Android share inputs and later optional integrations |
 | `app/src/main/assets/` | Rules, approved actions and prompts |
 | `tools/` | Model packaging and classifier development |
@@ -214,12 +216,12 @@ Model binaries, raw private datasets, signing keys and generated build outputs b
 - [x] Configure a buildable Android project and real Gradle wrapper.
 - [ ] Validate Llama + ExecuTorch on a physical Android device.
 - [x] Implement bounded local text/link checks and evidence-based results.
-- [ ] Add validated local explanations and failure handling.
+- [x] Add validated local explanations and explicit fallback/cancellation handling (emulator verified).
 - [ ] Implement Scam Story and user-controlled saved cases.
 - [x] Add bundled screenshot OCR, editable correction and non-opening QR inspection (hardware verification pending).
 - [ ] Evaluate optional notification checking.
-- [ ] Build a clearly labelled recorded-network-analysis demonstrator.
-- [ ] Publish held-out evaluation, device benchmarks and an offline demo.
+- [x] Build a clearly labelled recorded-network-analysis demonstrator.
+- [x] Record held-out spam-proxy evaluation, emulator profiles and an actual offline Llama demo; phone benchmarks pending.
 
 Live VPN monitoring and behavioural malware detection are later work. Their absence must remain visible in the [PS3 coverage document](docs/PS3_COVERAGE.md); recorded analysis will not be described as live protection.
 

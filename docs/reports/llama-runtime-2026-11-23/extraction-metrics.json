@@ -1,0 +1,70 @@
+[
+  {
+    "test": "corruptAndExcessivePagePdfsAreRejected",
+    "hindi": false,
+    "success": false,
+    "exception": "IOException",
+    "elapsedMs": 113
+  },
+  {
+    "test": "corruptAndExcessivePagePdfsAreRejected",
+    "hindi": false,
+    "success": false,
+    "exception": "IllegalArgumentException",
+    "elapsedMs": 7
+  },
+  {
+    "test": "pdfOcrAndQrRemainAssociatedWithPageOne",
+    "hindi": false,
+    "success": true,
+    "textChars": 30,
+    "qrChars": 11,
+    "source": "PDF page 1",
+    "elapsedMs": 173
+  },
+  {
+    "test": "qrImportDecodesTheActualPayloadWithoutOpeningIt",
+    "hindi": false,
+    "success": true,
+    "textChars": 38,
+    "qrChars": 38,
+    "source": "Imported image (orientation corrected)",
+    "elapsedMs": 17
+  },
+  {
+    "test": "jpegOrientationIsAppliedBeforeRealOcr",
+    "hindi": false,
+    "success": true,
+    "textChars": 18,
+    "qrChars": 0,
+    "source": "Imported image (orientation corrected)",
+    "elapsedMs": 21
+  },
+  {
+    "test": "bundledDevanagariWorksWithoutDownloadingAnEngine",
+    "hindi": true,
+    "success": true,
+    "textChars": 16,
+    "qrChars": 0,
+    "source": "Imported image (orientation corrected)",
+    "elapsedMs": 27
+  },
+  {
+    "test": "qrOnlyPdfIsAnalysedWithoutClaimingOcrContent",
+    "hindi": false,
+    "success": true,
+    "textChars": 0,
+    "qrChars": 38,
+    "source": "PDF page 1",
+    "elapsedMs": 70
+  },
+  {
+    "test": "unreadableImageDoesNotInventExtractedContent",
+    "hindi": false,
+    "success": true,
+    "textChars": 0,
+    "qrChars": 0,
+    "source": "Imported image (orientation corrected)",
+    "elapsedMs": 16
+  }
+]
