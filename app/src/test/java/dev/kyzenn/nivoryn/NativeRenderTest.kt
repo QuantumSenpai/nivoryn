@@ -25,23 +25,23 @@ class NativeRenderTest {
   }
  }
  @Test @Config(qualifiers="w1024dp-h768dp-land-mdpi") fun renderTablet() {
-  compose.onNodeWithText("Start checking").performScrollTo().performClick()
-  compose.onNodeWithText("History").assertExists()
+  compose.onNodeWithText("Check").performClick()
+  compose.onNodeWithText("Activity").assertExists()
   capture("tablet-home")
  }
  @Test @Config(qualifiers="w390dp-h844dp-port-mdpi") fun renderDarkAndHindi() {
-  compose.onNodeWithText("Start checking").performScrollTo().performClick()
+  compose.onNodeWithText("Check").performClick()
   compose.onNodeWithText("Settings").performClick()
   compose.onNodeWithContentDescription("Dark").performClick()
   compose.onNodeWithText("Home").performClick()
   capture("dark-home")
   compose.onNodeWithText("हिन्दी").performClick()
-  compose.onNodeWithText("आप क्या जाँचना चाहते हैं?").assertExists()
+  compose.onNodeWithText("क्या जाँचना है?").assertExists()
   capture("hindi-home")
  }
  @Test fun renderWelcomeHomeAndResult() {
   capture("welcome")
-  compose.onNodeWithText("Start checking").performScrollTo().performClick()
+  compose.onNodeWithText("Check").performClick()
   capture("home")
   compose.onNodeWithText("Explore sample checks · example data").performScrollTo().performClick()
   compose.onNodeWithText("Pay to unlock earnings").performScrollTo().performClick()
@@ -55,9 +55,9 @@ class NativeRenderTest {
   capture("input")
  }
  @Test fun renderRealOfflineResult() {
-  compose.onNodeWithText("Start checking").performScrollTo().performClick()
+  compose.onNodeWithText("Check").performClick()
   compose.onNode(hasSetTextAction()).performTextInput("Please send your OTP to finish verification.")
-  compose.onNodeWithText("Review input").performScrollTo().performClick()
+  compose.onNodeWithText("Review message").performScrollTo().performClick()
   compose.onNodeWithText("Run local check").performScrollTo().performClick()
   compose.waitUntil(5000) { compose.onAllNodesWithText("!  High risk").fetchSemanticsNodes().size == 1 }
   compose.onNodeWithText("View evidence").performClick()

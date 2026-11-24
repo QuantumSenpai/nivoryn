@@ -27,34 +27,52 @@ import dev.kyzenn.nivoryn.ui.components.*
     ActionButton(if(hi)"उदाहरण आज़माएँ"else"Try a sample",onSample,Modifier.fillMaxWidth(),secondary=true)
     Text(if(hi)"कोई खाता या अनिवार्य अनुमति नहीं।"else"No account. No required permissions.",style=MaterialTheme.typography.bodyMedium,color=MaterialTheme.colorScheme.onSurfaceVariant)
 }
-@Composable fun HomeScreen(draft:CheckDraft,hi:Boolean,onText:(String)->Unit,onReview:()->Unit,onImport:(String)->Unit,onSamples:()->Unit,onClear:()->Unit,onKind:(String)->Unit,isCheck:Boolean=false) {
-    Spacer(Modifier.height(12.dp))
-    PageTitle(if(isCheck) { if(hi)"जाँच के लिए सामग्री"else"Your input, in context." } else { if(hi)"आप क्या जाँचना चाहते हैं?"else"What do you\nwant to check?" },if(hi)"जल्दबाज़ी की जगह थोड़ा संदर्भ।"else"An unexpected request can wait.")
-    LocalDashboard(hi, draft.kind, onKind, onImport)
-    HomeForm(draft,hi,onText,onReview,onImport,onSamples,onClear)
-}
-@Composable private fun HomeForm(draft:CheckDraft,hi:Boolean,onText:(String)->Unit,onReview:()->Unit,onImport:(String)->Unit,onSamples:()->Unit,onClear:()->Unit) {
+@Composable fun HomeScreen(draft:CheckDraft,hi:Boolean,onText:(String)->Unit,onReview:()->Unit,onImport:(String)->Unit,onSamples:()->Unit,onClear:()->Unit,onKind:(String)->Unit,isCheck:Boolean=false,onPage:(String)->Unit={}) {
     val clipboard=androidx.compose.ui.platform.LocalClipboard.current
-    val pasteScope = rememberCoroutineScope()
+    val scope=rememberCoroutineScope()
     var pasteNotice by remember { mutableStateOf("") }
-    Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        FormField(draft.text,if(hi)"संदेश या लिंक"else"Message or link",onText,multiline=true)
-        TextAction(if(hi)"क्लिपबोर्ड से पेस्ट करें"else"Paste from clipboard",{ pasteScope.launch { val text=clipboard.getClipEntry()?.clipData?.getItemAt(0)?.text?.toString(); if(text.isNullOrEmpty()) pasteNotice=if(hi)"क्लिपबोर्ड में पाठ नहीं है।"else"There is no text on the clipboard." else { onText(text.take(12000));pasteNotice="" } } })
-        if(pasteNotice.isNotEmpty()) Text(pasteNotice,style=MaterialTheme.typography.bodyMedium)
-        if(draft.attachmentUri.isNotEmpty()) Notice("${draft.filename}\n${if(hi)"समीक्षा के लिए चुनी फ़ाइल"else"Selected for review"}")
-        ActionButton(if(hi)"इनपुट की समीक्षा करें"else"Review input",onReview,Modifier.fillMaxWidth())
-        Text(if(hi)"पाठ और लिंक की संरचना इसी फ़ोन पर जाँची जाती है। ड्राफ़्ट केवल इस सत्र में रहता है।"else"Text and URL structure are checked locally. Your draft stays in this app session.",style=MaterialTheme.typography.bodyMedium,color=MaterialTheme.colorScheme.onSurfaceVariant)
-        if(draft.canReview) TextAction(if(hi)"ड्राफ़्ट हटाएँ"else"Clear draft",onClear)
-        var moreImports by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(false) }
-        TextAction(if (hi) "अन्य आयात विकल्प" else "More import options", { moreImports = !moreImports })
-        androidx.compose.animation.AnimatedVisibility(moreImports,
-            enter = androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(if (dev.kyzenn.nivoryn.ui.theme.LocalReducedMotion.current) 0 else 160)),
-            exit = androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(if (dev.kyzenn.nivoryn.ui.theme.LocalReducedMotion.current) 0 else 120))) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                listOf("QR", "Audio", "APK").forEach { kind -> TextAction(kind, { onImport(kind) }) }
+    fun paste() { scope.launch {
+        val text=clipboard.getClipEntry()?.clipData?.getItemAt(0)?.text?.toString().orEmpty()
+        if(text.isBlank()) pasteNotice=if(hi) "क्लिपबोर्ड में पाठ नहीं है।" else "There is no text on the clipboard."
+        else { onText(text.take(12000)); onKind("Text"); pasteNotice="" }
+    } }
+    PageTitle(if(hi) "क्या जाँचना है?" else if(isCheck) "Check content" else "Check before you act.",
+        if(hi) "सामग्री चुनें। प्रमाण देखें।" else if(isCheck) "Choose a mode, then review your content." else "Messages, links and files. Checked on your device.")
+    androidx.compose.animation.AnimatedVisibility(!isCheck,
+        enter=androidx.compose.animation.expandVertically(androidx.compose.animation.core.tween(if(dev.kyzenn.nivoryn.ui.theme.LocalReducedMotion.current) 0 else 220))+androidx.compose.animation.fadeIn(),exit=androidx.compose.animation.shrinkVertically(androidx.compose.animation.core.tween(if(dev.kyzenn.nivoryn.ui.theme.LocalReducedMotion.current) 0 else 220))+androidx.compose.animation.fadeOut()) {
+        Column(verticalArrangement=Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                ActionButton(if(hi) "स्कैन करें" else "Scan", { onPage("scan") }, Modifier.weight(1f))
+                ActionButton(if(hi) "पेस्ट करें" else "Paste", ::paste, Modifier.weight(1f), secondary=true)
+            }
+            Surface(onClick={onPage("model")},color=MaterialTheme.colorScheme.surfaceContainerHigh,shape=MaterialTheme.shapes.small) {
+                Column(Modifier.fillMaxWidth().padding(14.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(if(hi) "बुनियादी जाँच तैयार" else "Basic checks ready",style=MaterialTheme.typography.labelLarge)
+                    val ai by (androidx.compose.ui.platform.LocalContext.current.applicationContext as dev.kyzenn.nivoryn.NivorynApplication).modelSetup.state.collectAsState()
+                    Text(if(hi) "स्थानीय AI: ${ai.phase}" else "Local AI: ${ai.phase}",style=MaterialTheme.typography.bodySmall)
+                    Text(if(ai.ready) "Offline explanations ready ›" else "Set up local AI ›",style=MaterialTheme.typography.labelSmall)
+                }
             }
         }
-        TextAction(if(hi)"उदाहरण देखें · कोई वास्तविक जाँच नहीं"else"Explore sample checks · example data",onSamples)
+    }
+    if(pasteNotice.isNotBlank()) Notice(pasteNotice)
+    LocalDashboard(hi,draft.kind,onKind,onImport,compact=isCheck)
+    if(isCheck) GroupedSurface(if(hi) "आपकी सामग्री" else when(draft.kind) { "Link"->"Inspect a link";"Document"->"Choose a document";"Screenshot","QR"->"Scan or import";else->"Review a message" }) {
+        if(draft.kind in listOf("Screenshot","QR","Document")) {
+            Text(if(draft.kind=="Document") "PDF or image · first-page OCR · up to 20 MB" else "Camera or image import · OCR and QR · up to 20 MB",style=MaterialTheme.typography.bodyMedium)
+            ActionButton(if(draft.kind=="Document") "Choose document" else "Scan image",{onImport(draft.kind)},Modifier.fillMaxWidth())
+            if(draft.attachmentUri.isNotEmpty()) Text(draft.filename)
+        } else {
+            FormField(draft.text,if(hi) "संदेश या लिंक" else "Message or link",onText,multiline=true)
+            TextAction(if(hi) "क्लिपबोर्ड से पेस्ट करें" else "Paste from clipboard",::paste)
+            ActionButton(if(hi) "समीक्षा करें" else if(draft.kind=="Link") "Check link" else "Review message",onReview,Modifier.fillMaxWidth())
+        }
+        Text(if(hi) "विश्लेषण इसी फ़ोन पर होता है।" else "Analysis stays on this device. Review extracted text before checking.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+        if(draft.canReview) TextAction(if(hi) "ड्राफ़्ट हटाएँ" else "Clear draft",onClear)
+    }
+    if(isCheck) {
+        TextAction(if(hi) "QR छवि चुनें" else "Inspect a QR image",{onImport("QR")})
+        TextAction(if(hi) "उदाहरण देखें · कोई वास्तविक जाँच नहीं" else "Explore sample checks · example data",onSamples)
     }
 }
 @Composable fun SampleList(samples:List<DemoSample>,hi:Boolean,onSelect:(DemoSample)->Unit) {

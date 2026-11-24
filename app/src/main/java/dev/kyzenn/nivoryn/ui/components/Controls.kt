@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -57,9 +58,9 @@ import dev.kyzenn.nivoryn.ui.theme.*
     }
 }
 @Composable fun SettingSwitch(title: String, detail: String, checked: Boolean, onChange: (Boolean)->Unit) {
-    Row(Modifier.fillMaxWidth().padding(vertical=8.dp), horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+    Row(Modifier.fillMaxWidth().toggleable(checked,role=Role.Switch,onValueChange=onChange).semantics(mergeDescendants=true) { stateDescription=if(checked) "On" else "Off" }.padding(vertical=8.dp), horizontalArrangement=Arrangement.spacedBy(12.dp)) {
         Column(Modifier.weight(1f)) { Text(title); Text(detail, style=MaterialTheme.typography.bodyMedium, color=MaterialTheme.colorScheme.onSurfaceVariant) }
-        Switch(checked,onChange, modifier=Modifier.semantics { contentDescription=title; stateDescription=if(checked) "On" else "Off" })
+        Switch(checked,onCheckedChange=null)
     }
 }
 
@@ -77,7 +78,12 @@ import dev.kyzenn.nivoryn.ui.theme.*
             3 -> { line(.25f,.12f,.6f,.12f);line(.6f,.12f,.8f,.32f);line(.8f,.32f,.8f,.88f);line(.8f,.88f,.25f,.88f);line(.25f,.88f,.25f,.12f);line(.6f,.12f,.6f,.32f);line(.6f,.32f,.8f,.32f);line(.37f,.52f,.65f,.52f);line(.37f,.68f,.6f,.68f) }
             4 -> { line(.12f,.45f,.5f,.12f);line(.5f,.12f,.88f,.45f);line(.23f,.4f,.23f,.86f);line(.23f,.86f,.77f,.86f);line(.77f,.86f,.77f,.4f);line(.43f,.86f,.43f,.6f);line(.43f,.6f,.6f,.6f);line(.6f,.6f,.6f,.86f) }
             5 -> { drawCircle(ink,.34f*w,androidx.compose.ui.geometry.Offset(.5f*w,.5f*h),style=androidx.compose.ui.graphics.drawscope.Stroke(stroke));line(.5f,.28f,.5f,.53f);line(.5f,.53f,.68f,.62f) }
-            else -> { drawCircle(ink,.3f*w,androidx.compose.ui.geometry.Offset(.5f*w,.5f*h),style=androidx.compose.ui.graphics.drawscope.Stroke(stroke));drawCircle(ink,.08f*w,androidx.compose.ui.geometry.Offset(.5f*w,.5f*h),style=androidx.compose.ui.graphics.drawscope.Stroke(stroke));line(.5f,.05f,.5f,.2f);line(.5f,.8f,.5f,.95f);line(.05f,.5f,.2f,.5f);line(.8f,.5f,.95f,.5f) }
+            7 -> { line(.15f,.72f,.3f,.72f);line(.3f,.72f,.42f,.3f);line(.42f,.3f,.6f,.8f);line(.6f,.8f,.73f,.5f);line(.73f,.5f,.88f,.5f) }
+            8 -> { drawRect(ink,androidx.compose.ui.geometry.Offset(.25f*w,.25f*h),androidx.compose.ui.geometry.Size(.5f*w,.5f*h),style=androidx.compose.ui.graphics.drawscope.Stroke(stroke));listOf(.35f,.65f).forEach { p->line(p,.1f,p,.25f);line(p,.75f,p,.9f);line(.1f,p,.25f,p);line(.75f,p,.9f,p) } }
+            else -> { repeat(8) { i->
+                val angle=i*Math.PI/4
+                line((.5+.31*kotlin.math.cos(angle)).toFloat(),(.5+.31*kotlin.math.sin(angle)).toFloat(),(.5+.44*kotlin.math.cos(angle)).toFloat(),(.5+.44*kotlin.math.sin(angle)).toFloat())
+            };drawCircle(ink,.3f*w,androidx.compose.ui.geometry.Offset(.5f*w,.5f*h),style=androidx.compose.ui.graphics.drawscope.Stroke(stroke));drawCircle(ink,.08f*w,androidx.compose.ui.geometry.Offset(.5f*w,.5f*h),style=androidx.compose.ui.graphics.drawscope.Stroke(stroke));line(.5f,.05f,.5f,.2f);line(.5f,.8f,.5f,.95f);line(.05f,.5f,.2f,.5f);line(.8f,.5f,.95f,.5f) }
         }
     }
 }

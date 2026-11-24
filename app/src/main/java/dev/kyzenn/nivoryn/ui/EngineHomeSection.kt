@@ -5,27 +5,32 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import dev.kyzenn.nivoryn.data.*
 import dev.kyzenn.nivoryn.ui.components.*
-import kotlinx.coroutines.*
 
-@Composable fun EngineHomeSection(checks: List<SavedCheck>, onOpen: (SavedCheck) -> Unit, onPage: (String) -> Unit) {
-    val context = LocalContext.current
-    val ready by produceState<Boolean?>(null) {
-        value = withContext(Dispatchers.IO) { ModelStore(context).installed() != null }
+@Composable fun EngineHomeSection(checks:List<SavedCheck>,onOpen:(SavedCheck)->Unit,onPage:(String)->Unit) {
+    GroupedSurface("Device and network") {
+        ActionRow("Network activity","Live usage totals and capture import. No VPN or traffic blocking.",{onPage("network")},glyph=7)
+        HorizontalDivider(color=MaterialTheme.colorScheme.outlineVariant)
+        ActionRow("APK inspection","Inspect a file's signing and static indicators without installing it.",{onPage("apk")},glyph=3)
     }
-    HorizontalDivider()
-    SectionTitle("On this device")
-    Text("Text rules, URL structure, bundled OCR and QR are available.")
-    Text("English SMS spam-like wording: bundled statistical classifier. Hindi/Hinglish: explicit rules. Neither verifies sender identity.", style = MaterialTheme.typography.bodySmall)
-    Text(when (ready) {
-        true -> "Llama resources verified · inference readiness is established when a check runs."
-        false -> "Llama resources missing · checks use labelled curated guidance."
-        null -> "Checking model resources…"
-    }, style = MaterialTheme.typography.bodySmall)
-    TextAction("Manage local model", { onPage("model") })
-    TextAction("Inspect network capture", { onPage("network") })
-    TextAction("Inspect APK indicators", { onPage("apk") })
-    if (checks.isNotEmpty()) {
-        SectionTitle("Recent saved checks")
-        checks.take(3).forEach { check -> TextAction(check.preview.take(70), { onOpen(check) }) }
+    GroupedSurface("Your activity") {
+        if(checks.isEmpty()) Text("Nothing saved yet. Save a result when you want to keep its evidence.",style=MaterialTheme.typography.bodyMedium)
+        checks.take(2).forEach { check -> ActionRow(check.preview.take(70),"Saved on this device",{onOpen(check)},glyph=5) }
+        ActionRow("Checks and saved cases","Reopen, export or delete saved checks; explore your demo cases.",{onPage("cases")},glyph=5)
+    }
+    val ai by (LocalContext.current.applicationContext as dev.kyzenn.nivoryn.NivorynApplication).modelSetup.state.collectAsState()
+    GroupedSurface("Local resources") {
+        ActionRow("Set up local AI",ai.phase+" · "+ai.detail,{onPage("model")},glyph=8)
+        ActionRow("Rules and indicators","Bundled rules are ready. Signed indicator updates are optional.",{onPage("rules")},glyph=3)
+    }
+    TextAction("Explore sample checks · example data",{onPage("samples")})
+}
+
+@Composable fun ResourcesScreen(onPage:(String)->Unit) {
+    PageTitle("Models and resources","Real engine status and setup, in one place.")
+    val ai by (LocalContext.current.applicationContext as dev.kyzenn.nivoryn.NivorynApplication).modelSetup.state.collectAsState()
+    GroupedSurface("On-device engines") {
+        ActionRow("Llama resources",ai.detail,{onPage("model")},state=ai.phase)
+        ActionRow("Rules and indicators","Bundled text/link rules; optional authenticated indicator imports.",{onPage("rules")})
+        Text("OCR and QR are bundled. No extra model download is needed for those checks.",style=MaterialTheme.typography.bodySmall)
     }
 }

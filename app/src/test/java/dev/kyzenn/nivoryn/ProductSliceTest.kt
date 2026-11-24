@@ -15,7 +15,7 @@ import org.robolectric.annotation.GraphicsMode
 class ProductSliceTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
     @Test fun paymentPhraseSurvivesFromInputToEvidenceAndBack() {
-        compose.onNodeWithText("Try a sample").performScrollTo().performClick()
+        compose.onNodeWithText("Explore sample checks · example data").performScrollTo().performClick()
         compose.onNodeWithText("Pay to unlock earnings").performScrollTo().performClick()
         compose.onNode(hasSetTextAction()).assertTextContains("Pay a fee to release your earnings.",substring=true)
         compose.onNodeWithText("Show example result").performScrollTo()
@@ -34,9 +34,9 @@ class ProductSliceTest {
         compose.onNode(hasSetTextAction()).assertTextContains("Pay a fee to release your earnings.",substring=true)
     }
     @Test fun fourRootDestinationsRetainCustomInput() {
-        compose.onNodeWithText("Start checking").performScrollTo().performClick()
+        compose.onNodeWithText("Check").performClick()
         compose.onNode(hasSetTextAction()).performTextInput("Retain this input")
-        compose.onNodeWithText("History").performClick()
+        compose.onNodeWithText("Activity").performClick()
         compose.onNodeWithText("Check").performClick()
         compose.onNode(hasSetTextAction()).assertTextContains("Retain this input")
         compose.onNodeWithText("Home").assertExists()

@@ -1,0 +1,14 @@
+{
+  "path": "/Volumes/ORBIT/Nivoryn/captures/nivoryn-0.2.0-offline-demo.mp4",
+  "bytes": 4867640,
+  "sha256": "f855f626547304d13416fbce7fb0229baee371f17dd6806d6da66a71314caace",
+  "seconds": 30.419233,
+  "emulator": true,
+  "airplaneMode": true,
+  "realLlamaRequired": true,
+  "instrumentationPassed": true,
+  "framesInspected": [
+    14
+  ],
+  "input": "Synthetic OTP request"
+}

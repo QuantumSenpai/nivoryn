@@ -1,0 +1,18 @@
+[
+  {
+    "url": "https://nivoryn.vercel.app/",
+    "headers": "HTTP/2 200 \r\naccept-ranges: bytes\r\naccess-control-allow-origin: *\r\nage: 129\r\ncache-control: public, max-age=0, must-revalidate\r\ncontent-disposition: inline\r\ncontent-type: text/html; charset=utf-8\r\ndate: Tue, 24 Nov 2026 07:49:24 GMT\r\netag: \"8e52137b00761190cf7a9932c10b7168\"\r\nlast-modified: Tue, 24 Nov 2026 07:47:15 GMT\r\nreferrer-policy: strict-origin-when-cross-origin\r\nserver: Vercel\r\nstrict-transport-security: max-age=63072000; includeSubDomains; preload\r\nx-content-type-options: nosniff\r\nx-frame-options: DENY\r\nx-vercel-cache: HIT\r\nx-vercel-id: bom1::tcfkk-1795506564655-5cf40b73c20a\r\ncontent-length: 18656\r\n\r\n"
+  },
+  {
+    "url": "https://nivoryn.vercel.app/release.json",
+    "headers": "HTTP/2 200 \r\naccept-ranges: bytes\r\naccess-control-allow-origin: *\r\nage: 0\r\ncache-control: public, max-age=0, must-revalidate\r\ncontent-disposition: inline; filename=\"release.json\"\r\ncontent-type: application/json; charset=utf-8\r\ndate: Tue, 24 Nov 2026 07:49:25 GMT\r\netag: \"2a6bc9de97f172f5f21d05e8a6d44d35\"\r\nlast-modified: Tue, 24 Nov 2026 07:49:25 GMT\r\nreferrer-policy: strict-origin-when-cross-origin\r\nserver: Vercel\r\nstrict-transport-security: max-age=63072000; includeSubDomains; preload\r\nx-content-type-options: nosniff\r\nx-frame-options: DENY\r\nx-vercel-cache: HIT\r\nx-vercel-id: bom1::5bmwh-1795506564669-9abde515ec85\r\ncontent-length: 321\r\n\r\n"
+  },
+  {
+    "url": "https://nivoryn-vercel.vercel.app/",
+    "headers": "HTTP/2 308 \r\ncache-control: public, max-age=300\r\ncontent-type: text/plain\r\ndate: Tue, 24 Nov 2026 07:49:25 GMT\r\nlocation: https://nivoryn.vercel.app/\r\nrefresh: 0;url=https://nivoryn.vercel.app/\r\nserver: Vercel\r\nstrict-transport-security: max-age=63072000; includeSubDomains; preload\r\nx-vercel-id: bom1::bt9xf-1795506564681-3dc15dcaeae9\r\n\r\n"
+  },
+  {
+    "url": "https://nivoryn-public.vercel.app/",
+    "headers": "HTTP/2 308 \r\ncache-control: public, max-age=300\r\ncontent-type: text/plain\r\ndate: Tue, 24 Nov 2026 07:49:26 GMT\r\nlocation: https://nivoryn.vercel.app/\r\nrefresh: 0;url=https://nivoryn.vercel.app/\r\nserver: Vercel\r\nstrict-transport-security: max-age=63072000; includeSubDomains; preload\r\nx-vercel-id: bom1::wf4r8-1795506565733-2a4769b960f2\r\n\r\n"
+  }
+]

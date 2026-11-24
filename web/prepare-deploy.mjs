@@ -32,3 +32,13 @@ await writeFile(join(output,'downloads/SHA256SUMS.txt'),`${release.sha256}  ${re
 await copyFile(join(root,'vercel.json'),join(output,'vercel.json'));
 await writeFile(join(output,'.vercelignore'),'.nivoryn-package\n.env\n.env.*\n.vercel\n.git\n.gitignore\n');
 console.log(JSON.stringify({directory:output,apk:release.filename,bytes,sha256:release.sha256}));
+
+const staticOutput=join(output,'.vercel/output/static');
+await mkdir(staticOutput,{recursive:true});
+for(const entry of await readdir(join(root,'dist')))await cp(join(root,'dist',entry),join(staticOutput,entry),{recursive:true});
+await cp(join(output,'downloads'),join(staticOutput,'downloads'),{recursive:true});
+const configuration=JSON.parse(await readFile(join(root,'vercel.json'),'utf8'));
+const routes=configuration.headers.map(rule=>({src:rule.source==='/(.*)'?'/(.*)':rule.source==='/downloads/:path*'?'/downloads/(.*)':rule.source.replaceAll('.',String.fromCharCode(92)+'.'),headers:Object.fromEntries(rule.headers.map(header=>[header.key,header.value])),continue:true}));
+routes.unshift({src:'/index'+String.fromCharCode(92)+'.html',status:308,headers:{Location:'/'}});
+routes.push({handle:'filesystem'});
+await writeFile(join(output,'.vercel/output/config.json'),JSON.stringify({version:3,routes},null,2)+'\n');

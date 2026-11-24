@@ -55,7 +55,7 @@ assert installed_sha256 == release['sha256'], 'Installed APK differs from the re
 adb('shell', 'am', 'force-stop', package)
 adb('shell', 'am', 'start', '-W', '-n', package + '/.MainActivity')
 first = nodes()
-start = next((n for n in first if n.get('text') == 'Start checking'), None)
+start = next((n for n in first if n.get('text') in ['Start checking','Check']), None)
 if start is not None:
     tap(start)
 field = None
@@ -69,7 +69,7 @@ tap(field)
 adb('shell', 'input', 'keycombination', 'KEYCODE_CTRL_LEFT', 'KEYCODE_A')
 adb('shell', 'input', 'text', 'Please%ssend%syour%sOTP%sto%sfinish%sverification.')
 adb('shell', 'input', 'keyevent', 'KEYCODE_BACK')
-tap(find('Review input', scroll=True))
+tap(find('Review message', scroll=True))
 tap(find('Run local check', scroll=True))
 find('!  High risk', timeout=45)
 llama_mode = 'Llama generated explanation · validated references'
@@ -78,12 +78,12 @@ if a.require_llama:
 tap(find('View evidence', scroll=True))
 find('A secret is requested', scroll=True)
 tap(find('Save check locally', scroll=True))
-tap(find('History'))
+tap(find('Activity'))
 original = 'Please send your OTP to finish verification.'
 tap(find(original, scroll=True))
 if a.require_llama:
     find(llama_mode, scroll=True)
-tap(find('History'))
+tap(find('Activity'))
 tap(find('Delete saved check', scroll=True))
 find('Nothing saved yet. Save a result when you want to keep its original text.', timeout=15)
 result = {'device': {k: adb('shell', 'getprop', k) for k in ['ro.product.model', 'ro.build.version.release', 'ro.build.version.sdk', 'ro.product.cpu.abi', 'ro.kernel.qemu']},

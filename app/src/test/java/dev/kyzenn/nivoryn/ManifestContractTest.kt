@@ -27,9 +27,9 @@ class ManifestContractTest {
         info.receivers.orEmpty().forEach { assertTrue(BroadcastReceiver::class.java.isAssignableFrom(Class.forName(it.name))) }
     }
 
-    @Test fun offlineChecksDoNotRequestUnusedCameraOrBackgroundPrivileges() {
-        val unused = setOf("CAMERA", "FOREGROUND_SERVICE", "FOREGROUND_SERVICE_DATA_SYNC",
-            "POST_NOTIFICATIONS", "WAKE_LOCK", "RECEIVE_BOOT_COMPLETED")
+    @Test fun setupAndObservationDeclareOnlySupportedPrivileges() {
+        val unused = setOf("FOREGROUND_SERVICE_DATA_SYNC", "WAKE_LOCK", "RECEIVE_BOOT_COMPLETED",
+            "READ_SMS", "READ_CALL_LOG", "RECORD_AUDIO", "QUERY_ALL_PACKAGES", "ACCESS_FINE_LOCATION")
         assertTrue(info.requestedPermissions.orEmpty().none { it.removePrefix("android.permission.") in unused })
     }
 

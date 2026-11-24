@@ -14,9 +14,9 @@ import org.robolectric.annotation.*
 class OfflineFlowTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     @Test fun realCheckUsesOriginalEvidenceAndEditingClearsOldAssessment() {
-        compose.onNodeWithText("Start checking").performScrollTo().performClick()
+        compose.onNodeWithText("Check").performClick()
         compose.onNode(hasSetTextAction()).performTextInput("Please send your OTP to finish verification.")
-        compose.onNodeWithText("Review input").performScrollTo().performClick()
+        compose.onNodeWithText("Review message").performScrollTo().performClick()
         compose.onNodeWithText("Run local check").performScrollTo().performClick()
         compose.waitUntil(5000) { compose.onAllNodesWithText("!  High risk").fetchSemanticsNodes().size == 1 }
         compose.onNodeWithText("!  High risk").assertExists()
@@ -32,17 +32,19 @@ class OfflineFlowTest {
         compose.onNodeWithText("!  No clear warning found").assertExists()
         compose.onNodeWithText("!  High risk").assertDoesNotExist()
     }
-    @Test fun offlineBoundarySurvivesDependencyManifestMerge() {
+    @Test fun supportedSetupPermissionsDoNotEnableSensitiveDataAccess() {
         val activity = compose.activity
         val permissions = activity.packageManager.getPackageInfo(activity.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions.orEmpty()
-        Assert.assertFalse(permissions.contains("android.permission.INTERNET"))
-        Assert.assertFalse(permissions.contains("android.permission.ACCESS_NETWORK_STATE"))
+        Assert.assertTrue(permissions.contains("android.permission.INTERNET"))
+        Assert.assertFalse(permissions.contains("android.permission.READ_SMS"))
+        Assert.assertFalse(permissions.contains("android.permission.READ_CALL_LOG"))
+        Assert.assertTrue(permissions.contains("android.permission.ACCESS_NETWORK_STATE"))
         Assert.assertFalse(activity.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_ALLOW_BACKUP != 0)
     }
     @Test fun leavingACheckDoesNotNavigateBackToALateResult() {
-        compose.onNodeWithText("Start checking").performScrollTo().performClick()
+        compose.onNodeWithText("Check").performClick()
         compose.onNode(hasSetTextAction()).performTextInput("Send your OTP. " + "Ordinary context. ".repeat(600))
-        compose.onNodeWithText("Review input").performScrollTo().performClick()
+        compose.onNodeWithText("Review message").performScrollTo().performClick()
         compose.onNodeWithText("Run local check").performScrollTo().performClick()
         compose.onNodeWithText("Back").performClick()
         compose.waitUntil(5000) { compose.onAllNodesWithText("Review your input").fetchSemanticsNodes().size == 1 }
@@ -52,10 +54,10 @@ class OfflineFlowTest {
         compose.onNodeWithText("Local check · Evidence-led; signals are not a verdict").assertDoesNotExist()
     }
     @Test fun dashboardLinkSelectionOwnsTheActualInputMode() {
-        compose.onNodeWithText("Start checking").performScrollTo().performClick()
+        compose.onNodeWithText("Check").performClick()
         compose.onAllNodesWithText("Link").onFirst().performClick()
         compose.onNode(hasSetTextAction()).performTextInput("javascript:alert(1)")
-        compose.onNodeWithText("Review input").performScrollTo().performClick()
+        compose.onNodeWithText("Check link").performScrollTo().performClick()
         compose.onNodeWithText("Run local check").performScrollTo().performClick()
         compose.waitUntil(5000) { compose.onAllNodesWithText("!  Cannot assess").fetchSemanticsNodes().size == 1 }
         compose.onNodeWithText("!  No clear warning found").assertDoesNotExist()

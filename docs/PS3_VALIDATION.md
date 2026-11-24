@@ -1,5 +1,7 @@
 # PS3 implementation and validation report
 
+**Current 0.2.0 evidence:** [native UX/setup/release report](reports/native-0.2.0/README.md) supersedes the historical counts, permissions, setup and UI statements below. Internet/network-state permissions now support explicitly requested model downloads and live aggregate byte totals. Analysis remains local; aggregate totals are not packet-level intrusion detection. See that report for the current readiness decision and exact release artifact.
+
 **0.1.2 distribution update:** the website now ships a non-debuggable/minified Arm64 preview with JNI-preservation checks, versionCode 3 and the existing preview certificate. Android 17/API 37 with 16 KB pages passed the resource-required 18-test suite, clean/update installation and a normal System Files installer update. See [current installation guidance](INSTALL_ANDROID.md) and [new regression evidence](reports/android-0.1.2/README.md). The Oppo-specific failure remains unreproduced. The original 0.1.1 measurements below retain their historical scope.
 
 Run begun 23 November 2026, continued 24 November. Official Llama access is resolved: the authorised Meta checkpoint is on ORBIT, and an upstream-linked, build-pinned ExecuTorch conversion has performed **real local generation** on Android. This is a buildable implementation with scoped emulator evidence, **not a claim of full physical-phone acceptance or production security accuracy**. The owner deferred phone testing because the phone is unavailable.

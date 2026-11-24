@@ -16,9 +16,9 @@ class LargeTextTest {
  @get:Rule val compose=createComposeRule()
  @Test fun largeTypeKeepsPrimaryActionsReachableAndTextEditable() {
   compose.setContent { CompositionLocalProvider(LocalDensity provides Density(1f,1.6f)) { NivorynApp() } }
-  compose.onNodeWithText("Start checking").performScrollTo().assertIsDisplayed().performClick()
+  compose.onNodeWithText("Check").assertIsDisplayed().performClick()
   compose.onNode(hasSetTextAction()).performScrollTo().performTextInput("A long filename or Hindi message · नमस्ते")
-  compose.onNodeWithText("Review input").performScrollTo().assertIsDisplayed().performClick()
+  compose.onNodeWithText("Review message").performScrollTo().assertIsDisplayed().performClick()
   compose.onNodeWithText("Run local check").performScrollTo().assertIsDisplayed()
  }
 }

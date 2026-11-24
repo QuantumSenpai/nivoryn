@@ -1,5 +1,8 @@
 # Offline implementation — 22–23 November 2026
 
+**0.2.0 update:** this document retains earlier setup/engine evidence. The [current acceptance report](reports/native-0.2.0/README.md) supersedes old permission, camera, model-import-only and UI statements. Explicit verified downloads now use Internet/network-state permission; analysis remains local. Camera and foreground aggregate usage are optional.
+
+
 The selected architecture is **fully offline and account-free**. The user's NVIDIA NIM key was used with an earlier coding agent, not as an application backend. No key is needed by this implementation. Login, password recovery and a server were intentionally not introduced.
 
 ## What the previous checkout contained

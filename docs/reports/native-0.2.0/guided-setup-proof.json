@@ -1,0 +1,10 @@
+{
+  "source": "Actual guided DownloadManager flow on emulator-5556",
+  "downloadedBytes": 1138135470,
+  "processInterruptedAndRecovered": true,
+  "modelSha256": "8715cdba9e91f6bede00cc5f2d6b12397b95225da5630c4972a8da03001cda3b",
+  "tokenizerSha256": "82e9d31979e92ab929cd544440f129d9ecd797b69e327f80f17e1c50d5551b55",
+  "realInferenceMs": 5232,
+  "mode": "Llama generated explanation \u00b7 validated references",
+  "persistedProof": "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n<map>\n    <string name=\"inference-profile\">8715cdba9e91f6bede00cc5f2d6b123982e9d31979e92ab929cd544440f129d9</string>\n</map>"
+}

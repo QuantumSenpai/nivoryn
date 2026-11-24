@@ -18,6 +18,9 @@ private val Light = lightColorScheme(
     background = Paper,
     onBackground = Ink,
     surface = Color.White,
+    surfaceContainer = Color(0xFFF0F0EC),
+    surfaceContainerHigh = Color(0xFFE6E6E1),
+    surfaceContainerLow = Color.White,
     onSurface = Ink,
     surfaceVariant = Color(0xFFECECE8),
     onSurfaceVariant = Secondary,
@@ -33,6 +36,9 @@ private val Dark = darkColorScheme(
     background = Color(0xFF141414),
     onBackground = Color(0xFFF7F7F5),
     surface = Color(0xFF202020),
+    surfaceContainer = Color(0xFF222324),
+    surfaceContainerHigh = Color(0xFF303234),
+    surfaceContainerLow = Color(0xFF1B1C1D),
     onSurface = Color(0xFFF7F7F5),
     surfaceVariant = Color(0xFF2A2A2A),
     onSurfaceVariant = Color(0xFFBABABA),
@@ -70,6 +76,15 @@ fun NivorynTheme(
     }
     val dark = appearance == "Dark" || (appearance == "System" && isSystemInDarkTheme())
 
+    val view=androidx.compose.ui.platform.LocalView.current
+    LaunchedEffect(dark,view) {
+        (view.context as? android.app.Activity)?.window?.let { window ->
+            androidx.core.view.WindowCompat.getInsetsController(window,view).apply {
+                isAppearanceLightStatusBars=!dark
+                isAppearanceLightNavigationBars=!dark
+            }
+        }
+    }
     CompositionLocalProvider(LocalReducedMotion provides reducedMotion) {
         MaterialTheme(
             colorScheme = if (dark) Dark else Light,

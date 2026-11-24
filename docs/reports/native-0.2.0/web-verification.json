@@ -1,0 +1,23 @@
+{
+  "production": "https://nivoryn.vercel.app",
+  "version": "0.2.0",
+  "unitTests": 17,
+  "unitFailures": 0,
+  "browserWidths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "overflow": false,
+  "axeViolations": 0,
+  "keyboard": true,
+  "touchAtMobileWidths": true,
+  "reducedMotionAndNoJs": true,
+  "canonicalPages": 5,
+  "seoAssetsAndIndexRedirect": true,
+  "anonymousDownloadMatchedSha256": true,
+  "downloadSha256": "d5d9d17f66f6d18a4d7855b6941a3cc3819367c1ee5cb1f797d1dd503d6356c8",
+  "rawBrowserScreenshots": "/private/tmp/nivoryn-0.2-live"
+}

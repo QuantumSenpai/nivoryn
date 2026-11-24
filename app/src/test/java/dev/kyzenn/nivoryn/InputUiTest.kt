@@ -38,7 +38,7 @@ class InputUiTest {
             NivorynTheme {
                 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
                     HomeScreen(draft, false, { draft = draft.copy(text = it) }, { reviewed = true },
-                        { imported = it }, {}, {}, { draft = draft.copy(kind = it) })
+                        { imported = it }, {}, {}, { draft = draft.copy(kind = it) },isCheck=true)
                 }
             }
         }
@@ -46,14 +46,13 @@ class InputUiTest {
         compose.onNodeWithText("Link").performClick()
         compose.onNode(hasText("Link") and hasClickAction()).assert(
             SemanticsMatcher.expectValue(androidx.compose.ui.semantics.SemanticsProperties.StateDescription, "Selected"))
-        compose.onNodeWithText("Screenshot").performClick()
+        compose.onNodeWithText("Scan / OCR").performClick()
         compose.runOnIdle { Assert.assertEquals("Screenshot", imported) }
         compose.onNodeWithText("APK").assertDoesNotExist()
-        compose.onNodeWithText("More import options").performScrollTo().performClick()
-        compose.onNodeWithText("APK").performScrollTo().performClick()
-        compose.runOnIdle { Assert.assertEquals("APK", imported) }
+        compose.onNodeWithText("Inspect a QR image").performScrollTo().performClick()
+        compose.runOnIdle { Assert.assertEquals("QR", imported) }
         compose.onNode(hasSetTextAction()).performTextInput("Check this message")
-        compose.onNodeWithText("Review input").performScrollTo().performClick()
+        compose.onNodeWithText("Check link").performScrollTo().performClick()
         compose.runOnIdle { Assert.assertTrue(reviewed) }
     }
     @Test fun optionalDetailsStayAvailableWithoutCrowdingTheNextAction() {

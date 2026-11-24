@@ -16,13 +16,13 @@ Designed to explain the warning, show the evidence and connect the story.
 
 **[Visit the website](https://nivoryn.vercel.app) · [Download the Android test APK](https://nivoryn.vercel.app/#download)**
 
-Early-access version 0.1.3 · No account required.
+Early-access version 0.2.0 · No account required.
 
 [Why Nivoryn](#the-idea) · [Features](#features) · [Workflow](#how-it-works) · [Privacy](#privacy-and-boundaries) · [Architecture](#architecture) · [Development](#development) · [Roadmap](#roadmap)
 
 </div>
 
-> **Current status (2026-11-24):** the native Compose app runs local text/link checks, bundled Latin/Devanagari OCR/QR, document consistency, PCAP flow replay, static APK inspection and a trained English spam proxy. **Actual Llama 3.2 1B generation through ExecuTorch 1.2.0 is integrated and verified on an Arm64 Android emulator in airplane mode**, including validated advice and encrypted save/reopen/delete. Models are a separate pinned import. No Internet permission or cloud inference. Physical-phone acceptance, live Android VPN and general malware-behaviour monitoring remain unavailable/unverified. Read the [validation report](docs/PS3_VALIDATION.md) and [capability matrix](docs/PS3_COVERAGE.md) for exact scope.
+> **Current status (2026-11-24):** version 0.2.0 reorganizes Home/Check/Activity/Settings, adds real camera capture and guided verified Llama/ExecuTorch setup. Local text/link, bundled OCR/QR, documents, PCAP replay, static APK inspection and encrypted history retain their real pipelines. Explicit downloads require connectivity; later analysis runs offline. Live usage shows aggregate byte totals only. Full PS3 readiness remains blocked by live intrusion detection, malware-behaviour coverage and physical-target validation. Read the [current evidence and readiness report](docs/reports/native-0.2.0/README.md).
 
 [Offline implementation and security boundaries](docs/OFFLINE_IMPLEMENTATION.md)
 
@@ -57,10 +57,12 @@ Built for **Bharat AI-SoC Challenge 2026–27 · PS3: On-device threat, phishing
 | **Saved checks** | Deliberately save text, QR and exact evidence/advice snapshots in encrypted history; reopen, export or delete. | Verified in scoped host/emulator flows |
 | **Scam Story** | Explore example timelines and related messages. | Authored examples; custom linking planned |
 | **Local AI explanations** | Actual Llama / ExecuTorch generation, checked against findings and approved remediation. | Verified emulator; advisory reliability experimental |
+| **Camera scan** | Capture with the Android camera or import, review real OCR/QR before analysis. | Implemented with permission/cancel/import alternatives |
+| **Live usage** | Observe bounded device-wide byte totals with explicit start/stop. | Usage only; no destination threat detection or blocking |
 | **Network replay** | Import bounded classic IPv4 PCAP and review flow/scan thresholds. | Host and Android provider tests; no live VPN |
 | **APK indicators** | Inspect identity, permissions, signing fingerprints and static combinations without installation. | Android fixture tests; static only |
 
-The website presents authored examples. The Android app runs scoped local services; neither certifies that content is safe. Optional notification access, live monitoring and broader case linking remain roadmap work.
+The website presents authored examples. The Android app runs scoped local services; neither certifies that content is safe. Cross-app notification reading, packet-level live threat inspection and broader case linking remain roadmap work.
 
 ---
 
@@ -144,7 +146,7 @@ The diagram describes the local pipeline. The reasoning model receives controlle
 | Inference runtime | ExecuTorch Android 1.2.0, CPU/XNNPACK |
 | Fast detection | Kotlin rules + exported lightweight text classifier |
 | Classifier development | Reproducible Python multinomial Naive Bayes, with Kotlin parity checks |
-| Screenshot extraction | Bundled ML Kit Latin / Devanagari OCR, without network permission |
+| Screenshot extraction | Bundled ML Kit Latin / Devanagari OCR |
 | QR decoding | ZXing |
 | Saved checks / demo cases | Keystore AES-GCM store / app-private preferences |
 | Remote backend / cloud AI | None; analysis runs inside the Android app |
@@ -156,7 +158,7 @@ Dependencies are locked in Gradle; see [API compatibility](docs/API_COMPATIBILIT
 
 Meta reports a **1,083 MB PTE file** and **1,921 MB runtime RSS** for its 1B SpinQuant reference benchmark on OnePlus 12. These are reference measurements, not Nivoryn app benchmarks or minimum device requirements. See the [official model card](https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8).
 
-The model is a separate verified import. The tested pair needs about 1.14 GB before staging/previous-version overhead. Actual emulator load, generation, memory and frame samples are in the validation report; these are not physical-phone or battery measurements.
+The model uses a separate pinned guided download or advanced verified import. The tested pair needs about 1.14 GB before staging/previous-version overhead. Actual emulator load, generation, memory and frame samples are in the validation report; these are not physical-phone or battery measurements.
 
 </details>
 
@@ -182,11 +184,11 @@ Notification access does not provide complete chat history, and Android may reda
 
 ### What exists today
 
-The repository contains a native Android app with real local services and a separately labelled authored demo. Current verification: 90 host tests, 18 Android instrumentation tests, two Linux-observer host tests, debug/release builds and lint. Real OCR/QR, Llama inference, PCAP replay, APK static inspection and encrypted history are exercised. The spam proxy has a documented held-out UCI evaluation; it is not contemporary scam ground truth. The existing promotional website is preserved.
+The repository contains a native Android app with real local services and a separately labelled authored demo. Current verification and measured results are recorded in the 0.2.0 report; historical test counts are retained with their original reports. Real OCR/QR, Llama inference, PCAP replay, APK static inspection and encrypted history are exercised. The spam proxy has a documented held-out UCI evaluation; it is not contemporary scam ground truth. The existing promotional website is preserved.
 
 ### Build and test
 
-The website now distributes **Nivoryn-Guard-v0.1.3.apk**, a non-debuggable Arm64 preview. Build it with `zsh scripts/android.sh :app:assemblePreview`; the publication gate checks signature continuity, native 16 KB alignment and JNI class retention. See [installation guidance](docs/INSTALL_ANDROID.md) and [0.1.3 regression evidence](docs/reports/android-0.1.3/README.md). Stock Android 17/API 37 with 16 KB pages passed clean installation and the 18-test resource-required suite. Oppo-specific installation remains unverified.
+The website now distributes **Nivoryn-Guard-v0.2.0.apk**, a non-debuggable Arm64 preview. Build it with `zsh scripts/android.sh :app:assemblePreview`; the publication gate checks signature continuity, native 16 KB alignment and JNI class retention. See [installation guidance](docs/INSTALL_ANDROID.md) and [0.2.0 regression evidence](docs/reports/native-0.2.0/README.md). Android 17/API 37 with 16 KB pages passed 20 current device tests (18 offline model-required, 2 connected camera/usage) and an exact minified APK offline smoke. Oppo-specific installation remains unverified.
 
 Use JDK 17, Android SDK 36 and the checked-in Gradle wrapper: `./gradlew :app:assembleDebug :app:assembleRelease :app:testDebugUnitTest :app:lintDebug`. `scripts/android.sh` uses the existing Mac/ORBIT toolchain where present. Resource-required instrumentation needs the documented real model staged first; no weights are test assets.
 

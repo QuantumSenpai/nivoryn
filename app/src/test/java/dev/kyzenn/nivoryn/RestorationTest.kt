@@ -15,12 +15,19 @@ import org.robolectric.annotation.Config
 @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
 class RestorationTest {
  @get:Rule val compose=createComposeRule()
+ @Test fun changingInputModeCannotReuseAnOldQrOrAttachment() {
+  val draft=dev.kyzenn.nivoryn.domain.CheckDraft(text="Reviewed text",attachmentUri="content://scan/old",filename="old.jpg",mime="image/jpeg",bytes=100,kind="QR",qrPayload="https://old.example",extractionSource="QR decoder")
+  val next=draft.forInputMode("Text")
+  Assert.assertEquals(dev.kyzenn.nivoryn.domain.CheckDraft(text="Reviewed text",kind="Text"),next)
+  Assert.assertEquals(draft,draft.forInputMode("QR"))
+  Assert.assertEquals(next,next.copy(qrPayload="stale").forInputMode("Text"))
+ }
  @Test fun recreationKeepsCustomDraftAndReviewRoute() {
   val restoration=StateRestorationTester(compose)
   restoration.setContent{NivorynApp()}
-  compose.onNodeWithText("Start checking").performScrollTo().performClick()
+  compose.onNodeWithText("Check").performClick()
   compose.onNode(hasSetTextAction()).performTextInput("My draft · नमस्ते")
-  compose.onNodeWithText("Review input").performScrollTo().performClick()
+  compose.onNodeWithText("Review message").performScrollTo().performClick()
   restoration.emulateSavedInstanceStateRestore()
   compose.onNodeWithText("Review your input").assertExists()
   compose.onNode(hasSetTextAction()).assertTextContains("My draft · नमस्ते")

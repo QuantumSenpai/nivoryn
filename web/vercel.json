@@ -22,7 +22,7 @@
       ]
     },
     {
-      "source": "/downloads/nivoryn-0.1.3-arm64-dd85cec85b80.apk",
+      "source": "/downloads/nivoryn-0.2.0-arm64-d5d9d17f66f6.apk",
       "headers": [
         {
           "key": "Content-Type",
@@ -30,7 +30,7 @@
         },
         {
           "key": "Content-Disposition",
-          "value": "attachment; filename=\"Nivoryn-Guard-v0.1.3.apk\""
+          "value": "attachment; filename=\"Nivoryn-Guard-v0.2.0.apk\""
         },
         {
           "key": "Cache-Control",
@@ -54,5 +54,8 @@
       "destination": "/",
       "permanent": true
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": false
+  }
 }

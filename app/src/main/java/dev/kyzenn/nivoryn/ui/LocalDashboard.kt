@@ -1,49 +1,46 @@
 package dev.kyzenn.nivoryn.ui
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.border
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.runtime.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.*
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import dev.kyzenn.nivoryn.ui.components.ProductGlyph
 import dev.kyzenn.nivoryn.ui.theme.*
 
-/** Stable touch targets: two columns on compact phones, four when labels fit. */
-@Composable fun LocalDashboard(hi: Boolean, kind: String, onKind: (String) -> Unit, onImport: (String) -> Unit) {
-    val selected = when(kind) { "Link" -> 0; "Screenshot" -> 2; "Document" -> 3; else -> 1 }
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(if (hi) "ऑफ़लाइन · इसी फ़ोन पर" else "OFFLINE · ON THIS DEVICE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        BoxWithConstraints(Modifier.fillMaxWidth().selectableGroup()) {
-            val columns = if (maxWidth < 340.dp) 2 else 4
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                (0..3).chunked(columns).forEach { indices ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        indices.forEach { index ->
-                            val active = selected == index
-                            val line by animateColorAsState(if (active) BrandRed else MaterialTheme.colorScheme.outlineVariant,
-                                tween(if (LocalReducedMotion.current) 0 else 120), label = "input selection")
-                            Column(Modifier.weight(1f).heightIn(min = 72.dp)
-                                .border(1.dp, line, androidx.compose.foundation.shape.RoundedCornerShape(6.dp))
-                                .selectable(active, role = Role.RadioButton, onClick = {
-                                    when(index) { 0 -> onKind("Link"); 1 -> onKind("Text"); 2 -> onImport("Screenshot"); else -> onImport("Document") }
-                                }).semantics { stateDescription = if (active) (if (hi) "चयनित" else "Selected") else "" }.padding(horizontal = 8.dp, vertical = 10.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                ProductGlyph(index, Modifier.size(22.dp))
-                                Text(if (hi) listOf("लिंक", "संदेश", "छवि", "फ़ाइल")[index] else listOf("Link", "Message", "Screenshot", "Document")[index], style = MaterialTheme.typography.labelSmall)
-                                Canvas(Modifier.size(4.dp)) { if (active) drawCircle(BrandRed) }
-                            }
-                        }
+@Composable fun LocalDashboard(hi:Boolean,kind:String,onKind:(String)->Unit,onImport:(String)->Unit,compact:Boolean=true) {
+    val modes=listOf("Link","Text","Screenshot","Document")
+    val labels=if(hi) listOf("लिंक","संदेश","स्कैन","दस्तावेज़") else listOf("Link","Message","Scan / OCR","Document")
+    val reduce=LocalReducedMotion.current
+    BoxWithConstraints(Modifier.fillMaxWidth().semantics { isTraversalGroup=true }) {
+        val fontScale=androidx.compose.ui.platform.LocalDensity.current.fontScale
+        val columns=if(compact && maxWidth>=280.dp && fontScale<=1.3f) 4 else 2
+        val width=(maxWidth-8.dp*(columns-1))/columns
+        val tileHeight=(if(compact) 82.dp else 94.dp)*maxOf(1f,fontScale*.9f)
+        val height by animateDpAsState(tileHeight*((4+columns-1)/columns)+8.dp*((4+columns-1)/columns-1),tween(if(reduce) 0 else Motion.Enter,easing=EaseInOutCustom),label="selector bounds")
+        Box(Modifier.fillMaxWidth().height(height)) {
+            modes.forEachIndexed { index,mode -> key(mode) {
+                val x by animateDpAsState((width+8.dp)*(index%columns),tween(if(reduce) 0 else Motion.Enter,easing=EaseInOutCustom),label="feature position x")
+                val y by animateDpAsState((tileHeight+8.dp)*(index/columns),tween(if(reduce) 0 else Motion.Enter,easing=EaseInOutCustom),label="feature position y")
+                val w by animateDpAsState(width,tween(if(reduce) 0 else Motion.Enter,easing=EaseInOutCustom),label="feature width")
+                val active=kind==mode || (mode=="Screenshot" && kind=="QR")
+                val tone by animateColorAsState(if(active) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.surfaceContainer,tween(if(reduce) 0 else Motion.Press),label="feature tone")
+                Surface(onClick={ if(mode=="Screenshot") onImport(mode) else onKind(mode) },
+                    modifier=Modifier.offset { IntOffset(x.roundToPx(),y.roundToPx()) }.width(w).heightIn(min=tileHeight).semantics {
+                        role=Role.RadioButton; selected=active; stateDescription=if(active) (if(hi) "चयनित" else "Selected") else ""
+                    },shape=MaterialTheme.shapes.small,color=tone,
+                    border=BorderStroke(if(active) 2.dp else 1.dp,if(active) BrandRed else MaterialTheme.colorScheme.outlineVariant)) {
+                    Column(Modifier.padding(8.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                        ProductGlyph(index,Modifier.size(24.dp))
+                        Text(labels[index],style=MaterialTheme.typography.labelSmall)
                     }
                 }
-            }
+            } }
         }
     }
 }

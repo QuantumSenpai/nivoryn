@@ -1,0 +1,34 @@
+{
+  "canonical": {
+    "project": "nivoryn",
+    "id": "prj_BgzCgd6XZqUdwNWaxmbbWORy3kbl",
+    "url": "https://nivoryn.vercel.app",
+    "deployment": "dpl_4XSbW4zm2D7Y9pAM9wgwVnpUq6Jj",
+    "version": "0.2.0",
+    "publicApkSha256": "d5d9d17f66f6d18a4d7855b6941a3cc3819367c1ee5cb1f797d1dd503d6356c8"
+  },
+  "duplicates": [
+    {
+      "project": "nivoryn-vercel",
+      "id": "prj_ZwTUJN8r6m7vnz23ziAzkpoq51nU",
+      "url": "https://nivoryn-vercel.vercel.app",
+      "redirectDeployment": "dpl_GhedeuUYtiYUCr4F3R1azQkSKLEa",
+      "verifiedHttpStatus": 308,
+      "verifiedLocation": "https://nivoryn.vercel.app/",
+      "projectAndHistoryPreserved": true
+    },
+    {
+      "project": "nivoryn-public",
+      "id": "prj_sX8kgKToJhTibRpx3N7KgSvzBDc5",
+      "url": "https://nivoryn-public.vercel.app",
+      "redirectDeployment": "dpl_G82Jgp9qcM2L6NFjHnwg8Matggxd",
+      "verifiedHttpStatus": 308,
+      "verifiedLocation": "https://nivoryn.vercel.app/",
+      "projectAndHistoryPreserved": true
+    }
+  ],
+  "deletedProjects": [],
+  "previewUrlsAreNotDuplicates": true,
+  "gitAutoDeployDisabledInSource": true,
+  "routing": "Vercel Build Output API v3, explicit prebuilt deployment; bulk redirect API is plan-restricted"
+}

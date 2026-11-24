@@ -2,7 +2,7 @@
 
 0.1.2 update: native engine regressions now also pass on an Arm64 Android 17/API 37 emulator using 16 KB pages; the distributed minified APK has scoped ExecuTorch JNI keep rules and a publication gate. Original Oppo installation failure remains unreproduced. See INSTALL_ANDROID.md and reports/android-0.1.2/README.md for exact current distribution evidence.
 
-Updated 24 November 2026. Kotlin/Compose retained; promotional website untouched. **Official model access is resolved. Actual local Llama/ExecuTorch generation and the import → evidence → validated explanation → encrypted history pipeline passed on an Arm64 Android 14 emulator in airplane mode. Physical phone acceptance is deferred at the owner's request.** Authored fixtures do not establish real-world detection accuracy or phone performance. See PS3_VALIDATION.md for the latest scoped evidence.
+Updated 24 November 2026. The [0.2.0 acceptance and readiness report](reports/native-0.2.0/README.md) supersedes this earlier detailed engine inventory for setup, permissions, native UI and release evidence. Guided Llama downloads, camera capture and live aggregate usage observation are now implemented. Aggregate usage does not implement intrusion detection; static APK inspection does not implement cross-app malware behaviour. Physical target acceptance is unavailable. Authored fixtures do not establish real-world accuracy.
 
 ## Current capability matrix
 

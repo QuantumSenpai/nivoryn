@@ -1,0 +1,10 @@
+{
+  "emulator": true,
+  "lightDarkSystemSwitch": true,
+  "languageSwitch": true,
+  "rotationKeptDraft": true,
+  "fontScale": 1.6,
+  "warmActivityStart": "Starting: Intent { cmp=dev.kyzenn.nivoryn/.MainActivity }\nWarning: Activity not started, intent has been delivered to currently running top-most instance.\nStatus: ok\nLaunchState: UNKNOWN (0)\nActivity: dev.kyzenn.nivoryn/.MainActivity\nTotalTime: 0\nWaitTime: 4\nComplete",
+  "firstCheckAccessibilityObservationMs": 4110,
+  "timingScope": "ADB input to UIAutomator-observed check action, includes accessibility dump overhead; not frame latency"
+}

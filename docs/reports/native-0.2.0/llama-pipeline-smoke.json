@@ -1,0 +1,12 @@
+[
+  {
+    "mode": "Llama generated explanation · validated references",
+    "elapsedMs": 2955,
+    "explanation": "A secret is requested, which could expose a credential that authorises account access or payment [E1]. These signals do not prove fraud. Identity and live status remain unverified."
+  },
+  {
+    "mode": "Llama generated explanation · validated references",
+    "elapsedMs": 1653,
+    "explanation": "A secret is requested, which could expose a credential that authorises account access or payment [E1]. These signals do not prove fraud. Identity and live status remain unverified."
+  }
+]

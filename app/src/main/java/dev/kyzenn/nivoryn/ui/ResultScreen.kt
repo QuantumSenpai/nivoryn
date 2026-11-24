@@ -5,6 +5,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,10 +37,11 @@ fun ResultScreen(
         return
     }
 
+    val dark=MaterialTheme.colorScheme.background.luminance()<.5f
     val color = when (result.assessment) {
         Assessment.HIGH -> MaterialTheme.colorScheme.error
-        Assessment.SUSPICIOUS -> Warning
-        Assessment.NONE -> Positive
+        Assessment.SUSPICIOUS -> if(dark) Color(0xFFFFCF8A) else Warning
+        Assessment.NONE -> if(dark) Color(0xFFA5DBBA) else Positive
         else -> MaterialTheme.colorScheme.onSurface
     }
 
@@ -55,12 +57,9 @@ fun ResultScreen(
             .padding(bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        if (result.destinations.isNotEmpty()) Text("Destination host: " + result.destinations.joinToString(", "))
-        Text(result.explanationMode, style = MaterialTheme.typography.labelMedium)
         Notice(if (result.origin == ResultOrigin.AUTHORED) {
             if (hi) "उदाहरण परिणाम · लिखे हुए डेमो डेटा" else "Example result · Authored demo data"
         } else if (hi) "स्थानीय जाँच · नियम आधारित, AI का फैसला नहीं" else "Local check · Evidence-led; signals are not a verdict")
-        Text(if (result.origin == ResultOrigin.AUTHORED) "Mode: authored example. No detection engine ran." else "Mode: ${result.explanationMode}. Detection uses local evidence; no connected verification.", style = MaterialTheme.typography.bodySmall)
 
         CrossFadeText(
             text = "!  $label",
@@ -76,6 +75,10 @@ fun ResultScreen(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
+
+        result.evidence.firstOrNull()?.let { Text("Key evidence · "+it.quote.take(160),style=MaterialTheme.typography.bodyMedium) }
+        Text(result.explanationMode,style=MaterialTheme.typography.labelMedium)
+        if(result.origin==ResultOrigin.AUTHORED) Text("Mode: authored example. No detection engine ran.",style=MaterialTheme.typography.bodySmall)
 
         TextAction(
             label = if (showEvidence) (if (hi) "साक्ष्य छिपाएँ" else "Hide evidence") else (if (hi) "साक्ष्य देखें" else "View evidence"),
@@ -94,7 +97,7 @@ fun ResultScreen(
             }
         }
 
-        SectionTitle(if (hi) "अगला कदम" else "What to do next")
+        GroupedSurface(if (hi) "अगला कदम" else "What to do next") {
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -110,6 +113,7 @@ fun ResultScreen(
             }
         }
 
+        }
         if (draft != null && draft.text.isNotEmpty()) {
             SectionTitle(if (hi) "मूल इनपुट" else "Original input")
             val quote = result.evidence.firstOrNull()?.quote.orEmpty()
@@ -138,6 +142,8 @@ fun ResultScreen(
         TextAction(if (showCoverage) (if (hi) "जाँच विवरण छिपाएँ" else "Hide check details") else (if (hi) "जाँच विवरण देखें" else "View check details"), { showCoverage = !showCoverage })
         AnimatedVisibility(showCoverage, enter = fadeIn(tween(if (reduced) 0 else 180)), exit = fadeOut(tween(if (reduced) 0 else 120))) {
 
+        if(result.origin!=ResultOrigin.AUTHORED) Text("Mode: ${result.explanationMode}. Detection uses local evidence; no connected verification.",style=MaterialTheme.typography.bodySmall)
+        if (result.destinations.isNotEmpty()) Text("Destination host: " + result.destinations.joinToString(", "))
         CoveragePanel(
             checks = result.completed.map { CoverageCheck(it, CoverageStatus.COMPLETED, "Completed for this result; see evidence and limitations.") } +
                 result.unavailable.map { CoverageCheck(it, CoverageStatus.UNAVAILABLE, "This check did not run. Do not treat its absence as evidence of safety.") }

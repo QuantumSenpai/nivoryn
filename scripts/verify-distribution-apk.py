@@ -33,7 +33,9 @@ assert f"versionCode='{a.version_code}'" in badging, 'Unexpected upgrade version
 assert 'application-debuggable' not in badging, 'Never distribute the developer debug variant'
 assert not re.search(r'android:testOnly.*(?:0xffffffff|true)', manifest), 'Test-only APK is not a public download'
 assert "native-code: 'arm64-v8a'" in badging, 'Public build must declare the supported Arm64 ABI'
-assert 'android.permission.INTERNET' not in badging, 'Offline permission boundary changed'
+assert 'android.permission.INTERNET' in badging, 'Pinned model downloads require explicit Internet permission'
+for permission in ['READ_SMS', 'READ_CALL_LOG', 'ACCESS_FINE_LOCATION', 'RECORD_AUDIO', 'QUERY_ALL_PACKAGES']:
+    assert 'android.permission.' + permission not in badging, 'Unexpected sensitive-data permission: ' + permission
 certificates = run('apksigner', 'verify', '--verbose', '--print-certs', a.apk)
 assert 'Verified using v2 scheme (APK Signature Scheme v2): true' in certificates
 assert '84a0da97e2b069e89cbc70e9259609e7a6f2de3e87e90886eee6d9c823385b76' in certificates, 'Existing preview signing identity must be preserved'

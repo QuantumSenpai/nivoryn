@@ -1,0 +1,10 @@
+{
+  "airplaneMode": true,
+  "wifiDisabled": true,
+  "mobileDataDisabled": true,
+  "realLlamaRequired": true,
+  "expectedTests": 18,
+  "passed": true,
+  "wallSeconds": 54.59,
+  "target": "Android 17/API37 Arm64 emulator, 16KB pages; no physical phone"
+}

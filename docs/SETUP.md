@@ -1,5 +1,8 @@
 # Offline app and ORBIT update — 2026-11-23
 
+**0.2.0 update:** this document retains earlier setup/engine evidence. The [current acceptance report](reports/native-0.2.0/README.md) supersedes old permission, camera, model-import-only and UI statements. Explicit verified downloads now use Internet/network-state permission; analysis remains local. Camera and foreground aggregate usage are optional.
+
+
 The app now runs local rules, URL inspection, bundled OCR and QR decoding. Large caches,
 the Gradle distribution, build outputs and the existing test AVD have moved to an
 ORBIT-backed APFS sparse bundle. This supersedes the older cache-location caveat below.

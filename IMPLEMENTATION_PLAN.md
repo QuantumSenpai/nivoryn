@@ -1,5 +1,8 @@
 # Nivoryn Guard - Implementation Plan
 
+Current task: native 0.2.0 UX, camera, guided verified Llama setup and canonical deployment. See [the implementation ledger](docs/reports/native-0.2.0/IMPLEMENTATION.md) and [acceptance report](docs/reports/native-0.2.0/README.md). The older checklist below is historical planning; unimplemented VPN alerts and broader monitoring are not shipped claims.
+
+
 The owner confirmed on 2026-11-24 that the immediate task is to finish and verify 0.1.3. That stabilization update is complete; see [the recovery and regression report](docs/reports/android-0.1.3/README.md). The phases below are an unimplemented future roadmap, not shipped capabilities.
 
 ## Phase 1: UI/Animation Overhaul + Live Network Test

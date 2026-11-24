@@ -20,7 +20,11 @@ data class DemoSample(val id: String, val title: String, val titleHi: String, va
 data class CheckDraft(
     val text: String = "", val sampleId: String = "", val attachmentUri: String = "",
     val filename: String = "", val mime: String = "", val bytes: Long = -1, val kind: String = "Text", val qrPayload: String = "", val extractionSource: String = ""
-) { val canReview: Boolean get() = text.isNotBlank() || qrPayload.isNotBlank() || attachmentUri.isNotBlank() }
+) {
+    val canReview: Boolean get() = text.isNotBlank() || qrPayload.isNotBlank() || attachmentUri.isNotBlank()
+    fun forInputMode(selected: String): CheckDraft = if (selected == kind && selected !in listOf("Text", "Link")) copy(sampleId = "")
+        else CheckDraft(text = text, kind = selected)
+}
 data class DemoCase(val id: String, val name: String, val sampleIds: List<String> = emptyList()) {
     fun add(sampleId: String) = copy(sampleIds = (sampleIds + sampleId).distinct())
     fun remove(sampleId: String) = copy(sampleIds = sampleIds.filterNot { it == sampleId })

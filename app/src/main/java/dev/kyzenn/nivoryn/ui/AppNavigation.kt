@@ -41,20 +41,27 @@ private val DraftSaver = Saver<CheckDraft, String>(
 @Composable
 private fun AppNav(route: String, hi: Boolean, rail: Boolean, onNavigate: (String) -> Unit) {
     val roots = listOf("home", "check", "cases", "settings")
-    val names = if (hi) listOf("होम", "जाँच", "इतिहास", "सेटिंग") else listOf("Home", "Check", "History", "Settings")
+    val names = if (hi) listOf("होम", "जाँच", "इतिहास", "सेटिंग") else listOf("Home", "Check", "Activity", "Settings")
 
     @Composable
     fun item(index: Int) {
-        val selected = route == roots[index] || (route == "case" && index == 2) || (route in listOf("review", "result", "samples", "processing") && index == 1)
+        var response by remember { mutableIntStateOf(0) }
+        val section=when(route) {
+            "check","review","result","samples","processing","scan"->"check"
+            "cases","case"->"cases"
+            "settings","resources","model","rules","privacy","accessibility","notices"->"settings"
+            else->"home"
+        }
+        val selected=section==roots[index]
         Column(
             modifier = Modifier
                 .widthIn(min = 64.dp)
-                .selectable(selected, onClick = { onNavigate(roots[index]) }, role = Role.Tab)
+                .selectable(selected, onClick = { response++; onNavigate(roots[index]) }, role = Role.Tab)
                 .padding(horizontal = 8.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ProductGlyph(listOf(4, 1, 5, 6)[index], Modifier.size(22.dp))
+            NavigationGlyph(index, response, Modifier.size(22.dp))
             Text(names[index], color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelLarge)
             val alpha by animateFloatAsState(targetValue = if (selected) 1f else 0f, animationSpec = tween(if (LocalReducedMotion.current) 0 else 200, easing = EaseOutCustom), label = "navigation marker")
             Box(modifier = Modifier.width(24.dp).height(3.dp).background(MaterialTheme.colorScheme.primary.copy(alpha = alpha)))
@@ -105,7 +112,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
     var reduced by rememberSaveable { mutableStateOf(store.get("reduced", "false").toBoolean()) }
     val systemReduced = Settings.Global.getFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
 
-    var stack by rememberSaveable { mutableStateOf("splash") }
+    var stack by rememberSaveable { mutableStateOf(if (shared.isNotEmpty()) "check" else if (launchIntent?.getStringExtra("workspace") == "network") "network" else "home") }
     var draft by rememberSaveable(stateSaver = DraftSaver) { mutableStateOf(CheckDraft(text = shared)) }
     var customDraft by rememberSaveable(stateSaver = DraftSaver) { mutableStateOf(CheckDraft(text = shared)) }
     var cases by remember { mutableStateOf(store.cases()) }
@@ -157,7 +164,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
         go("review")
     }
 
-    fun start() { store.put("welcomed", "true"); root("home") }
+    fun start() { store.put("welcomed", "true"); root("check") }
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
@@ -173,14 +180,14 @@ fun NivorynApp(launchIntent: Intent? = null) {
                 }
                 require(valid) { "This file format is not supported for $importKind." }
                 runCatching { context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
-                if (draft.attachmentUri.isNotEmpty()) runCatching { context.contentResolver.releasePersistableUriPermission(draft.attachmentUri.toUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                if (draft.attachmentUri.isNotEmpty()) dev.kyzenn.nivoryn.integration.ScanFiles.release(context,draft.attachmentUri)
                 draft = attachment; customDraft = draft; go("review")
               }.onFailure { error = it.message ?: "The file could not be opened. Choose another file." }
             }
         }
     }
 
-    fun pick(kind: String) {
+    fun pickFile(kind: String) {
         if (kind == "APK") { go("apk"); return }
         importKind = kind
         runCatching {
@@ -191,6 +198,11 @@ fun NivorynApp(launchIntent: Intent? = null) {
                 else -> arrayOf("application/vnd.android.package-archive", "application/octet-stream")
             })
         }.onFailure { error = "No file picker is available on this device." }
+    }
+
+    fun pick(kind:String) {
+        if(kind=="Screenshot" || kind=="QR") { importKind=kind; go("scan") }
+        else pickFile(kind)
     }
 
     BackHandler(stack.contains('/') || route == "welcome" || route == "splash") {
@@ -231,7 +243,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
 
                         AnimatedContent(
                             targetState = stack,
-                            contentKey = { value -> if (value.substringAfterLast('/') in listOf("processing", "result")) "analysis-result" else value },
+                            contentKey = { value -> when (value.substringAfterLast('/')) { "processing", "result" -> "analysis-result"; "home", "check" -> "workspace"; else -> value } },
                             modifier = Modifier.weight(1f),
                             transitionSpec = {
                                 val enter = if (reduce) 0 else Motion.Enter
@@ -242,7 +254,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
                             },
                             label = "page navigation"
                         ) { current ->
-                            pageStates.SaveableStateProvider(current) {
+                            pageStates.SaveableStateProvider(if(current.substringAfterLast('/') in listOf("home","check")) "workspace" else current) {
                                 val page = current.substringAfterLast('/')
                                 val scroll = rememberSaveable(current, saver = ScrollState.Saver) { ScrollState(0) }
                                 Box(
@@ -250,9 +262,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                         .fillMaxSize()
                                         .then(if (current != stack) Modifier.clearAndSetSemantics {} else Modifier)
                                 ) {
-                                    if (page == "splash") SplashScreen {
-                                        if (stack == current) root(if (shared.isNotEmpty()) "check" else if (store.get("welcomed") == "true") "home" else "welcome")
-                                    } else Column(
+                                    Column(
                                         modifier = Modifier
                                             .widthIn(max = 1000.dp)
                                             .fillMaxWidth()
@@ -270,12 +280,17 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                                 ::pick,
                                                 { go("samples") },
                                                 {
-                                                    if (draft.attachmentUri.isNotEmpty()) runCatching { context.contentResolver.releasePersistableUriPermission(draft.attachmentUri.toUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                                                    if (draft.attachmentUri.isNotEmpty()) dev.kyzenn.nivoryn.integration.ScanFiles.release(context,draft.attachmentUri)
                                                     draft = CheckDraft(); customDraft = CheckDraft()
                                                     notify(tr("Draft cleared", "ड्राफ़्ट हटाया गया"))
                                                 },
-                                                onKind = { kind -> draft = draft.copy(kind = kind, sampleId = ""); customDraft = draft },
-                                                isCheck = page == "check"
+                                                onKind = { kind ->
+                                                    val next = draft.forInputMode(kind)
+                                                    if (draft.attachmentUri.isNotEmpty() && next.attachmentUri.isEmpty()) dev.kyzenn.nivoryn.integration.ScanFiles.release(context,draft.attachmentUri)
+                                                    draft = next; customDraft = next
+                                                    if (page == "home") go("check")
+                                                },
+                                                isCheck = page == "check", onPage = ::go
                                             )
                                               if (page == "home") EngineHomeSection(savedChecks, { check ->
                                                   draft = CheckDraft(text = check.text, kind = check.kind, qrPayload = check.qrPayload, extractionSource = check.extractionSource); customDraft = draft
@@ -293,7 +308,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                                     }
                                                 },
                                                 {
-                                                    runCatching { context.contentResolver.releasePersistableUriPermission(draft.attachmentUri.toUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                                                    dev.kyzenn.nivoryn.integration.ScanFiles.release(context,draft.attachmentUri)
                                                     draft = draft.copy(attachmentUri = "", filename = "", mime = "", bytes = -1, qrPayload = "", extractionSource = "")
                                                     customDraft = draft
                                                     notify(tr("Attachment removed", "फ़ाइल हटा दी गई"))
@@ -391,10 +406,17 @@ fun NivorynApp(launchIntent: Intent? = null) {
                                                 { reduced = it; store.put("reduced", it.toString()) },
                                                 { go(it) },
                                                 { dialog = "clear" },
-                                                { go("welcome") }
+                                                { go("welcome") },
+                                                { language=if(hi) "en" else "hi"; store.put("language",language) }
                                             )
+                                            "scan" -> ScanScreen(importKind, { captured ->
+                                                dev.kyzenn.nivoryn.integration.ScanFiles.release(context,draft.attachmentUri)
+                                                draft=captured; customDraft=draft; go("review")
+                                            }, ::pickFile)
                                             "rules" -> RulesScreen()
-                                            "network" -> InspectionScreen(true)
+                                            "network" -> NetworkScreen { go("capture") }
+                                            "capture" -> InspectionScreen(true)
+                                            "resources" -> ResourcesScreen(::go)
                                             "apk" -> InspectionScreen(false)
                                             "model" -> ModelSetupScreen()
                                             "privacy", "accessibility", "notices" -> InformationScreen(page, hi)
@@ -416,7 +438,7 @@ fun NivorynApp(launchIntent: Intent? = null) {
                             "create" -> tr("Create a demo case", "डेमो केस बनाएँ")
                             "rename" -> tr("Rename case", "केस का नाम बदलें")
                             "delete" -> tr("Delete ${activeCase?.name}?", "${activeCase?.name} हटाएँ?")
-                            "clear" -> tr("Clear saved demo cases?", "सहेजे डेमो केस हटाएँ?")
+                            "clear" -> tr("Clear saved checks and cases?", "सहेजे डेमो केस हटाएँ?")
                             "add" -> tr("Add an example", "उदाहरण जोड़ें")
                             else -> tr("Save example to case", "उदाहरण केस में सहेजें")
                         }) },

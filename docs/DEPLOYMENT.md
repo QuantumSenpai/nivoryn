@@ -13,9 +13,9 @@ On this Mac, mount ORBIT and its NivorynBuildCache image as described in [the of
 ```sh
 npm test --prefix web
 npm run build --prefix web
-NIVORYN_ANDROID_BUILD_DIR=/Volumes/NivorynBuildCache/app-build node web/prepare-deploy.mjs /Volumes/NivorynBuildCache/nivoryn-vercel-0.1.3-verified
-vercel link --yes --project nivoryn --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel-0.1.3-verified
-vercel deploy --prod --yes --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel-0.1.3-verified
+NIVORYN_ANDROID_BUILD_DIR=/Volumes/NivorynBuildCache/app-build node web/prepare-deploy.mjs /Volumes/NivorynBuildCache/nivoryn-vercel-0.2.0-verified
+vercel link --yes --project nivoryn --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel-0.2.0-verified
+vercel deploy --prebuilt --prod --yes --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel-0.2.0-verified
 ```
 
 Set `NIVORYN_ANDROID_BUILD_DIR` to the same output directory used for the Android build; omit it for a standard `app/build` build. Only the prepared static package is uploaded. Android sources, SDKs, tests, Git data, environment files and CLI credentials are excluded. `vercel link` can generate `.env.local`; `.vercelignore` explicitly excludes `.env` and `.env.*`, along with the private `.vercel` directory. Do not serve credential-bearing deployment directories with a public development server.
@@ -45,3 +45,9 @@ node web/scripts/render-brand.cjs http://127.0.0.1:4178
 The five HTML pages have unique titles/descriptions and production canonical/social URLs. The homepage includes factual WebSite and SoftwareApplication structured data, without invented ratings. `robots.txt` references the canonical `sitemap.xml`. This is technical SEO setup, not a claim of indexing, rankings or rich-result eligibility. Search Console ownership/submission is not configured by this deployment.
 
 README graphics, badges and Mermaid colours follow the app/website palette. GitHub still controls the Markdown page's own light/dark theme. Source and README edits remain uncommitted until deliberately reviewed and committed; deployment does not push unrelated work.
+
+## Canonical consolidation, 0.2.0
+
+The confirmed canonical project is `nivoryn` (`prj_BgzCgd6XZqUdwNWaxmbbWORy3kbl`). Confirmed duplicate projects `nivoryn-vercel` and `nivoryn-public` are preserved with publicly verified HTTP 308 redirects to the canonical root. Normal preview URLs in `nivoryn` are deployment history, not duplicate projects. No projects were deleted. Exact IDs and redirect deployment evidence are in `reports/native-0.2.0/deployment-inventory.json`.
+
+Use the generated Build Output API v3 package and `--prebuilt`: the current CLI did not apply deployment-level redirect configuration reliably. Root and web Git auto-deployment are disabled so a repository-root Git build cannot replace the verified static package with a 404. Always verify public APK bytes, redirects and headers after publishing.

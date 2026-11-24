@@ -41,15 +41,15 @@ class OfflineDeviceTest {
         val requireLlama = arguments.getString("llamaRequired") == "true"
         val recording = arguments.getString("recording") == "true"
         compose.waitUntil(10000) {
-            compose.onAllNodesWithText("Start checking").fetchSemanticsNodes().isNotEmpty() ||
-                compose.onAllNodesWithText("Review input").fetchSemanticsNodes().isNotEmpty()
+            compose.onAllNodesWithText("Check").fetchSemanticsNodes().isNotEmpty() ||
+                compose.onAllNodesWithText("Review message").fetchSemanticsNodes().isNotEmpty()
         }
-        if (compose.onAllNodesWithText("Start checking").fetchSemanticsNodes().isNotEmpty())
-            compose.onNodeWithText("Start checking").performScrollTo().performClick()
+        if (compose.onAllNodesWithText("Check").fetchSemanticsNodes().isNotEmpty())
+            compose.onNodeWithText("Check").performClick()
         compose.onNode(hasSetTextAction()).performScrollTo().performTextReplacement("Please send your OTP to finish verification.")
         androidx.test.espresso.Espresso.closeSoftKeyboard()
         compose.waitForIdle()
-        compose.onNodeWithText("Review input").performScrollTo().performClick()
+        compose.onNodeWithText("Review message").performScrollTo().performClick()
         compose.waitUntil(10000) { compose.onAllNodesWithText("Run local check").fetchSemanticsNodes().size == 1 }
         compose.onNodeWithText("Run local check").performScrollTo().performClick()
         compose.waitUntil(10000) { compose.onAllNodesWithText("!  High risk").fetchSemanticsNodes().size == 1 }
@@ -68,7 +68,7 @@ class OfflineDeviceTest {
         }
         if (requireLlama) {
             compose.onNodeWithText("Save check locally").performScrollTo().performClick()
-            compose.onNodeWithText("History").performClick()
+            compose.onNodeWithText("Activity").performClick()
             val original = "Please send your OTP to finish verification."
             compose.waitUntil(10000) { compose.onAllNodesWithText(original).fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithText(original).performScrollTo().performClick()
@@ -81,7 +81,7 @@ class OfflineDeviceTest {
                 compose.onNodeWithText("Llama generated explanation · validated references").assertExists()
             }
             if (recording) { compose.waitForIdle(); Thread.sleep(3000) }
-            compose.onNodeWithText("History").performClick()
+            compose.onNodeWithText("Activity").performClick()
             compose.onNodeWithText("Delete saved check").performScrollTo().performClick()
             compose.waitUntil(10000) { compose.onAllNodesWithText(original).fetchSemanticsNodes().isEmpty() }
             if (recording) { compose.waitForIdle(); Thread.sleep(2000) }

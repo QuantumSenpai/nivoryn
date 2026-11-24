@@ -2,6 +2,21 @@
 
 Built with Llama. Runtime: dependency-locked `org.pytorch:executorch-android:1.2.0`, CPU/XNNPACK, Arm64 Android. On 23 November 2026 an Android 14 Arm64 emulator in airplane mode loaded the actual 1B SpinQuant model and generated an explanation accepted by the app's evidence/advice validator. This establishes emulator compatibility, **not physical-phone performance or universal output correctness**. The first two prompt attempts were rejected; rejection was preserved and the prompt corrected rather than bypassing validation.
 
+## Set up on Android (0.2.0)
+
+1. Open **Home → Set up local AI**. Basic checks already work without it.
+2. Check the displayed device information. The supported model needs Arm64 Android, about 1.14 GB to download and at least 2.6 GB free during installation, in addition to existing resources. 4 GB RAM or more is recommended; the real inference check determines readiness.
+3. Read the bundled Llama licence/notice and publisher access instructions. Confirm that you meet the licence and acceptable-use terms. No developer account token is bundled or requested.
+4. Keep **Allow mobile data** off to use an unmetered connection. Select **Download and verify local AI**.
+5. Watch the actual downloaded-byte progress. Android manages network pauses/retries and resumption, including after process interruption. Manual pause is not supported. **Cancel setup operation** removes download copies; previously verified installed resources are kept.
+6. Wait for exact size/hash verification, private resource activation and the real Llama inference check. Download completion alone does not establish readiness.
+7. Once **Ready for offline explanations** appears, disconnect or enable airplane mode and run a supported check. Each result names its actual explanation mode. A rejected generation still uses clearly labelled curated fallback.
+8. Use **Delete model resources** to remove active, previous and partial resources/download copies. Saved checks are separate and remain unchanged.
+
+The download source is the exact upstream-linked published conversion below, pinned to a reviewed revision. Android DownloadManager stores temporary files in app-specific device storage; verified resources move into private no-backup model storage. No Android path points to the Mac's ORBIT volume. If access later requires an account or gated licence acceptance, follow the publisher's legitimate steps in your browser and use advanced import. Do not paste account tokens into the app.
+
+**Advanced import:** expand **Advanced: import existing resources**, select the exact supported model export and matching tokenizer, then select **Test local inference**. Arbitrary `.pte`, GGUF and training checkpoints are refused. Failed/cancelled import never activates an incomplete resource pair.
+
 ## Tested resources
 
 The app pins this published conversion, linked directly by the [official ExecuTorch v1.2.0 Llama README](https://github.com/pytorch/executorch/blob/v1.2.0/examples/models/llama/README.md):
@@ -25,7 +40,7 @@ python tools/model/download-supported.py
 zsh scripts/android.sh :app:assemblePreview
 ```
 
-The downloader scopes caches to ORBIT, pins the publisher revision, verifies independently reviewed build hashes, retains resumable downloads and includes licence/notice files. It does not trust imported checksum sidecars. Copy `model.pte` and `tokenizer.bin` to a phone folder; install the APK; open Settings → Llama resources → Import model export, then Import matching official tokenizer. Select each using Android's picker. Original `.pth`, `.safetensors`, GGUF and arbitrary `.pte` files are unsupported.
+The downloader scopes caches to ORBIT, pins the publisher revision, verifies independently reviewed build hashes, retains resumable downloads and includes licence/notice files. It does not trust imported checksum sidecars. For advanced import, copy `model.pte` and `tokenizer.bin` to a phone folder; install the APK; open Home → Set up local AI → Advanced: import existing resources → Import model export, then Import matching official tokenizer. Select each using Android's picker. Original `.pth`, `.safetensors`, GGUF and arbitrary `.pte` files are unsupported.
 
 Allow at least 1.3 GB free **app-private** storage, plus the source copy and any previous version. Phone paths never use ORBIT. Only a size/hash-verified complete pair activates atomically. Interrupted copies can be reselected to resume. Update/delete/rollback unloads cached inference under the same lock; rollback requires a still-trusted complete prior pair. “Test local inference” must report actual Llama mode; curated fallback is not success. Cold-start in airplane mode and follow PHONE_ACCEPTANCE.md.
 
