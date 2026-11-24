@@ -16,7 +16,7 @@ Designed to explain the warning, show the evidence and connect the story.
 
 **[Visit the website](https://nivoryn.vercel.app) · [Download the Android test APK](https://nivoryn.vercel.app/#download)**
 
-Early-access version 0.1.2 · No account required.
+Early-access version 0.1.3 · No account required.
 
 [Why Nivoryn](#the-idea) · [Features](#features) · [Workflow](#how-it-works) · [Privacy](#privacy-and-boundaries) · [Architecture](#architecture) · [Development](#development) · [Roadmap](#roadmap)
 
@@ -182,11 +182,11 @@ Notification access does not provide complete chat history, and Android may reda
 
 ### What exists today
 
-The repository contains a native Android app with real local services and a separately labelled authored demo. Current verification: 86 host tests, 18 Android instrumentation tests, two Linux-observer host tests, debug/release builds and lint. Real OCR/QR, Llama inference, PCAP replay, APK static inspection and encrypted history are exercised. The spam proxy has a documented held-out UCI evaluation; it is not contemporary scam ground truth. The existing promotional website is preserved.
+The repository contains a native Android app with real local services and a separately labelled authored demo. Current verification: 90 host tests, 18 Android instrumentation tests, two Linux-observer host tests, debug/release builds and lint. Real OCR/QR, Llama inference, PCAP replay, APK static inspection and encrypted history are exercised. The spam proxy has a documented held-out UCI evaluation; it is not contemporary scam ground truth. The existing promotional website is preserved.
 
 ### Build and test
 
-The website now distributes **Nivoryn-Guard-v0.1.2.apk**, a non-debuggable Arm64 preview. Build it with `zsh scripts/android.sh :app:assemblePreview`; the publication gate checks signature continuity, native 16 KB alignment and JNI class retention. See [installation guidance](docs/INSTALL_ANDROID.md) and [0.1.2 regression evidence](docs/reports/android-0.1.2/README.md). Stock Android 17/API 37 with 16 KB pages passed clean installation and the 18-test resource-required suite. Oppo-specific installation remains unverified.
+The website now distributes **Nivoryn-Guard-v0.1.3.apk**, a non-debuggable Arm64 preview. Build it with `zsh scripts/android.sh :app:assemblePreview`; the publication gate checks signature continuity, native 16 KB alignment and JNI class retention. See [installation guidance](docs/INSTALL_ANDROID.md) and [0.1.3 regression evidence](docs/reports/android-0.1.3/README.md). Stock Android 17/API 37 with 16 KB pages passed clean installation and the 18-test resource-required suite. Oppo-specific installation remains unverified.
 
 Use JDK 17, Android SDK 36 and the checked-in Gradle wrapper: `./gradlew :app:assembleDebug :app:assembleRelease :app:testDebugUnitTest :app:lintDebug`. `scripts/android.sh` uses the existing Mac/ORBIT toolchain where present. Resource-required instrumentation needs the documented real model staged first; no weights are test assets.
 

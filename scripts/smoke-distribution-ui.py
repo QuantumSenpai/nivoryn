@@ -16,7 +16,9 @@ p.add_argument('--adb', required=True)
 p.add_argument('--serial', required=True)
 p.add_argument('--output', type=Path, required=True)
 p.add_argument('--require-llama', action='store_true')
+p.add_argument('--release', type=Path, default=Path(__file__).resolve().parents[1] / 'web/release.json')
 a = p.parse_args()
+release = json.loads(a.release.read_text())
 base = [a.adb, '-s', a.serial]
 
 def adb(*args):
@@ -45,10 +47,11 @@ def find(label, scroll=False, timeout=15):
 assert adb('shell', 'settings', 'get', 'global', 'airplane_mode_on') == '1', 'Enable airplane mode on the test runtime'
 package = 'dev.kyzenn.nivoryn'
 package_info = adb('shell', 'dumpsys', 'package', package)
-assert 'versionName=0.1.2' in package_info and 'versionCode=3 ' in package_info
+assert f"versionName={release['version']}" in package_info and f"versionCode={release['versionCode']} " in package_info
 assert 'DEBUGGABLE' not in package_info, 'Test the actual non-debuggable distribution variant'
 apk_path = adb('shell', 'pm', 'path', package).removeprefix('package:')
 installed_sha256 = adb('shell', 'sha256sum', apk_path).split()[0]
+assert installed_sha256 == release['sha256'], 'Installed APK differs from the release artifact'
 adb('shell', 'am', 'force-stop', package)
 adb('shell', 'am', 'start', '-W', '-n', package + '/.MainActivity')
 first = nodes()
@@ -87,7 +90,7 @@ result = {'device': {k: adb('shell', 'getprop', k) for k in ['ro.product.model',
     'pageSize': adb('shell', 'getconf', 'PAGE_SIZE'), 'airplaneMode': True,
     'tested': ['custom text', 'deterministic evidence', 'save', 'reopen', 'delete'],
     'realLlamaRequired': a.require_llama, 'passed': True,
-    'installedApkSha256': installed_sha256, 'version': '0.1.2', 'versionCode': 3, 'nonDebuggable': True,
+    'installedApkSha256': installed_sha256, 'version': release['version'], 'versionCode': release['versionCode'], 'nonDebuggable': True,
     'scope': 'Synthetic black-box UI on the installed distribution APK; not Oppo hardware or Play Protect approval'}
 a.output.parent.mkdir(parents=True, exist_ok=True)
 a.output.write_text(json.dumps(result, indent=2) + '\n')

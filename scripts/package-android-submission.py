@@ -7,6 +7,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -18,11 +19,17 @@ p.add_argument('--output', type=Path, required=True)
 p.add_argument('--video', type=Path, required=True)
 a = p.parse_args()
 root = Path(__file__).resolve().parents[1]
+release = json.loads((root / 'web/release.json').read_text())
+build = Path(os.environ.get('NIVORYN_ANDROID_BUILD_DIR', root / 'app/build'))
 out = a.output.resolve()
 out.mkdir(parents=True, exist_ok=True)
 def digest(path):
     with path.open('rb') as f:
         return hashlib.file_digest(f, 'sha256').hexdigest()
+
+preview = build / 'outputs/apk/preview/app-preview.apk'
+if not preview.is_file() or digest(preview) != release['sha256']:
+    raise SystemExit('Preview APK differs from the verified release; select the current build output')
 
 files = []
 allowed = ['app/src', 'gradle/wrapper', 'scripts', 'tools', 'evaluation', 'assets/readme']
@@ -37,15 +44,17 @@ for directory in allowed:
         files.append(path)
 for name in ['build.gradle.kts', 'settings.gradle.kts', 'gradle.properties', 'gradlew', 'gradlew.bat', 'app/build.gradle.kts', 'app/proguard-rules.pro', 'app/gradle.lockfile', 'LICENSE', 'README.md', 'NOTICE.md', 'THIRD_PARTY_NOTICES.md']:
     files.append(root / name)
+files.append(root / 'web/release.json')
 files += list((root / 'docs').glob('*.md'))
 files += [p for p in (root / 'docs/reports/llama-runtime-2026-11-23').glob('*') if p.is_file()]
 files += [p for p in (root / 'docs/reports/ps3-increment-2026-11-23').glob('*') if p.is_file()]
+files += [p for p in (root / 'docs/reports/android-0.1.3').glob('*') if p.is_file()]
 with zipfile.ZipFile(out / 'Nivoryn-native-source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
     for path in sorted(set(files)):
         archive.write(path, 'nivoryn/' + str(path.relative_to(root)))
-for source, name in [(root / 'app/build/outputs/apk/preview/app-preview.apk', 'Nivoryn-Guard-v0.1.2.apk'),
-                     (root / 'app/build/outputs/apk/debug/app-debug.apk', 'Nivoryn-debug.apk'),
-                     (root / 'app/build/outputs/apk/release/app-release-unsigned.apk', 'Nivoryn-release-unsigned.apk'),
+for source, name in [(preview, release['downloadName']),
+                     (build / 'outputs/apk/debug/app-debug.apk', 'Nivoryn-debug.apk'),
+                     (build / 'outputs/apk/release/app-release-unsigned.apk', 'Nivoryn-release-unsigned.apk'),
                      (a.video.resolve(), 'Nivoryn-offline-demo.mp4')]:
     if not source.is_file():
         raise SystemExit('Build/recording is missing: ' + str(source))
@@ -60,11 +69,11 @@ for name in ['LLAMA32_LICENSE.txt', 'LLAMA_NOTICE.txt', 'SMS_CLASSIFIER_NOTICE.t
 fixtures = out / 'safe-fixtures'
 fixtures.mkdir(exist_ok=True)
 subprocess.run([sys.executable, str(root / 'tools/network/make-fixtures.py'), str(fixtures)], check=True)
-shutil.copyfile(root / 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk', fixtures / 'benign-instrumentation.apk')
+shutil.copyfile(build / 'outputs/apk/androidTest/debug/app-debug-androidTest.apk', fixtures / 'benign-instrumentation.apk')
 (fixtures / 'README.txt').write_text('Synthetic PCAP metadata fixtures: import only, never transmit. Checksums intentionally omitted.\n'
     'benign.pcap: four SYN/port records; port-sweep.pcap: forty distinct destination ports. Neither is a representative intrusion dataset.\n'
     'benign-instrumentation.apk: existing signed test harness built from this source. Import into APK indicators; do not install it as a product or malware sample.\n')
-(out / 'INSTALL.txt').write_text('Install Nivoryn-Guard-v0.1.2.apk: non-debuggable Arm64 preview signed with the existing preview identity. The separate production release APK is unsigned and needs the owner signing key.\n'
+(out / 'INSTALL.txt').write_text(f"Install {release['downloadName']}: non-debuggable Arm64 preview signed with the existing preview identity. The separate production release APK is unsigned and needs the owner signing key.\n"
     'Weights are separate: follow MODEL_SETUP.md and use the pinned model.pte + tokenizer.bin from ORBIT. Import both via Settings > Llama resources.\n'
     'Read PS3_VALIDATION.md for actual verified scope, experimental behavior and unavailable features. The video is an Arm64 emulator recording, not a physical-phone benchmark.\n'
     'The source ZIP contains current native working-tree changes, tests, tools and reports; no credentials/signing keys/model weights. The existing website is unchanged in the repository.\n')

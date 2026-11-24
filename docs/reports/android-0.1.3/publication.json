@@ -1,0 +1,28 @@
+{
+  "url": "https://nivoryn.vercel.app",
+  "deploymentId": "dpl_F8TRxFMErCmjVK4e7eUj4wLaL3Tp",
+  "deploymentUrl": "https://nivoryn-85peopu9g-quantumsenpais-projects.vercel.app",
+  "release": {
+    "version": "0.1.3",
+    "channel": "preview",
+    "filename": "nivoryn-0.1.3-arm64-dd85cec85b80.apk",
+    "downloadName": "Nivoryn-Guard-v0.1.3.apk",
+    "sha256": "dd85cec85b80cba852353fe8e31431ea3b3d23f49db980288af6d2734980d11f",
+    "bytes": 25552782,
+    "versionCode": 4,
+    "buildVariant": "preview",
+    "abi": "arm64-v8a"
+  },
+  "anonymousBrowserDownload": true,
+  "downloadChecksumMatched": true,
+  "downloadHeadersVerified": true,
+  "seoBrowserPassed": true,
+  "webUnitTests": 17,
+  "linuxObserverTests": 2,
+  "packageNegativeChecksPassed": true,
+  "packageArtifactChecksPassed": true,
+  "installedChecksumNegativeCheckPassed": true,
+  "packagingRegressionTests": 1,
+  "packagingRegressionCases": 2,
+  "checksumMutationDetected": true
+}

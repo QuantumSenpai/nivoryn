@@ -9,11 +9,12 @@ import struct
 import subprocess
 import zipfile
 
+release = json.loads((Path(__file__).resolve().parents[1] / 'web/release.json').read_text())
 p = argparse.ArgumentParser()
 p.add_argument('apk', type=Path)
 p.add_argument('--sdk', type=Path, default=Path(os.environ.get('ANDROID_HOME', '/Volumes/ORBIT/Nivoryn/android-sdk')))
-p.add_argument('--version', default='0.1.2')
-p.add_argument('--version-code', type=int, default=3)
+p.add_argument('--version', default=release['version'])
+p.add_argument('--version-code', type=int, default=release['versionCode'])
 a = p.parse_args()
 build = a.sdk / 'build-tools/35.0.0'
 env = os.environ.copy()

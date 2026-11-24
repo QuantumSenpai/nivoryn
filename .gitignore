@@ -27,6 +27,7 @@ local-resources/
 # Companion frontend
 web/node_modules/
 web/dist/
+web/downloads/
 web/test-results/
 web/playwright-report/
 .taste-skill/

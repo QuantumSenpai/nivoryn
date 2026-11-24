@@ -1,0 +1,19 @@
+{
+  "version": "0.1.3",
+  "bytes": 25552782,
+  "sha256": "dd85cec85b80cba852353fe8e31431ea3b3d23f49db980288af6d2734980d11f",
+  "nonDebuggable": true,
+  "standalone": true,
+  "samePreviewCertificate": true,
+  "zip16K": true,
+  "elf16K": true,
+  "jniClassesPreserved": true,
+  "libraries": [
+    "lib/arm64-v8a/libandroidx.graphics.path.so",
+    "lib/arm64-v8a/libc++_shared.so",
+    "lib/arm64-v8a/libexecutorch.so",
+    "lib/arm64-v8a/libfbjni.so",
+    "lib/arm64-v8a/libmlkit_google_ocr_pipeline.so"
+  ],
+  "scope": "Static distribution checks; not phone installation or Play Protect approval"
+}

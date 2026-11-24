@@ -7,7 +7,7 @@ import {execFileSync} from 'node:child_process';
 
 const root=import.meta.dirname;
 const output=resolve(process.argv[2] || '/Volumes/NivorynBuildCache/nivoryn-vercel');
-const apk=resolve(root,'../app/build/outputs/apk/preview/app-preview.apk');
+const apk=resolve(process.env.NIVORYN_ANDROID_BUILD_DIR || resolve(root,'../app/build'),'outputs/apk/preview/app-preview.apk');
 const release=JSON.parse(await readFile(join(root,'release.json'),'utf8'));
 assert.equal(release.buildVariant,'preview','Only the non-debuggable signed preview may be published');
 execFileSync('python3',[resolve(root,'../scripts/verify-distribution-apk.py'),apk,'--version',release.version,'--version-code',String(release.versionCode)],{stdio:'inherit'});

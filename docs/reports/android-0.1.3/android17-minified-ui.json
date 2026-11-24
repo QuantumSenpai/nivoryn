@@ -1,0 +1,25 @@
+{
+  "device": {
+    "ro.product.model": "sdk_gphone16k_arm64",
+    "ro.build.version.release": "17",
+    "ro.build.version.sdk": "37",
+    "ro.product.cpu.abi": "arm64-v8a",
+    "ro.kernel.qemu": "1"
+  },
+  "pageSize": "16384",
+  "airplaneMode": true,
+  "tested": [
+    "custom text",
+    "deterministic evidence",
+    "save",
+    "reopen",
+    "delete"
+  ],
+  "realLlamaRequired": true,
+  "passed": true,
+  "installedApkSha256": "dd85cec85b80cba852353fe8e31431ea3b3d23f49db980288af6d2734980d11f",
+  "version": "0.1.3",
+  "versionCode": 4,
+  "nonDebuggable": true,
+  "scope": "Synthetic black-box UI on the installed distribution APK; not Oppo hardware or Play Protect approval"
+}

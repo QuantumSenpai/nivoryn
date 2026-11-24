@@ -29,7 +29,7 @@ for name, (size, digest) in expected.items():
     with path.open('rb') as stream:
         assert hashlib.file_digest(stream, 'sha256').hexdigest() == digest, 'Unexpected test resource'
     with path.open('rb') as stream:
-        subprocess.run(base + ['exec-in', 'run-as', package, 'dd', 'of=files/runtime-smoke/' + name, 'bs=65536'],
+        subprocess.run(base + ['shell', '-T', 'run-as', package, 'dd', 'of=files/runtime-smoke/' + name, 'bs=65536'],
                        stdin=stream, check=True, timeout=180)
     assert adb('shell', 'run-as', package, 'sha256sum', 'files/runtime-smoke/' + name).split()[0] == digest
     print(json.dumps({'testInput': name, 'bytes': size, 'sha256': digest, 'verifiedOnEmulator': True}))

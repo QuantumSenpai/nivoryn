@@ -15,6 +15,20 @@ import org.robolectric.annotation.GraphicsMode
 @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
 class FrontendFlowTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Test fun settingsOnlyOffersConnectedEngineScreens() {
+        compose.onNodeWithText("Start checking").performScrollTo().performClick()
+        compose.onNodeWithText("Settings").performClick()
+        compose.onNodeWithText("Live network monitor").assertDoesNotExist()
+        listOf("Rules and indicators" to "Offline resources · authenticated updates",
+            "Llama resources" to "Local model",
+            "Network replay" to "Import PCAP",
+            "APK indicators" to "Import APK").forEach { (label, destination) ->
+            compose.onNodeWithText(label).performScrollTo().performClick()
+            compose.onNodeWithText(destination).assertExists()
+            compose.onNodeWithText("Back").performClick()
+            compose.onNodeWithText("Make yourself at home").assertExists()
+        }
+    }
     @Before fun setup() {
         // Each test starts from its own fresh activity/process test sandbox.
     }

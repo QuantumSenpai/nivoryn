@@ -49,6 +49,16 @@ test('app structured data describes the actual tested release without fabricated
  assert.equal(app.operatingSystem,'Android 8.0 or newer');assert.equal(app.aggregateRating,undefined);assert.equal(app.review,undefined);
 });
 
+test('visible download versions agree with the release metadata',()=>{
+ const release=JSON.parse(read('release.json'));
+ for(const file of ['index.html','notices.html']){
+  const visible=read(file).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replace(/<[^>]*>/g,' ');
+  const versions=[...visible.matchAll(/\b(?:Version |test build )(\d+\.\d+\.\d+)\b/g)].map(m=>m[1]);
+  assert.ok(versions.length>0,file);
+  assert.deepEqual([...new Set(versions)],[release.version],file);
+ }
+});
+
 test('generated favicon and social images have real, correctly sized raster payloads',()=>{
  for(const [file,width,height] of [['favicon-48.png',48,48],['apple-touch-icon.png',180,180],['assets/brand/social-card.png',1200,630]]){
   const png=readFileSync(new URL(file,root));assert.equal(png.subarray(1,4).toString(),'PNG');

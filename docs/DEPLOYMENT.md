@@ -13,12 +13,12 @@ On this Mac, mount ORBIT and its NivorynBuildCache image as described in [the of
 ```sh
 npm test --prefix web
 npm run build --prefix web
-node web/prepare-deploy.mjs
-vercel link --yes --project nivoryn --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel
-vercel deploy --prod --yes --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel
+NIVORYN_ANDROID_BUILD_DIR=/Volumes/NivorynBuildCache/app-build node web/prepare-deploy.mjs /Volumes/NivorynBuildCache/nivoryn-vercel-0.1.3-verified
+vercel link --yes --project nivoryn --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel-0.1.3-verified
+vercel deploy --prod --yes --scope quantumsenpais-projects --cwd /Volumes/NivorynBuildCache/nivoryn-vercel-0.1.3-verified
 ```
 
-Only the prepared static package is uploaded. Android sources, SDKs, tests, Git data, environment files and CLI credentials are excluded. `vercel link` can generate `.env.local`; `.vercelignore` explicitly excludes `.env` and `.env.*`, along with the private `.vercel` directory. Do not serve credential-bearing deployment directories with a public development server.
+Set `NIVORYN_ANDROID_BUILD_DIR` to the same output directory used for the Android build; omit it for a standard `app/build` build. Only the prepared static package is uploaded. Android sources, SDKs, tests, Git data, environment files and CLI credentials are excluded. `vercel link` can generate `.env.local`; `.vercelignore` explicitly excludes `.env` and `.env.*`, along with the private `.vercel` directory. Do not serve credential-bearing deployment directories with a public development server.
 
 For a different APK release, update `web/release.json`, both download URLs, the exact APK header route in `web/vercel.json` and the SoftwareApplication download metadata. Reverify the APK signature and runtime behavior, then use a fresh package directory so old large binaries do not accumulate in a single CLI upload. A production Android release also needs the owner's release-signing key. Multiple long-lived APK versions can later move to a dedicated release/object store; that is not required for this first test build.
 
