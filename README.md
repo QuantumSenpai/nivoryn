@@ -263,6 +263,13 @@ See [LICENSE](LICENSE) for the repository's current terms. Llama weights remain 
 | Name |
 | :--- |
 | **Harshit Raj** |
+---
+
+## Mentor
+
+| Name | GitHub |
+| :--- | :--- |
+| **Prabhat Das** | [prabhatdash](https://github.com/prabhatdash) |
 ## References
 
 - [Official Bharat AI-SoC Challenge and PS3](https://arm-education.github.io/Arm-Developer-Labs/Bharat_AI_SoC_2026_27.html)
