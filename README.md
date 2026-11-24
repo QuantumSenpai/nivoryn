@@ -256,9 +256,13 @@ Useful early contributions include reproducible Android integration, reviewed sc
 See [LICENSE](LICENSE) for the repository's current terms. Llama weights remain subject to the [Llama 3.2 Community License](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE), independently of the application licence. Dependency and asset notices belong in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ---
-Contributors
+---
 
-Harshit Raj
+## Contributors
+
+| Name |
+| :--- |
+| **Harshit Raj** |
 ## References
 
 - [Official Bharat AI-SoC Challenge and PS3](https://arm-education.github.io/Arm-Developer-Labs/Bharat_AI_SoC_2026_27.html)
